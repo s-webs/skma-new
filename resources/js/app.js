@@ -38,3 +38,13 @@ toggleMenuButton.addEventListener('click', () => {
         searchForm.classList.remove('hidden');
     }
 });
+
+document.querySelectorAll('.submenu-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+        const submenu = toggle.nextElementSibling; // Находим следующее подменю
+        if (submenu) {
+            submenu.classList.toggle('hidden'); // Переключаем видимость подменю
+        }
+    });
+});
+

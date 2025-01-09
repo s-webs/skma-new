@@ -47,45 +47,18 @@
         <div class="swiper-pagination"></div>
     </div>
     <div class="mt-20">
-        @include('custom-components.home-heading', ['title' => 'ЮКМА В ЦИФРАХ'])
-
+        @include('custom-components.home-heading', ['title' => __('home.academyCounter')])
         <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mt-8">
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Обучающихся</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="7900">0</div>
-            </div>
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Обучаем уже лет</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="46">0</div>
-            </div>
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Выпускников</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="43560">0</div>
-            </div>
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Кафедры</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="34">0</div>
-            </div>
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Языков обучения</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="3">0</div>
-            </div>
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Мест в общежитии</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="3000">0</div>
-            </div>
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Мест на военной кафедре</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="200">0</div>
-            </div>
-            <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
-                <div class="text-2xl">Спортивных секций</div>
-                <div class="font-bold text-4xl counter mt-4" data-target="12">0</div>
-            </div>
+            @foreach($counters as $counter)
+                <div class="bg-white p-4 text-center h-48 flex flex-col justify-center items-center rounded-md border">
+                    <div class="text-xl">{{ $counter->getProperty('name') }}</div>
+                    <div class="font-bold text-4xl counter mt-4" data-target="{{ $counter->count }}">0</div>
+                </div>
+            @endforeach
         </div>
     </div>
     <div class="mt-20">
-        @include('custom-components.home-heading', ['title' => 'Сервисы академии'])
+        @include('custom-components.home-heading', ['title' => __('home.academyServices')])
 
         <div class="swiper slider-services mt-8 h-72">
             <div class="swiper-wrapper">
@@ -155,40 +128,60 @@
         </div>
     </div>
     <div class="mt-20">
-        @include('custom-components.home-heading', ['title' => 'объявления академии', 'link' => '##'])
+        @include('custom-components.home-heading', ['title' => __('home.academyAnnouncement'), 'link' => '##'])
         <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mt-8">
-            <div class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
-                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main " href="##">
+            <div
+                class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
+                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main "
+                   href="##">
                     <div class="w-full p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики
+                            Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
-                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main " href="##">
+            <div
+                class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
+                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main "
+                   href="##">
                     <div class="w-full p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики
+                            Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
-                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main " href="##">
+            <div
+                class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
+                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main "
+                   href="##">
                     <div class="w-full p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики
+                            Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
-                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main " href="##">
+            <div
+                class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
+                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main "
+                   href="##">
                     <div class="w-full p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики
+                            Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
-                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main " href="##">
+            <div
+                class="text-center flex flex-col h-48 justify-center items-center border rounded-md overflow-hidden relative">
+                <a class="flex items-center w-full h-full bg-white text-gray-800 transition-colors duration-300 hover:bg-primary-main hover:text-white border-primary-main "
+                   href="##">
                     <div class="w-full p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl">Встреча с вице-министром науки и высшего образования Республики
+                            Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
@@ -197,80 +190,96 @@
     <div class="mt-20">
         @include('custom-components.home-heading', ['title' => 'новости академии', 'link' => '##'])
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+            <div
+                class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
                 <a class="block w-full h-full" href="##">
                     <img class="w-full h-full object-cover" src="/assets/images/test/test-03.jpg" alt="">
                     <div class="absolute bottom-0 left-0 bg-black bg-opacity-45 w-full h-28 p-4 backdrop-blur-sm">
-                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования Республики Казахстан</div>
+                        <div class="text-start text-xl text-white">Встреча с вице-министром науки и высшего образования
+                            Республики Казахстан
+                        </div>
                     </div>
                 </a>
             </div>
         </div>
     </div>
-    <footer class="mt-20 border-t border-t-primary-main pt-4">
-        <div class="flex justify-between items-center">
-            <div>Ссылки 1</div>
-            <div>Ссылки 2</div>
-            <div>Ссылки 3</div>
-        </div>
-        <div>Информация</div>
-    </footer>
 @endsection
 
 @push('scripts')

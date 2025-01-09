@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Menu;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer('*', function ($view) {
+            $menus = Menu::query()->whereNull('parent_id')->with('children')->orderBy('order')->get();
+            $view->with('menus', $menus);
+        });
     }
 }

@@ -13,6 +13,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return redirect(app()->getLocale()); // Перенаправляем на текущий язык
+});
 
-require __DIR__.'/auth.php';
+Route::get('/{locale}', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => '{locale}', 'middleware' => 'setLocale'], function () {
+
+});
+
+require __DIR__ . '/auth.php';
