@@ -14,6 +14,7 @@ use App\MoonShine\Resources\MoonShineUserRoleResource;
 use App\MoonShine\Resources\CounterResource;
 use App\MoonShine\Resources\MenuResource;
 use App\MoonShine\Pages\MenuIndexPage;
+use App\MoonShine\Resources\ServiceResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 MoonShineUserRoleResource::class,
                 CounterResource::class,
                 MenuResource::class,
+                ServiceResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

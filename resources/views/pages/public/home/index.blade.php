@@ -59,69 +59,20 @@
     </div>
     <div class="mt-20">
         @include('custom-components.home-heading', ['title' => __('home.academyServices')])
-
         <div class="swiper slider-services mt-8 h-72">
             <div class="swiper-wrapper">
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
+                @foreach($services as $service)
+                    <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
+                        <a href="{{ $service->getProperty('link') }}" class="block w-full h-full hover:bg-primary-main text-black hover:text-white transition-colors duration-300" target="_blank">
+                            <div
+                                class="absolute top-5 left-5 font-bold">{{ $service->getProperty('name') }}</div>
+                            <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden border-2 border-white">
+                                <img src="{{ $service->getProperty('image') }}" alt=""
+                                     class="w-full h-full object-cover">
+                            </div>
+                        </a>
                     </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <div class="swiper-slide overflow-hidden swiper-slide-services border rounded-md relative">
-                    <div class="text-black absolute top-5 left-5 font-bold">3D ТУР</div>
-                    <div class="bg-cyan-600 absolute w-64 h-64 rounded-full -left-8 -bottom-20 overflow-hidden">
-                        <img src="/assets/images/test/test-03.png" alt="" class="w-full h-full object-cover">
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="swiper-button-next swiper-next-services"></div>
             <div class="swiper-button-prev swiper-prev-services"></div>

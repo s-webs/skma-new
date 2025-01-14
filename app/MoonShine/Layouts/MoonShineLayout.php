@@ -33,6 +33,7 @@ use MoonShine\UI\Components\{Breadcrumbs,
 use App\MoonShine\Resources\CounterResource;
 use MoonShine\MenuManager\MenuItem;
 use App\MoonShine\Resources\MenuResource;
+use App\MoonShine\Resources\ServiceResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -49,6 +50,7 @@ final class MoonShineLayout extends CompactLayout
             ...parent::menu(),
             MenuItem::make('Счетчики', CounterResource::class),
             MenuItem::make('Меню', MenuResource::class),
+            MenuItem::make('Services', ServiceResource::class),
         ];
     }
 

@@ -14,6 +14,8 @@ const closeIcon = document.getElementById('close-icon');
 const barsIcon = document.getElementById('bars-icon');
 const langSwitcher = document.getElementById('lang-switcher');
 const searchForm = document.getElementById('search-form');
+const fullLogo = document.getElementById('full-logo');
+const smallLogo = document.getElementById('small-logo');
 
 toggleMenuButton.addEventListener('click', () => {
     if (sidebar.classList.contains('w-64')) {
@@ -26,6 +28,8 @@ toggleMenuButton.addEventListener('click', () => {
         barsIcon.classList.remove('hidden');
         langSwitcher.classList.add('hidden');
         searchForm.classList.add('hidden');
+        fullLogo.classList.add('hidden');
+        smallLogo.classList.remove('hidden');
     } else {
         sidebar.classList.remove('w-20');
         menu.classList.remove('hidden')
@@ -36,6 +40,8 @@ toggleMenuButton.addEventListener('click', () => {
         barsIcon.classList.add('hidden');
         langSwitcher.classList.remove('hidden');
         searchForm.classList.remove('hidden');
+        fullLogo.classList.remove('hidden');
+        smallLogo.classList.add('hidden');
     }
 });
 

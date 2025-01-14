@@ -13,7 +13,7 @@
 <body class="h-screen overflow-hidden flex">
 <!-- Sidebar -->
 <div id="sidebar"
-     class="bg-gray-200 text-primary-main transition-width duration-500 ease w-64 h-full overflow-y-auto z-20 shadow-[3px_0px_11px_1px_#00000024]">
+     class="bg-gray-100 text-primary-main transition-width duration-500 ease w-64 h-full overflow-y-auto z-20 shadow-[6px_1px_19px_0px_rgba(0,_0,_0,_0.2)]">
     <div id="sidebar-actions" class="flex justify-between items-center p-4 text-2xl">
         <div id="lang-switcher" class="flex text-lg font-bold items-center">
             @php
@@ -39,14 +39,15 @@
     </div>
     <div class="p-4 text-lg font-bold">
         <a href="/" class="flex justify-center">
-            <img class="w-20" src="/assets/images/logos/logo.png" alt="">
+            <img id="full-logo" class="w-48" src="/assets/images/logos/skma-logo.svg" alt="">
+            <img id="small-logo" class="w-24 hidden" src="/assets/images/logos/logo.png" alt="">
         </a>
     </div>
     <form class="relative px-4 mt-4" id="search-form">
         <input
             type="text"
             placeholder="Поиск..."
-            class="w-full p-3 border-r-0 border-l-0 border-t-0 border-b-primary-light text-primary-main placeholder-primary-main bg-gray-200 focus:outline-none focus:ring-0 focus:ring-primary-light focus:border-primary-light"
+            class="w-full p-3 border-r-0 border-l-0 border-t-0 border-b-primary-light text-primary-main placeholder-primary-main bg-gray-100 focus:outline-none focus:ring-0 focus:ring-primary-light focus:border-primary-light"
         />
         <button type="submit" class="absolute inset-y-0 right-6 flex items-center text-primary-main">
             <i class="fa fa-search"></i>

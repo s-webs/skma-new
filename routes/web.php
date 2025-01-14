@@ -14,7 +14,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', function () {
-    return redirect(app()->getLocale()); // Перенаправляем на текущий язык
+    return redirect(app()->getLocale());
 });
 
 Route::get('/{locale}', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
