@@ -33,8 +33,9 @@ return new class extends Migration {
             $table->text('preview_kz')->nullable();
             $table->text('preview_en')->nullable();
 
-            $table->string('author')->default('skma');
-            $table->string('department')->default('academy');
+            $table->string('author')->nullable();
+            $table->string('department')->nullable();
+            $table->json('tags')->nullable();
             $table->boolean('published')->default(false);
 
             $table->timestamps();

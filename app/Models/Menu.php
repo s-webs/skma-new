@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Menu extends BaseModel
 {
     protected $fillable = [
         'name_ru',
@@ -13,7 +13,7 @@ class Menu extends Model
         'link_ru',
         'link_kz',
         'link_en',
-        'order',
+        'sort_order',
         'parent_id',
         'icon',
     ];

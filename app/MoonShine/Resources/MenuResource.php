@@ -34,8 +34,8 @@ class MenuResource extends TreeResource
     protected string $title = 'Меню';
 
     protected string $column = 'name_ru';
-
-    protected string $sortColumn = 'order';
+ 
+    protected string $sortColumn = 'sort_order';
 
     protected function assets(): array
     {

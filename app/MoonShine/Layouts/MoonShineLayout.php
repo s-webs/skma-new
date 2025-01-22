@@ -29,11 +29,15 @@ use MoonShine\UI\Components\{Breadcrumbs,
     Layout\ThemeSwitcher,
     Layout\TopBar,
     Layout\Wrapper,
-    When};
+    When
+};
 use App\MoonShine\Resources\CounterResource;
+use MoonShine\MenuManager\MenuGroup;
 use MoonShine\MenuManager\MenuItem;
 use App\MoonShine\Resources\MenuResource;
 use App\MoonShine\Resources\ServiceResource;
+use App\MoonShine\Resources\NewsResource;
+use App\MoonShine\Resources\OrgNodeResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -48,9 +52,13 @@ final class MoonShineLayout extends CompactLayout
     {
         return [
             ...parent::menu(),
-            MenuItem::make('Счетчики', CounterResource::class),
+            MenuGroup::make('Об академии', [
+                MenuItem::make('Счетчики', CounterResource::class, 'variable'),
+                MenuItem::make('Структура правления', OrgNodeResource::class, 'share'),
+            ], 'academic-cap'),
             MenuItem::make('Меню', MenuResource::class),
-            MenuItem::make('Services', ServiceResource::class),
+            MenuItem::make('Сервисы', ServiceResource::class),
+            MenuItem::make('Новости', NewsResource::class),
         ];
     }
 

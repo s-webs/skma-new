@@ -54,3 +54,25 @@ document.querySelectorAll('.submenu-toggle').forEach(toggle => {
     });
 });
 
+const sidebarMobile = document.getElementById('sidebar-mobile');
+const closeMobileSidebar = document.getElementById('close-mobile-sidebar');
+const openMobileSidebar = document.getElementById('open-mobile-sidebar');
+
+closeMobileSidebar.addEventListener('click', () => {
+    sidebarMobile.classList.add('disable')
+    sidebarMobile.classList.remove('active');
+})
+
+openMobileSidebar.addEventListener('click', () => {
+    sidebarMobile.classList.remove('disable')
+    sidebarMobile.classList.add('active')
+})
+
+new isvek.Bvi({
+    target: '#enable-pc-impaired',
+    fontSize: 24,
+    theme: 'white'
+    //...etc
+});
+
+

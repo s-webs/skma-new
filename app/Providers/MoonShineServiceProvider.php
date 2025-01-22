@@ -15,6 +15,9 @@ use App\MoonShine\Resources\CounterResource;
 use App\MoonShine\Resources\MenuResource;
 use App\MoonShine\Pages\MenuIndexPage;
 use App\MoonShine\Resources\ServiceResource;
+use App\MoonShine\Resources\NewsResource;
+use App\MoonShine\Resources\OrgNodeResource;
+use App\MoonShine\Pages\OrgNodeIndexPage;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -34,10 +37,13 @@ class MoonShineServiceProvider extends ServiceProvider
                 CounterResource::class,
                 MenuResource::class,
                 ServiceResource::class,
+                NewsResource::class,
+                OrgNodeResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
                 MenuIndexPage::class,
+                OrgNodeIndexPage::class,
             ])
         ;
     }
