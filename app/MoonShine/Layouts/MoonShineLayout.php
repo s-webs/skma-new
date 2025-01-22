@@ -38,6 +38,8 @@ use App\MoonShine\Resources\MenuResource;
 use App\MoonShine\Resources\ServiceResource;
 use App\MoonShine\Resources\NewsResource;
 use App\MoonShine\Resources\OrgNodeResource;
+use App\MoonShine\Resources\RolesResource;
+use App\MoonShine\Resources\UserResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -56,6 +58,10 @@ final class MoonShineLayout extends CompactLayout
                 MenuItem::make('Счетчики', CounterResource::class, 'variable'),
                 MenuItem::make('Структура правления', OrgNodeResource::class, 'share'),
             ], 'academic-cap'),
+            MenuGroup::make('Пользователи сайта', [
+                MenuItem::make('Users', UserResource::class),
+                MenuItem::make('Roles', RolesResource::class),
+            ], 'users'),
             MenuItem::make('Меню', MenuResource::class),
             MenuItem::make('Сервисы', ServiceResource::class),
             MenuItem::make('Новости', NewsResource::class),

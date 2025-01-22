@@ -18,12 +18,14 @@ use App\MoonShine\Resources\ServiceResource;
 use App\MoonShine\Resources\NewsResource;
 use App\MoonShine\Resources\OrgNodeResource;
 use App\MoonShine\Pages\OrgNodeIndexPage;
+use App\MoonShine\Resources\RolesResource;
+use App\MoonShine\Resources\UserResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
     /**
-     * @param  MoonShine  $core
-     * @param  MoonShineConfigurator  $config
+     * @param MoonShine $core
+     * @param MoonShineConfigurator $config
      *
      */
     public function boot(CoreContract $core, ConfiguratorContract $config): void
@@ -39,12 +41,13 @@ class MoonShineServiceProvider extends ServiceProvider
                 ServiceResource::class,
                 NewsResource::class,
                 OrgNodeResource::class,
+                RolesResource::class,
+                UserResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
                 MenuIndexPage::class,
                 OrgNodeIndexPage::class,
-            ])
-        ;
+            ]);
     }
 }
