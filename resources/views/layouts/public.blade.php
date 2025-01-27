@@ -88,7 +88,8 @@
                                     <li class="">
                                         <a href="{{ $child->getProperty('link') }}"
                                            class="block py-2 border-b px-2 border-b-primary-secondary hover:bg-primary-secondary transition-colors duration-300">
-                                            {!! $child->icon !!}<span class="ml-4">{{ $child->getProperty('name') }}</span>
+                                            {!! $child->icon !!}<span
+                                                class="ml-4">{{ $child->getProperty('name') }}</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -154,7 +155,8 @@
                                     <li class="">
                                         <a href="{{ $child->getProperty('link') }}"
                                            class="block py-2 border-b px-2 border-b-primary-secondary hover:bg-primary-secondary transition-colors duration-300">
-                                            {!! $child->icon !!}<span class="ml-4">{{ $child->getProperty('name') }}</span>
+                                            {!! $child->icon !!}<span
+                                                class="ml-4">{{ $child->getProperty('name') }}</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -178,12 +180,13 @@
                     <button id="open-mobile-sidebar" class="text-white">
                         <i id="mobile-bars-icon" class="fa fa-bars lg:hidden" aria-hidden="true"></i>
                     </button>
-                    <button id="enable-pc-impaired" class="ml-4 text-white hover:text-primary-light"><i class="fas fa-eye"></i></button>
+                    <button id="enable-pc-impaired" class="ml-4 text-white hover:text-primary-light"><i
+                            class="fas fa-eye"></i></button>
                     <a class="text-white" href="/crm" target="_blank">ADMIN PANEL</a>
                 </div>
                 <div class="text-gray-100 hidden lg:block">
-                    <a href="##">Авторизация</a>
-                    <a href="##" class="ml-3">Регистрация</a>
+                    <a href="{{ route('login') }}">Авторизация</a>
+                    <a href="{{ route('register') }}" class="ml-3">Регистрация</a>
                 </div>
                 <div class="flex lg:hidden">
                     <div class="mr-4 text-white">

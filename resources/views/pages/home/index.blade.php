@@ -165,11 +165,11 @@
         </div>
     </div>
     <div class="mt-20">
-        @include('custom-components.home-heading', ['title' => 'новости академии', 'link' => '##'])
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+        @include('custom-components.home-heading', ['title' => __('home.academyNews'), 'link' => '##'])
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
             @foreach($news as $item)
                 <div
-                    class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border rounded-md overflow-hidden relative">
+                    class="bg-white text-center flex flex-col h-64 justify-center items-center rounded-md border overflow-hidden relative">
                     <a class="block w-full h-full" href="{{ route('news.show', $item->getProperty('slug')) }}">
                         <img class="w-full h-full object-cover transition duration-300 ease-in-out hover:scale-110"
                              src="{{ $item->preview_ru }}" alt="{{ $item->getProperty('title')  }}">
@@ -179,7 +179,13 @@
                                 class="text-start text-md text-gray-100 border-b border-b-primary-main h-14">{{ $item->getProperty('title')  }}</div>
                             <div class="text-start text-md text-primary-light text-sm mt-2">
                                 <span><i class="fal fa-calendar"></i> 12.07.2024</span>
-                                <span class="ml-2"><i class="fal fa-eye"></i> {{ $item->getProperty('views')  }}</span>
+                                <span class="ml-4"><i class="fal fa-eye"></i> {{ $item->getProperty('views')  }}</span>
+                                @if($item->isLikedBy(Auth::id()))
+                                    <span class="ml-2"><i class="fas text-red-500 fa-heart"></i> {{ $item->likes->count()  }}</span>
+                                @else
+                                    <span class="ml-2"><i class="fal fa-heart"></i> {{ $item->likes->count()  }}</span>
+                                @endif
+                                <span class="ml-4"><i class="fal fa-comment"></i> {{ $item->comments->count() }}</span>
                             </div>
                         </div>
                     </a>

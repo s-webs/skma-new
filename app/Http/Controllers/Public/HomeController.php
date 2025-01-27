@@ -19,7 +19,7 @@ class HomeController extends Controller
         $news = News::query()
             ->where('published', '=', 1)
             ->orderBy('created_at', 'desc')
-            ->paginate(8)
+            ->paginate(6)
             ->map(function ($newsItem) {
                 // Обрезаем заголовки
                 $newsItem->title_ru = Str::limit($newsItem->title_ru, 60, '...');
@@ -28,7 +28,7 @@ class HomeController extends Controller
                 return $newsItem;
             });
 
-        return view('pages.public.home.index', compact('counters', 'services', 'news'));
+        return view('pages.home.index', compact('counters', 'services', 'news'));
     }
 
     public function academyStructure()
