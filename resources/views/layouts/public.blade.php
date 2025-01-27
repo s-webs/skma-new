@@ -70,7 +70,7 @@
             </button>
         </form>
         <nav id="menu" class="mt-8">
-            <ul class="text-md px-4">
+            <ul class="text-sm px-4">
                 @foreach ($menus as $menu)
                     <li class="relative">
                         @if ($menu->children->isNotEmpty())
@@ -108,7 +108,7 @@
     </div>
 
     <div id="sidebar-mobile"
-         class="disable bg-gray-100 text-primary-main transition-width duration-500 ease w-full h-full z-20 lg:hidden overflow-y-auto absolute left-0">
+         class="disable bg-gray-100 text-primary-main transition-width duration-500 ease w-full h-full z-20 lg:hidden overflow-y-auto absolute left-0 z-50">
         <div id="sidebar-actions" class="flex justify-between items-center p-4 text-2xl">
             <div id="lang-switcher" class="flex text-lg font-bold items-center"></div>
             <div>
@@ -180,16 +180,20 @@
                     <button id="open-mobile-sidebar" class="text-white">
                         <i id="mobile-bars-icon" class="fa fa-bars lg:hidden" aria-hidden="true"></i>
                     </button>
-                    <button id="enable-pc-impaired" class="ml-4 text-white hover:text-primary-light"><i
+                    <button id="enable-pc-impaired"
+                            class="ml-4 mr-8 text-white hover:text-primary-light"><i
                             class="fas fa-eye"></i></button>
-                    <a class="text-white" href="/crm" target="_blank">ADMIN PANEL</a>
                 </div>
                 <div class="text-gray-100 hidden lg:block">
-                    <a href="{{ route('login') }}">Авторизация</a>
-                    <a href="{{ route('register') }}" class="ml-3">Регистрация</a>
+                    @auth
+                        <a class="text-white" href="{{ route('dashboard') }}" target="_blank">Личный кабинет</a>
+                    @else
+                        <a href="{{ route('login') }}">Авторизация</a>
+                        <a href="{{ route('register') }}" class="ml-3">Регистрация</a>
+                    @endauth
                 </div>
                 <div class="flex lg:hidden">
-                    <div class="mr-4 text-white">
+                    <div class="text-white">
                         <a href="/kz{{$kzLink ? '/' . $kzLink : ''}}{{$page ?? ''}}"
                            class="hover:text-primary-light mx-0.5">
                             KZ
@@ -202,11 +206,6 @@
                            class="hover:text-primary-light mx-0.5">
                             EN
                         </a>
-                    </div>
-                    <div>
-                        <button class="text-white">
-                            <i class="fas fa-eye"></i>
-                        </button>
                     </div>
                 </div>
             </div>

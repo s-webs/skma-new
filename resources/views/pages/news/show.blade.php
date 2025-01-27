@@ -2,13 +2,32 @@
 
 @section('content')
     <div class="">
-        <div class="w-full h-[500px] relative rounded-md overflow-hidden">
+        <div class="bg-white p-4 rounded-md mb-4 xl:hidden">
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold py-4 text-primary-main">{{ $item->getProperty('title') }}</h1>
+            </div>
+            <div class="border-t-2 text-sm py-2 flex">
+                <div class="text-primary-main mr-4"><i class="fal fa-calendar"></i> {{$item->created_at}}</div>
+                <div class="text-primary-main mr-4"><i class="fal fa-eye"></i> {{$item->getProperty('views')}}</div>
+                <form action="{{ route('like.store', $item->id)  }}" method="post" class="text-primary-main mr-4">
+                    @csrf
+                    @if($item->isLikedBy(Auth::id()))
+                        <button type="submit"><i class="fas text-red-500 fa-heart"></i> {{ $item->likes->count() }}
+                        </button>
+                    @else
+                        <button type="submit"><i class="fal fa-heart"></i> {{ $item->likes->count() }}</button>
+                    @endif
+                </form>
+                <div class="text-primary-main mr-4"><i class="fal fa-comment"></i> {{ $item->comments->count() }}</div>
+            </div>
+        </div>
+        <div class="w-full h-[200px] md:h-[300px] xl:h-[500px] relative rounded-md overflow-hidden">
             <div
                 class="w-full h-full bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 opacity-20 absolute top-0 left-0 z-10">
             </div>
             <img class="w-full h-full object-cover absolute" src="{{ $item->preview_ru }}" alt="">
             <div
-                class="absolute z-20 left-0 bottom-16 pl-16 pr-8 py-8 rounded-tr-md rounded-br-md bg-black bg-opacity-70 backdrop-blur-sm">
+                class="absolute z-20 left-0 bottom-16 pl-16 pr-8 py-8 rounded-tr-md rounded-br-md bg-black bg-opacity-70 backdrop-blur-sm hidden xl:block">
                 <div>
                     <h1 class="text-3xl font-bold py-4 text-white">{{ $item->getProperty('title') }}</h1>
                 </div>
@@ -30,9 +49,9 @@
         </div>
         <div class="flex gap-4 justify-between mt-8">
             <div class="">
-                <div>
-                    SLIDER
-                </div>
+{{--                <div>--}}
+{{--                    SLIDER--}}
+{{--                </div>--}}
                 <div class="px-5 py-4 bg-white rounded-md">
                     <div class="content">{!! $item->getProperty('text') !!}</div>
                 </div>
@@ -59,11 +78,12 @@
                                 <div class="flex justify-between items-center text-sm text-gray-400 pt-2 border-t">
                                     <div class="mr-4"><i class="fal fa-calendar"></i> {{ $comment->created_at }}</div>
                                     @if($comment->isOwnedBy(Auth::id()))
-                                        {{ $comment->isOwnedBy(Auth::id()) }}
                                         <form action="{{ route('comment.delete', $comment->id) }}" method="post">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="text-red-400"><i class="fal fa-trash"></i> Удалить</button>
+                                            <button type="submit" class="text-red-400"><i class="fal fa-trash"></i>
+                                                Удалить
+                                            </button>
                                         </form>
                                     @endif
                                 </div>
@@ -98,10 +118,11 @@
 @push('styles')
     <style>
         .content p {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
 
         .content img {
+            height: auto !important;
             margin: 30px auto;
             text-align: center;
         }
