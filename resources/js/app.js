@@ -4,68 +4,20 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-Alpine.start();
-
-const sidebar = document.getElementById('sidebar');
-const toggleMenuButton = document.getElementById('toggle-menu');
-const menu = document.getElementById('menu');
-const sidebarActions = document.getElementById('sidebar-actions');
-const closeIcon = document.getElementById('close-icon');
-const barsIcon = document.getElementById('bars-icon');
-const langSwitcher = document.getElementById('lang-switcher');
-const searchForm = document.getElementById('search-form');
-const fullLogo = document.getElementById('full-logo');
-const smallLogo = document.getElementById('small-logo');
-
-toggleMenuButton.addEventListener('click', () => {
-    if (sidebar.classList.contains('w-64')) {
-        sidebar.classList.remove('w-64');
-        sidebar.classList.add('w-20');
-        menu.classList.add('hidden')
-        sidebarActions.classList.remove('justify-between');
-        sidebarActions.classList.add('justify-center');
-        closeIcon.classList.add('hidden');
-        barsIcon.classList.remove('hidden');
-        langSwitcher.classList.add('hidden');
-        searchForm.classList.add('hidden');
-        fullLogo.classList.add('hidden');
-        smallLogo.classList.remove('hidden');
-    } else {
-        sidebar.classList.remove('w-20');
-        menu.classList.remove('hidden')
-        sidebar.classList.add('w-64');
-        sidebarActions.classList.remove('justify-center');
-        sidebarActions.classList.add('justify-between');
-        closeIcon.classList.remove('hidden');
-        barsIcon.classList.add('hidden');
-        langSwitcher.classList.remove('hidden');
-        searchForm.classList.remove('hidden');
-        fullLogo.classList.remove('hidden');
-        smallLogo.classList.add('hidden');
-    }
-});
-
-document.querySelectorAll('.submenu-toggle').forEach(toggle => {
-    toggle.addEventListener('click', () => {
-        const submenu = toggle.nextElementSibling; // Находим следующее подменю
-        if (submenu) {
-            submenu.classList.toggle('hidden'); // Переключаем видимость подменю
-        }
-    });
-});
-
-const sidebarMobile = document.getElementById('sidebar-mobile');
-const closeMobileSidebar = document.getElementById('close-mobile-sidebar');
-const openMobileSidebar = document.getElementById('open-mobile-sidebar');
+const sidebarMobile = document.getElementById('sidebarMobile');
+const closeMobileSidebar = document.getElementById('closeMobileSidebar');
+const openMobileSidebar = document.getElementById('openMobileSidebar');
+const toggleMobileSubMenu = document.getElementById('toggleMobileSubMenu');
 
 closeMobileSidebar.addEventListener('click', () => {
-    sidebarMobile.classList.add('disable')
-    sidebarMobile.classList.remove('active');
+    sidebarMobile.classList.add('-translate-x-full')
+    sidebarMobile.classList.remove('translate-x-full');
 })
 
 openMobileSidebar.addEventListener('click', () => {
-    sidebarMobile.classList.remove('disable')
-    sidebarMobile.classList.add('active')
+    console.log('click')
+    sidebarMobile.classList.add('translate-x-none')
+    sidebarMobile.classList.remove('-translate-x-full')
 })
 
 new isvek.Bvi({
@@ -74,5 +26,21 @@ new isvek.Bvi({
     theme: 'white'
     //...etc
 });
+
+Alpine.data('mobileMenu', () => ({
+    openMenu: null,
+
+    toggleSubMenu(index) {
+        this.openMenu = this.openMenu === index ? null : index;
+    }
+}));
+
+Alpine.data('formSearch', () => ({
+    searchQuery: '',
+    resetForm() {
+        this.searchQuery = '';
+    }
+}));
+Alpine.start();
 
 

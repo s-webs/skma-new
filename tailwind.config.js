@@ -12,6 +12,12 @@ export default {
     theme: {
         extend: {
             colors: {
+                custom: {
+                    dark: '#1E1E1E',
+                    halftone: '#F5EFFF',
+                    main: '#853BFF',
+                    secondary: '#9392B6'
+                },
                 primary: {
                     main: '#302C76',
                     secondary: '#64649A',
@@ -19,7 +25,7 @@ export default {
                 }
             },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'openSans': ['Open Sans', 'sans-serif'],
             },
             transitionProperty: {
                 'width': 'width'
