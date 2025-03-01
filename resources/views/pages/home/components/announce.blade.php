@@ -1,5 +1,5 @@
 <div class="bg-[#F9F5FF] overflow-hidden hidden xl:block" x-data="{ slideIndex: 0, slides: {{ json_encode($announcements) }} }">
-    <div class="flex items-center justify-between py-[120px]">
+    <div class="flex items-center justify-between py-[120px] uxl:container uxl:mx-auto">
         <div class="flex-1 flex mr-[80px] pl-[16px]">
             <div class="flex-1"></div>
             <div class="w-[767px]">
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="relative border-[20px] w-[728px] h-[623px] border-custom-primary rounded-tl-[60px] rounded-bl-[60px] translate-x-[20px] overflow-hidden">
+        <div class="relative border-[20px] w-[728px] h-[623px] border-custom-primary rounded-tl-[60px] rounded-bl-[60px] uxl:rounded-tr-[60px] uxl:rounded-br-[60px] translate-x-[20px] uxl:translate-x-0 overflow-hidden">
             <img :src="slides[slideIndex].image" :alt="slides[slideIndex].title" class="w-full h-full object-cover" x-cloak>
             <div class="absolute bottom-[20px] left-[30px] flex">
                 <template x-for="(slide, index) in slides" :key="index">

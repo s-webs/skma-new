@@ -1,6 +1,7 @@
 import './bootstrap';
 
 import Alpine from 'alpinejs';
+import intersect from '@alpinejs/intersect'
 
 window.Alpine = Alpine;
 
@@ -58,6 +59,42 @@ Alpine.magic('fade', (el, { Alpine }) => {
         isVisible = !isVisible;
     };
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const counters = document.querySelectorAll(".counter");
+    let hasAnimated = false;
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                startCounters();
+                observer.disconnect(); // Отключаем после анимации
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll(".counter").forEach(counter => observer.observe(counter.parentElement));
+
+    function startCounters() {
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute("data-count");
+                const count = +counter.innerText;
+                const speed = target / 130; // Скорость анимации
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + speed);
+                    requestAnimationFrame(updateCount);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+    }
+});
+
 
 Alpine.start();
 

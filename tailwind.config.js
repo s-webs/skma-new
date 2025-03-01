@@ -11,6 +11,9 @@ export default {
 
     theme: {
         extend: {
+            screens: {
+                'uxl': '1920px',
+            },
             colors: {
                 custom: {
                     dark: '#1E1E1E',

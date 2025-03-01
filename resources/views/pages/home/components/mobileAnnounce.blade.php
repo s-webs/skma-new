@@ -1,7 +1,7 @@
-<div class="bg-[#F9F5FF] xl:hidden mt-[44px] px-2"
+<div class="bg-[#F9F5FF] xl:hidden mt-[44px] pb-[44px] md:pb-[64px] md:mt-[64px] px-2"
      x-data="{ slideIndex: 0, slides: {{ json_encode($announcements) }} }">
     <div
-        class="relative border-[5px] w-full h-[300px] border-inside border-custom-primary rounded-[20px] overflow-hidden">
+        class="relative border-[5px] w-full h-[300px] md:h-[450px] border-inside border-custom-primary rounded-[20px] overflow-hidden">
         <img :src="slides[slideIndex].image" :alt="slides[slideIndex].title" class="w-full h-full object-cover" x-cloak>
         <div class="absolute bottom-[20px] left-[30px] flex">
             <template x-for="(slide, index) in slides" :key="index">

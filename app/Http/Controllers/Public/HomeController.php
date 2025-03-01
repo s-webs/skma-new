@@ -15,7 +15,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $counters = Counter::all();
+        $counters = Counter::take(4)->get();
         $services = Service::query()->where('active', '=', 1)->orderBy('order')->get();
         $announcements = Announce::query()
             ->where('is_published', '=', 1)
