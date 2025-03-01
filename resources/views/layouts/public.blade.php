@@ -132,7 +132,7 @@
     </div>
     {{-- /TopHeader --}}
     {{-- MainHeader --}}
-    <div class="bg-white shadow-md">
+    <div class="bg-white shadow-md relative z-[5]">
         <div class="container px-4 2xl:px-0 mx-auto flex items-center">
             <div class="w-[104px] relative">
                 <a href="/"
