@@ -1,4 +1,4 @@
-<div class="bg-[#F9F5FF] xl:hidden mt-[44px] pb-[44px] md:pb-[64px] md:mt-[64px] px-2"
+<div class="bg-[#F9F5FF] xl:hidden pt-[44px] pb-[44px] md:pb-[64px] md:pt-[64px] px-2"
      x-data="{ slideIndex: 0, slides: {{ json_encode($announcements) }} }">
     <div
         class="relative border-[5px] w-full h-[300px] md:h-[450px] border-inside border-custom-primary rounded-[20px] overflow-hidden">
