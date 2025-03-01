@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announce;
 use App\Models\Counter;
 use App\Models\News;
 use App\Models\OrgNode;
@@ -16,6 +17,18 @@ class HomeController extends Controller
     {
         $counters = Counter::all();
         $services = Service::query()->where('active', '=', 1)->orderBy('order')->get();
+        $announcements = Announce::query()
+            ->where('is_published', '=', 1)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($announcement) {
+                return [
+                    'title' => $announcement->getProperty('title'),
+                    'description' => $announcement->getProperty('description'),
+                    'link' => $announcement->getProperty('link'),
+                    'image' => $announcement->getProperty('image'),
+                ];
+            });
         $news = News::query()
             ->where('published', '=', 1)
             ->orderBy('created_at', 'desc')
@@ -28,7 +41,7 @@ class HomeController extends Controller
                 return $newsItem;
             });
 
-        return view('pages.home.index', compact('counters', 'services', 'news'));
+        return view('pages.home.index', compact('counters', 'services', 'news', 'announcements'));
     }
 
     public function academyStructure()

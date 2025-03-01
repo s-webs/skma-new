@@ -16,7 +16,9 @@ export default {
                     dark: '#1E1E1E',
                     halftone: '#F5EFFF',
                     main: '#853BFF',
-                    secondary: '#9392B6'
+                    secondary: '#9392B6',
+                    primary: '#EADDFF',
+                    heading: '#11111B',
                 },
                 primary: {
                     main: '#302C76',
@@ -28,7 +30,8 @@ export default {
                 'openSans': ['Open Sans', 'sans-serif'],
             },
             transitionProperty: {
-                'width': 'width'
+                'width': 'width',
+                'opacity': 'opacity',
             },
         },
     },

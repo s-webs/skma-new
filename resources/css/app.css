@@ -8,11 +8,11 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #64649A;
+    background-color: #EADDFF;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #3e3e8f;
+    background-color: #853BFF;
 }
 
 ::-webkit-scrollbar-track {

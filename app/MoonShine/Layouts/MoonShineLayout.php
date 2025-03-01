@@ -40,6 +40,7 @@ use App\MoonShine\Resources\NewsResource;
 use App\MoonShine\Resources\OrgNodeResource;
 use App\MoonShine\Resources\RolesResource;
 use App\MoonShine\Resources\UserResource;
+use App\MoonShine\Resources\AnnounceResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -65,6 +66,7 @@ final class MoonShineLayout extends CompactLayout
             MenuItem::make('Меню', MenuResource::class),
             MenuItem::make('Сервисы', ServiceResource::class),
             MenuItem::make('Новости', NewsResource::class),
+            MenuItem::make('Анонсы', AnnounceResource::class),
         ];
     }
 

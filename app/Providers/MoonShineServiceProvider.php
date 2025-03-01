@@ -20,6 +20,7 @@ use App\MoonShine\Resources\OrgNodeResource;
 use App\MoonShine\Pages\OrgNodeIndexPage;
 use App\MoonShine\Resources\RolesResource;
 use App\MoonShine\Resources\UserResource;
+use App\MoonShine\Resources\AnnounceResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 OrgNodeResource::class,
                 RolesResource::class,
                 UserResource::class,
+                AnnounceResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

@@ -7,7 +7,6 @@ window.Alpine = Alpine;
 const sidebarMobile = document.getElementById('sidebarMobile');
 const closeMobileSidebar = document.getElementById('closeMobileSidebar');
 const openMobileSidebar = document.getElementById('openMobileSidebar');
-const toggleMobileSubMenu = document.getElementById('toggleMobileSubMenu');
 
 closeMobileSidebar.addEventListener('click', () => {
     sidebarMobile.classList.add('-translate-x-full')
@@ -41,6 +40,25 @@ Alpine.data('formSearch', () => ({
         this.searchQuery = '';
     }
 }));
+
+Alpine.magic('fade', (el, { Alpine }) => {
+    let isVisible = false;
+
+    Alpine.effect(() => {
+        if (isVisible) {
+            el.classList.remove('fade-in-enter-from');
+            el.classList.add('fade-in-enter-active');
+        } else {
+            el.classList.remove('fade-in-enter-active');
+            el.classList.add('fade-in-enter-from');
+        }
+    });
+
+    return () => {
+        isVisible = !isVisible;
+    };
+});
+
 Alpine.start();
 
 

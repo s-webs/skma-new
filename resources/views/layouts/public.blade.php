@@ -19,7 +19,7 @@
 
 {{-- Mobile Sidebar --}}
 <div id="sidebarMobile"
-     class="lg:hidden flex flex-col h-[100vh] w-[100%] fixed bg-custom-halftone z-10 -translate-x-full transition-transform duration-300">
+     class="lg:hidden flex flex-col h-[100vh] w-[100%] fixed bg-custom-halftone z-20 -translate-x-full transition-transform duration-300">
     <div class="flex justify-end px-[16px] bg-custom-main text-white py-[8px]">
         <button class="text-[24px]" id="closeMobileSidebar"><i class="fas fa-times"></i></button>
     </div>
@@ -136,7 +136,7 @@
         <div class="container px-4 2xl:px-0 mx-auto flex items-center">
             <div class="w-[104px] relative">
                 <a href="/"
-                   class="flex items-center justify-center bg-custom-main w-[74px] md:w-[104px] h-[70px] md:h-[100px] absolute top-[-29px] md:top-[-28px] lg:top-[-39px] left-1/2 -translate-x-1/2 lg:left-[0px] lg:translate-x-0 rounded-bl-2xl rounded-br-2xl shadow-md">
+                   class="flex items-center justify-center bg-custom-main w-[74px] md:w-[104px] h-[70px] md:h-[100px] absolute z-10 top-[-29px] md:top-[-28px] lg:top-[-39px] left-1/2 -translate-x-1/2 lg:left-[0px] lg:translate-x-0 rounded-bl-2xl rounded-br-2xl shadow-md">
                     <img src="/assets/images/logos/logo.svg" alt="logo" class="w-[36px] md:w-[48px]">
                 </a>
             </div>
@@ -181,6 +181,16 @@
     {{-- /MainHeader --}}
 </header>
 {{-- /Header --}}
+
+@yield('content')
+
+{{-- Footer --}}
+<footer class="mt-[44px]">
+    <div class="bg-custom-dark py-[16px]">
+        <div class="text-center">SKMA 2025</div>
+    </div>
+</footer>
+{{-- /Footer --}}
 </body>
 <script src="/assets/js/pro.min.js"></script>
 <script src="/assets/js/bvi.min.js"></script>
