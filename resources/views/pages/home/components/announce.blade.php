@@ -39,8 +39,8 @@
             <img :src="slides[slideIndex].image" :alt="slides[slideIndex].title" class="w-full h-full object-cover" x-cloak>
             <div class="absolute bottom-[20px] left-[30px] flex">
                 <template x-for="(slide, index) in slides" :key="index">
-                    <div class="w-[8px] h-[8px] bg-white mr-[8px] rounded-full"
-                         :class="{ 'w-[30px] opacity-100': slideIndex === index, 'opacity-40': slideIndex !== index }"></div>
+                    <div class="h-[8px] bg-white mr-[8px] rounded-full"
+                         :class="{ 'w-[30px] opacity-100': slideIndex === index, 'opacity-40 w-[8px]': slideIndex !== index }"></div>
                 </template>
             </div>
         </div>
