@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advert;
 use App\Models\Announce;
 use App\Models\Counter;
 use App\Models\Feedback;
@@ -63,7 +64,13 @@ class HomeController extends Controller
 
         $feedbacks = Feedback::query()->where('language', '=', app()->getLocale())->take(10)->get();
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks'));
+        $adverts = Advert::query()->where('is_published', '=', 1)->orderBy('created_at', 'desc')->take(3)->get()
+            ->map(function ($item) {
+                $item->formatted_date = Carbon::parse($item->created_at)->translatedFormat('j F Y');
+                return $item;
+            });;
+
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts'));
     }
 
     public function academyStructure()

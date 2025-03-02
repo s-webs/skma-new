@@ -8,5 +8,6 @@ return [
     'announce' => 'Объявление',
     'detail' => 'Подробнее',
     'allNews' => 'Все новости',
-    'readArticle' => 'Читать статью'
+    'readArticle' => 'Читать статью',
+    'allAdverts' => 'Все объявления'
 ];
