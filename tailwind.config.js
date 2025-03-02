@@ -13,6 +13,7 @@ export default {
         extend: {
             screens: {
                 'uxl': '1920px',
+                'xs': '380px',
             },
             colors: {
                 custom: {

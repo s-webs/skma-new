@@ -185,7 +185,7 @@
 @yield('content')
 
 {{-- Footer --}}
-<footer class="mt-[44px]">
+<footer class="">
     <div class="bg-custom-dark py-[16px]">
         <div class="text-center">SKMA 2025</div>
     </div>
