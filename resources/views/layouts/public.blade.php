@@ -124,9 +124,9 @@
                 </button>
             </div>
             <div class="text-white ml-[16px] md:ml-[44px]">
-                <a href="##">ҚАЗ</a>
-                <a href="##" class="mx-[16px]">РУС</a>
-                <a href="##">ENG</a>
+                <a href="/kz{{$kzLink ? '/' . $kzLink : ''}}{{$page ?? ''}}">ҚАЗ</a>
+                <a href="/ru{{$ruLink ? '/' . $ruLink : ''}}{{$page ?? ''}}" class="mx-[16px]">РУС</a>
+                <a href="/en{{$enLink ? '/' . $enLink : ''}}{{$page ?? ''}}">ENG</a>
             </div>
         </div>
     </div>

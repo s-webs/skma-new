@@ -4,5 +4,7 @@ return [
     'academyCounter' => 'SKMA in numbers',
     'academyServices' => 'Academy Services',
     'academyAnnouncement' => 'Academy Announcements',
-    'academyNews' => 'Academy News'
+    'academyNews' => 'Academy News',
+    'announce' => 'Announcement',
+    'detail' => 'More detailed'
 ];

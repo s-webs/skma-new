@@ -8,7 +8,7 @@
                      x-transition:leave="transition ease-in-out duration-300"
                      x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
                     <div>
-                        <span class="py-[11px] px-[21px] bg-custom-primary text-custom-main font-bold rounded-[10px]">Объявление</span>
+                        <span class="py-[11px] px-[21px] bg-custom-primary text-custom-main font-bold rounded-[10px]">{{ __('home.announce') }}</span>
                     </div>
                     <div class="text-[44px] font-bold mt-[24px] text-custom-heading">
                         <h2 x-text="slides[slideIndex].title"></h2>
@@ -18,8 +18,8 @@
                     </div>
 
                     <div class="mt-[64px] flex items-center">
-                        <div class="mr-[44px]">
-                            <a :href="slides[slideIndex].link" class="px-[31px] py-[21px] bg-custom-main rounded-full text-white font-semibold">Подробнее</a>
+                        <div class="mr-[44px]" x-show="slides[slideIndex].link">
+                            <a :href="slides[slideIndex].link" class="px-[31px] py-[21px] bg-custom-main rounded-full text-white font-semibold">{{ __('home.detail') }}</a>
                         </div>
                         <div class="flex items-center">
                             <button @click="slideIndex = (slideIndex - 1 + slides.length) % slides.length"

@@ -18,7 +18,7 @@
                  x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
                 <div class="flex items-center justify-between mt-[16px]">
                     <div class="text-[14px]">
-                        <span class="py-[7px] px-[10px] bg-custom-primary text-custom-main font-bold rounded-[10px]">Объявление</span>
+                        <span class="py-[7px] px-[10px] bg-custom-primary text-custom-main font-bold rounded-[10px]">{{ __('home.announce') }}</span>
                     </div>
                     <div class="flex items-center">
                         <button @click="slideIndex = (slideIndex - 1 + slides.length) % slides.length"
@@ -38,10 +38,10 @@
                     <p x-text="slides[slideIndex].description"></p>
                 </div>
 
-                <div class="mt-[24px]">
+                <div class="mt-[24px]" x-show="slides[slideIndex].link">
                     <div class="">
                         <a :href="slides[slideIndex].link"
-                           class="px-[13px] py-[8px] bg-custom-main rounded-full text-white font-semibold">Подробнее</a>
+                           class="px-[15px] py-[10px] bg-custom-main rounded-full text-white font-semibold">{{ __('home.detail') }}</a>
                     </div>
                 </div>
             </div>

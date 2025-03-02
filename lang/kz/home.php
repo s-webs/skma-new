@@ -5,4 +5,6 @@ return [
     'academyServices' => 'Академия қызметтері',
     'academyAnnouncement' => 'Академия хабарландырулары',
     'academyNews' => 'Академия жаңалықтары',
+    'announce' => 'Хабарландыру',
+    'detail' => 'Толығырақ'
 ];

@@ -9,7 +9,7 @@
         </div>
 
         @foreach($counters as $counter)
-            <div class="w-[150px] h-[150px] xl:w-[250px] xl:h-[250px] m-[16px] rounded-full flex flex-col justify-center items-center text-center mx-[16px] xl:mx-[40px] text-white bg-[#914EFF] border-[5px] xl:border-[20px] border-[#9757FF]">
+            <div class="w-[150px] h-[150px] xl:w-[250px] xl:h-[250px] m-[16px] rounded-full flex flex-col justify-center items-center text-center mx-[16px] xl:mx-[40px] p-5 text-white bg-[#914EFF] border-[5px] xl:border-[20px] border-[#9757FF]">
                 <div class="text-[24px] xl:text-[44px] font-semibold">
                     <span class="counter" data-count="{{ $counter->count }}">0</span>
                 </div>
