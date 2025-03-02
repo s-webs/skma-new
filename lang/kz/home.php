@@ -6,5 +6,7 @@ return [
     'academyAnnouncement' => 'Академия хабарландырулары',
     'academyNews' => 'Академия жаңалықтары',
     'announce' => 'Хабарландыру',
-    'detail' => 'Толығырақ'
+    'detail' => 'Толығырақ',
+    'allNews' => 'Барлық жаңалықтар',
+    'readArticle' => 'Мақаланы оқыңыз'
 ];

@@ -6,5 +6,7 @@ return [
     'academyAnnouncement' => 'Academy Announcements',
     'academyNews' => 'Academy News',
     'announce' => 'Announcement',
-    'detail' => 'More detailed'
+    'detail' => 'More detailed',
+    'allNews' => 'All news',
+    'readArticle' => 'Read the article'
 ];

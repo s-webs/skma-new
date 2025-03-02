@@ -19,7 +19,16 @@
 
                     <div class="mt-[64px] flex items-center">
                         <div class="mr-[44px]" x-show="slides[slideIndex].link">
-                            <a :href="slides[slideIndex].link" class="px-[31px] py-[21px] bg-custom-main rounded-full text-white font-semibold">{{ __('home.detail') }}</a>
+                            <a :href="slides[slideIndex].link" class="relative flex justify-between items-center bg-custom-main rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
+                                <!-- Текст -->
+                                <div class="text-[18px] pl-[31px] font-semibold text-white relative z-10 transition-all duration-300">
+                                    {{ __('home.detail') }}
+                                </div>
+                                <!-- Иконка -->
+                                <div class="flex items-center justify-center ml-[21px] w-[64px] h-[64px] bg-[#914EFF] text-white rounded-full relative z-10 transition-all duration-300 group-hover:bg-[#6835B8] group-hover:scale-110">
+                                    <i class="fal fa-arrow-right text-[20px]"></i>
+                                </div>
+                            </a>
                         </div>
                         <div class="flex items-center">
                             <button @click="slideIndex = (slideIndex - 1 + slides.length) % slides.length"

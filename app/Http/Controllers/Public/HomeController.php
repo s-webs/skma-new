@@ -9,12 +9,18 @@ use App\Models\News;
 use App\Models\OrgNode;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
     public function index()
     {
+
+        if (app()->getLocale() === 'kz') {
+            Carbon::setLocale('kk');
+        }
+
         $counters = Counter::take(4)->get();
         $services = Service::query()->where('active', '=', 1)->orderBy('order')->get();
         $announcements = Announce::query()
@@ -29,19 +35,32 @@ class HomeController extends Controller
                     'image' => $announcement->getProperty('image'),
                 ];
             });
+        $latestArticle = News::query()
+            ->where('published', '=', 1)
+            ->orderBy('created_at', 'desc')
+            ->first(); // Получаем самую свежую новость
+
+        if ($latestArticle) {
+            $latestArticle->formatted_date = Carbon::parse($latestArticle->created_at)->translatedFormat('j F Y');
+        }
+
         $news = News::query()
             ->where('published', '=', 1)
             ->orderBy('created_at', 'desc')
-            ->paginate(6)
+            ->when($latestArticle, function ($query) use ($latestArticle) {
+                $query->where('id', '!=', $latestArticle->id); // Исключаем самую свежую новость
+            })
+            ->take(5) // Берем остальные 5 новостей
+            ->get()
             ->map(function ($newsItem) {
-                // Обрезаем заголовки
+                $newsItem->formatted_date = Carbon::parse($newsItem->created_at)->translatedFormat('j F Y');
                 $newsItem->title_ru = Str::limit($newsItem->title_ru, 60, '...');
                 $newsItem->title_kz = Str::limit($newsItem->title_kz, 60, '...');
                 $newsItem->title_en = Str::limit($newsItem->title_en, 60, '...');
                 return $newsItem;
             });
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'announcements'));
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements'));
     }
 
     public function academyStructure()
