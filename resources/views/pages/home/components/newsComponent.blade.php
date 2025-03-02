@@ -1,6 +1,6 @@
 <div class="bg-white">
-    <div class="px-2 xl:container xl:px-0 mx-auto">
-        <div class="py-[100px] flex flex-col xl:flex-row justify-center items-center">
+    <div class="px-2 xl:container mx-auto">
+        <div class="py-[44px] xl:py-[100px] flex flex-col xl:flex-row justify-center items-center">
             <div class="w-full xl:px-0 xl:w-[842px] xl:mr-[100px]">
                 <div class="overflow-hidden h-[300px] sm:h-[400px] xl:h-[512px] rounded-[20px]">
                     <img src="{{ $latestArticle->preview_ru }}" alt="{{ $latestArticle->getProperty('title') }}"

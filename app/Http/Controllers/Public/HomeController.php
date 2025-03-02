@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Announce;
 use App\Models\Counter;
+use App\Models\Feedback;
 use App\Models\News;
 use App\Models\OrgNode;
 use App\Models\Service;
@@ -60,7 +61,9 @@ class HomeController extends Controller
                 return $newsItem;
             });
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements'));
+        $feedbacks = Feedback::query()->where('language', '=', app()->getLocale())->take(10)->get();
+
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks'));
     }
 
     public function academyStructure()
