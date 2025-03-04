@@ -9,5 +9,7 @@ return [
     'detail' => 'Подробнее',
     'allNews' => 'Все новости',
     'readArticle' => 'Читать статью',
-    'allAdverts' => 'Все объявления'
+    'allAdverts' => 'Все объявления',
+    'allPhoto' => 'Все фото',
+    'academyGallery' => 'Галерея',
 ];

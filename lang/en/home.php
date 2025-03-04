@@ -9,5 +9,7 @@ return [
     'detail' => 'More detailed',
     'allNews' => 'All news',
     'readArticle' => 'Read the article',
-    'allAdverts' => 'All adverts'
+    'allAdverts' => 'All adverts',
+    'allPhoto' => 'All photos',
+    'academyGallery' => 'Gallery',
 ];

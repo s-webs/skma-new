@@ -7,6 +7,7 @@ use App\Models\Advert;
 use App\Models\Announce;
 use App\Models\Counter;
 use App\Models\Feedback;
+use App\Models\Gallery;
 use App\Models\News;
 use App\Models\OrgNode;
 use App\Models\Service;
@@ -70,7 +71,9 @@ class HomeController extends Controller
                 return $item;
             });;
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts'));
+            $gallery = Gallery::all()->take('5');
+
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery'));
     }
 
     public function academyStructure()

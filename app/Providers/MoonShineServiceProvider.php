@@ -23,6 +23,7 @@ use App\MoonShine\Resources\UserResource;
 use App\MoonShine\Resources\AnnounceResource;
 use App\MoonShine\Resources\FeedbackResource;
 use App\MoonShine\Resources\AdvertResource;
+use App\MoonShine\Resources\GalleryResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -49,6 +50,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 AnnounceResource::class,
                 FeedbackResource::class,
                 AdvertResource::class,
+                GalleryResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

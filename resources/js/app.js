@@ -3,6 +3,7 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect'
 
+
 window.Alpine = Alpine;
 
 const sidebarMobile = document.getElementById('sidebarMobile');
@@ -42,7 +43,7 @@ Alpine.data('formSearch', () => ({
     }
 }));
 
-Alpine.magic('fade', (el, { Alpine }) => {
+Alpine.magic('fade', (el, {Alpine}) => {
     let isVisible = false;
 
     Alpine.effect(() => {
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 observer.disconnect(); // Отключаем после анимации
             }
         });
-    }, { threshold: 0.5 });
+    }, {threshold: 0.5});
 
     document.querySelectorAll(".counter").forEach(counter => observer.observe(counter.parentElement));
 
@@ -93,6 +94,36 @@ document.addEventListener("DOMContentLoaded", function () {
             updateCount();
         });
     }
+});
+
+import Swiper from 'swiper';
+import 'swiper/css';
+
+const gallerySlider = new Swiper(".gallery-slider", {
+    slidesPerView: 3.8,
+    spaceBetween: 30,
+    loop: true,
+    pagination: {
+        clickable: true,
+    },
+});
+
+const galleryMdSlider = new Swiper(".gallery-md-slider", {
+    slidesPerView: 2.5,
+    spaceBetween: 15,
+    loop: true,
+    pagination: {
+        clickable: true,
+    },
+});
+
+const gallerySmSlider = new Swiper(".gallery-sm-slider", {
+    slidesPerView: 1.5,
+    spaceBetween: 15,
+    loop: true,
+    pagination: {
+        clickable: true,
+    },
 });
 
 
