@@ -100,30 +100,21 @@ import Swiper from 'swiper';
 import 'swiper/css';
 
 const gallerySlider = new Swiper(".gallery-slider", {
-    slidesPerView: 3.8,
-    spaceBetween: 30,
+    slidesPerView: 4.5,
+    spaceBetween: 20,
     loop: true,
-    pagination: {
-        clickable: true,
-    },
 });
 
 const galleryMdSlider = new Swiper(".gallery-md-slider", {
     slidesPerView: 2.5,
     spaceBetween: 15,
     loop: true,
-    pagination: {
-        clickable: true,
-    },
 });
 
 const gallerySmSlider = new Swiper(".gallery-sm-slider", {
     slidesPerView: 1.5,
     spaceBetween: 15,
     loop: true,
-    pagination: {
-        clickable: true,
-    },
 });
 
 

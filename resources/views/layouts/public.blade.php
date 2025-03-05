@@ -40,6 +40,9 @@
         </form>
     </div>
     {{-- /MobileSearch --}}
+    <div class="px-2 mt-[16px]">
+        <a href="{{ route('login') }}" class="block bg-custom-main rounded-full px-[24px] py-[8px] text-white font-semibold hover:bg-[#5E18AF] transition-colors duration-300">Войти</a>
+    </div>
     <div class="my-[24px] px-[16px]">
         <span class="block h-[1px] bg-custom-secondary"></span>
     </div>
@@ -102,7 +105,7 @@
 <header>
     {{-- TopHeader --}}
     <div class="bg-custom-dark py-[13px] font-semibold">
-        <div class="container px-4 2xl:px-0 mx-auto justify-between flex items-center">
+        <div class="container px-4 2xl:px-[16px] mx-auto justify-between flex items-center">
             <div class="flex items-center text-[18px] text-white lg:mr-[44px]">
                 <a href="##"><i class="fab fa-facebook"></i></a>
                 <a href="##" class="mx-[16px]"><i class="fab fa-instagram"></i></a>
@@ -133,7 +136,7 @@
     {{-- /TopHeader --}}
     {{-- MainHeader --}}
     <div class="bg-white shadow-md relative z-[5]">
-        <div class="container px-4 2xl:px-0 mx-auto flex items-center">
+        <div class="container px-4 2xl:px-[16px] mx-auto flex items-center">
             <div class="w-[104px] relative">
                 <a href="{{ route('home') }}"
                    class="flex items-center justify-center bg-custom-main w-[74px] md:w-[104px] h-[70px] md:h-[100px] absolute z-10 top-[-29px] md:top-[-28px] lg:top-[-39px] left-1/2 -translate-x-1/2 lg:left-[0px] lg:translate-x-0 rounded-bl-2xl rounded-br-2xl shadow-md">
@@ -167,9 +170,12 @@
                 </ul>
             </div>
             <div class="hidden lg:block">
-                <button class="bg-custom-main w-[44px] h-[44px] rounded-full text-white">
+                <button class="bg-custom-main w-[44px] h-[44px] rounded-full text-white hover:bg-[#5E18AF] transition-colors duration-300">
                     <i class="fas fa-search"></i>
                 </button>
+            </div>
+            <div class="ml-[44px] hidden lg:block">
+                <a href="{{ route('login') }}" class="bg-custom-main rounded-full px-[24px] py-[12.5px] text-white font-semibold hover:bg-[#5E18AF] transition-colors duration-300">Войти</a>
             </div>
             <div class="block lg:hidden py-[10px]">
                 <button id="openMobileSidebar" class="text-[24px]">

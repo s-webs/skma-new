@@ -1,5 +1,5 @@
 <div class="bg-white">
-    <div class="container mx-auto px-2 py-[50px] xl:py-[100px]">
+    <div class="container mx-auto px-2 xl:px-[44px] py-[50px] xl:py-[100px]">
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-[24px] md:text-[36px] font-bold">
                 <h3>{{ __('home.academyGallery') }}</h3>
@@ -23,7 +23,7 @@
                 <div class="swiper-wrapper">
                     @foreach($gallery as $item)
                         <div class="swiper-slide">
-                            <img src="{{ $item->image }}" alt="{{ $item->image }}" class="h-[300px] object-cover rounded-[20px]">
+                            <img src="{{ $item->image }}" alt="{{ $item->image }}" class="w-auto h-[300px] object-cover rounded-[20px]">
                         </div>
                     @endforeach
                 </div>

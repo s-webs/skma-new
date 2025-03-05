@@ -1,5 +1,5 @@
 <div>
-    <div class="container mx-auto px-2 py-[50px] lg:py-[100px]">
+    <div class="container mx-auto px-2 xl:px-[44px] py-[50px] lg:py-[100px]">
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-[24px] md:text-[36px] font-bold">
                 <h3>{{ __('home.academyAnnouncement') }}</h3>
