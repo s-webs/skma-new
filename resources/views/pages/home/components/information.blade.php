@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="w-[248px] translate-y-[27px]">
-                <img src="/assets/images/cliparts/student_01.png" alt="" class="h-full">
+                <img src="/assets/images/cliparts/student_01.png" alt="">
             </div>
         </div>
     </div>
