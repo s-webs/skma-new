@@ -14,4 +14,5 @@ return [
     'academyGallery' => 'Галерея',
     'awardsAchievements' => 'Награды и достижения',
     'allAwards' => 'Все награды',
+    'partners' => 'Партнеры',
 ];

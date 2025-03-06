@@ -169,6 +169,35 @@ prevButton.addEventListener("click", () => servicesSlider.slidePrev());
 prevButton.addEventListener("click", () => servicesMdSlider.slidePrev());
 prevButton.addEventListener("click", () => servicesSmSlider.slidePrev());
 
+const partnersSlider = new Swiper(".partners-slider", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 2500,
+    },
+    slidesPerView: 5,
+    spaceBetween: 30,
+    freeMode: true,
+});
+
+const partnersMdSlider = new Swiper(".partners-md-slider", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 2500,
+    },
+    slidesPerView: 4,
+    spaceBetween: 30,
+    freeMode: true,
+});
+
+const partnersSmSlider = new Swiper(".partners-sm-slider", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 2500,
+    },
+    slidesPerView: 3,
+    spaceBetween: 30,
+    freeMode: true,
+});
 
 Alpine.start();
 

@@ -37,7 +37,6 @@ class AwardResource extends TreeResource
     protected ?PageType $redirectAfterSave = PageType::INDEX;
 
 
-
     protected function pages(): array
     {
         return [
@@ -68,15 +67,33 @@ class AwardResource extends TreeResource
                 Tabs::make([
                     Tab::make('RU', [
                         Text::make('Название', 'name_ru'),
-                        Image::make('Изображение', 'image_ru'),
+                        Image::make('Изображение', 'image_ru')
+                            ->dir('uploads/awards/')
+                            ->customName(function ($file, $field) {
+                                $timestamp = now()->format('Y_m_d_His');
+                                return 'award_' . $timestamp . "_RU_." . $file->extension();
+                            })
+                            ->removable(),
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название', 'name_kz'),
-                        Image::make('Изображение', 'image_kz'),
+                        Image::make('Изображение', 'image_kz')
+                            ->dir('uploads/awards/')
+                            ->customName(function ($file, $field) {
+                                $timestamp = now()->format('Y_m_d_His');
+                                return 'award_' . $timestamp . "_KZ_." . $file->extension();
+                            })
+                            ->removable(),
                     ]),
                     Tab::make('EN', [
                         Text::make('Название', 'name_en'),
-                        Image::make('Изображение', 'image_en'),
+                        Image::make('Изображение', 'image_en')
+                            ->dir('uploads/awards/')
+                            ->customName(function ($file, $field) {
+                                $timestamp = now()->format('Y_m_d_His');
+                                return 'award_' . $timestamp . "_EN_." . $file->extension();
+                            })
+                            ->removable(),
                     ]),
                 ]),
                 Switcher::make('Активно', 'is_published'),

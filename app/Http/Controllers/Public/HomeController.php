@@ -11,6 +11,7 @@ use App\Models\Feedback;
 use App\Models\Gallery;
 use App\Models\News;
 use App\Models\OrgNode;
+use App\Models\Partner;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -77,8 +78,9 @@ class HomeController extends Controller
         $services = Service::all()->take('5');
 
         $awards = Award::query()->where('is_published', '=', 1)->take('4')->get();
+        $partners = Partner::all();
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards'));
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners'));
     }
 
     public function academyStructure()

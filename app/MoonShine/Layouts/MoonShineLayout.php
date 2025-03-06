@@ -45,6 +45,7 @@ use App\MoonShine\Resources\FeedbackResource;
 use App\MoonShine\Resources\AdvertResource;
 use App\MoonShine\Resources\GalleryResource;
 use App\MoonShine\Resources\AwardResource;
+use App\MoonShine\Resources\PartnerResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -75,6 +76,7 @@ final class MoonShineLayout extends CompactLayout
             MenuItem::make('Объявления', AdvertResource::class),
             MenuItem::make('Галерея', GalleryResource::class),
             MenuItem::make('Награды и достижения', AwardResource::class),
+            MenuItem::make('Партнеры', PartnerResource::class),
         ];
     }
 
