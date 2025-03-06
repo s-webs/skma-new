@@ -1,4 +1,4 @@
-<div x-data="{
+<div class="overflow-hidden" x-data="{
     reviews: {{ json_encode($feedbacks) }},
     currentIndex: 0,
     timer: null,
@@ -41,7 +41,7 @@
         <div class="px-1 xs:px-2 xl:container flex items-center justify-center h-full mx-auto pt-[50px] xl:pt-[0px]">
             <div class="flex flex-col xl:flex-row items-center relative z-[5]">
                 <div
-                    class="w-[280px] xl:w-[600px] h-[280px] xl:h-[600px] relative border-[5px] xl:border-[20px] border-white/20 rounded-[60px] xl:translate-x-[55px] overflow-hidden">
+                    class="w-[280px] xl:w-[500px] 2xl:w-[600px] h-[280px] xl:h-[500px] 2xl:h-[600px] relative border-[5px] xl:border-[20px] border-white/20 rounded-[60px] xl:translate-x-[55px] overflow-hidden">
                     <img :src="reviews[currentIndex].image" :alt="reviews[currentIndex].name"
                          class="w-full h-full object-cover" x-transition:enter="transition ease-in-out duration-500"
                          x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -49,7 +49,7 @@
                          x-transition:leave-end="opacity-0">
                 </div>
                 <div
-                    class="bg-white -translate-y-[50px] xl:-translate-y-[0px] xl:-translate-x-[55px] p-[40px] xl:w-[850px] h-auto xl:h-[410px] rounded-[30px] relative">
+                    class="bg-white -translate-y-[50px] xl:-translate-y-[0px] xl:-translate-x-[55px] p-[40px] xl:w-[700px] 2xl:w-[850px] h-auto xl:h-[400px] 2xl:h-[410px] rounded-[30px] relative">
                     <img src="/assets/images/cliparts/wave-03.png" alt=""
                          class="absolute right-[0px] top-[0px] h-full z-[1]">
                     <div class="flex items-center relative z-[5]">

@@ -12,7 +12,7 @@ export default {
     theme: {
         extend: {
             screens: {
-                'uxl': '1920px',
+                'uxl': '2160px',
                 'xs': '380px',
             },
             colors: {
