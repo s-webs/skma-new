@@ -115,8 +115,8 @@ const galleryMdSlider = new Swiper(".gallery-md-slider", {
     autoplay: {
         delay: 1500,
     },
-    slidesPerView: 2.5,
-    spaceBetween: 15,
+    slidesPerView: 3,
+    spaceBetween: 10,
     loop: true,
 });
 
@@ -125,7 +125,7 @@ const gallerySmSlider = new Swiper(".gallery-sm-slider", {
     autoplay: {
         delay: 1500,
     },
-    slidesPerView: 1.5,
+    slidesPerView: 2.3,
     spaceBetween: 15,
     loop: true,
 });

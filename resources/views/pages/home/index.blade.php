@@ -12,8 +12,10 @@
     @include('pages.home.components.feedback', compact('feedbacks'))
     @include('pages.home.components.ads', compact('adverts'))
     @include('pages.home.components.services', compact('services'))
+    @include('pages.home.components.information')
     @include('pages.home.components.gallery', compact('gallery'))
     @include('pages.home.components.awards', compact('awards'))
+
 @endsection
 
 @push('scripts')

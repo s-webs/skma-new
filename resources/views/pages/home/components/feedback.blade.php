@@ -64,7 +64,7 @@
                                  x-text="reviews[currentIndex].about"></div>
                         </div>
                     </div>
-                    <div class="h-auto xl:h-[114px] mt-[20px] xl:mt-[40px] relative z-[5] xl:overflow-y-auto pr-[8px]">
+                    <div class="h-[82px] xl:h-[114px] mt-[20px] xl:mt-[40px] relative z-[5] overflow-y-auto pr-[8px]">
                         <p class="text-[14px] md:text-[24px] text-custom-heading"
                            x-text="reviews[currentIndex].message"></p>
                     </div>

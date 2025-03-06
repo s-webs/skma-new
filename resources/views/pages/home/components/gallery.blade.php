@@ -45,7 +45,7 @@
                 <div class="swiper-wrapper">
                     @foreach($gallery as $item)
                         <div class="swiper-slide">
-                            <img src="{{ $item->image }}" alt="{{ $item->image }}" class="h-[200px] object-cover rounded-[20px]">
+                            <img src="{{ $item->image }}" alt="{{ $item->image }}" class="h-[150px] object-cover rounded-[20px]">
                         </div>
                     @endforeach
                 </div>
