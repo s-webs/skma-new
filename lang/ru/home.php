@@ -12,4 +12,6 @@ return [
     'allAdverts' => 'Все объявления',
     'allPhoto' => 'Все фото',
     'academyGallery' => 'Галерея',
+    'awardsAchievements' => 'Награды и достижения',
+    'allAwards' => 'Все награды',
 ];

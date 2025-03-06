@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Advert;
 use App\Models\Announce;
+use App\Models\Award;
 use App\Models\Counter;
 use App\Models\Feedback;
 use App\Models\Gallery;
@@ -71,9 +72,13 @@ class HomeController extends Controller
                 return $item;
             });;
 
-            $gallery = Gallery::all()->take('5');
+        $gallery = Gallery::all()->take('5');
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery'));
+        $services = Service::all()->take('5');
+
+        $awards = Award::query()->where('is_published', '=', 1)->take('4')->get();
+
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards'));
     }
 
     public function academyStructure()

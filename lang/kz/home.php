@@ -12,4 +12,6 @@ return [
     'allAdverts' => 'Барлық хабарландырулар',
     'allPhoto' => 'Барлық суреттер',
     'academyGallery' => 'Галерея',
+    'awardsAchievements' => 'Марапаттар мен жетістіктер',
+    'allAwards' => 'Барлық марапаттар',
 ];

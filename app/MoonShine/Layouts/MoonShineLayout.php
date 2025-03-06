@@ -44,6 +44,7 @@ use App\MoonShine\Resources\AnnounceResource;
 use App\MoonShine\Resources\FeedbackResource;
 use App\MoonShine\Resources\AdvertResource;
 use App\MoonShine\Resources\GalleryResource;
+use App\MoonShine\Resources\AwardResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -73,6 +74,7 @@ final class MoonShineLayout extends CompactLayout
             MenuItem::make('Отзывы студентов', FeedbackResource::class),
             MenuItem::make('Объявления', AdvertResource::class),
             MenuItem::make('Галерея', GalleryResource::class),
+            MenuItem::make('Награды и достижения', AwardResource::class),
         ];
     }
 

@@ -24,6 +24,8 @@ use App\MoonShine\Resources\AnnounceResource;
 use App\MoonShine\Resources\FeedbackResource;
 use App\MoonShine\Resources\AdvertResource;
 use App\MoonShine\Resources\GalleryResource;
+use App\MoonShine\Resources\AwardResource;
+use App\MoonShine\Pages\AwardIndexPage;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -51,11 +53,13 @@ class MoonShineServiceProvider extends ServiceProvider
                 FeedbackResource::class,
                 AdvertResource::class,
                 GalleryResource::class,
+                AwardResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
                 MenuIndexPage::class,
                 OrgNodeIndexPage::class,
+                AwardIndexPage::class,
             ]);
     }
 }

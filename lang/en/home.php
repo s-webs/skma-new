@@ -12,4 +12,6 @@ return [
     'allAdverts' => 'All adverts',
     'allPhoto' => 'All photos',
     'academyGallery' => 'Gallery',
+    'awardsAchievements' => 'Awards and achievements',
+    'allAwards' => 'All awards',
 ];

@@ -1,4 +1,4 @@
-<div class="bg-white">
+<div class="">
     <div class="container mx-auto px-2 xl:px-[44px] py-[50px] xl:py-[100px]">
         <div class="flex flex-col md:flex-row items-center justify-between">
             <div class="text-[24px] md:text-[36px] font-bold">

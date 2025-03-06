@@ -97,25 +97,77 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 import Swiper from 'swiper';
+import {Autoplay} from "swiper/modules";
 import 'swiper/css';
 
 const gallerySlider = new Swiper(".gallery-slider", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 1500,
+    },
     slidesPerView: 4.5,
     spaceBetween: 20,
     loop: true,
 });
 
 const galleryMdSlider = new Swiper(".gallery-md-slider", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 1500,
+    },
     slidesPerView: 2.5,
     spaceBetween: 15,
     loop: true,
 });
 
 const gallerySmSlider = new Swiper(".gallery-sm-slider", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 1500,
+    },
     slidesPerView: 1.5,
     spaceBetween: 15,
     loop: true,
 });
+
+const servicesSlider = new Swiper(".slider-services", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 2500,
+    },
+    slidesPerView: 3.7,
+    spaceBetween: 10,
+    loop: true,
+});
+const servicesMdSlider = new Swiper(".slider-md-services", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 2500,
+    },
+    slidesPerView: 2.7,
+    spaceBetween: 10,
+    loop: true,
+});
+const servicesSmSlider = new Swiper(".slider-sm-services", {
+    modules: [Autoplay],
+    autoplay: {
+        delay: 2500,
+    },
+    slidesPerView: 1.5,
+    spaceBetween: 10,
+    loop: true,
+});
+
+
+const nextButton = document.querySelector("#services-next");
+const prevButton = document.querySelector("#services-prev");
+
+nextButton.addEventListener("click", () => servicesSlider.slideNext());
+nextButton.addEventListener("click", () => servicesMdSlider.slideNext());
+nextButton.addEventListener("click", () => servicesSmSlider.slideNext());
+prevButton.addEventListener("click", () => servicesSlider.slidePrev());
+prevButton.addEventListener("click", () => servicesMdSlider.slidePrev());
+prevButton.addEventListener("click", () => servicesSmSlider.slidePrev());
 
 
 Alpine.start();
