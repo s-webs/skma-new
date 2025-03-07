@@ -105,7 +105,11 @@ class NewsResource extends ModelResource
                     ]),
                 ]),
                 Divider::make(),
-                Switcher::make('Активно', 'is_published'),
+                Image::make('Изображения', 'images')
+                    ->dir('uploads/news/sliders')
+                    ->removable()
+                    ->multiple(),
+                Switcher::make('Активно', 'published')->default(false),
 
             ])
         ];

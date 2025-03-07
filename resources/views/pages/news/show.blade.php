@@ -4,20 +4,20 @@
     <div>
         <div class="container mx-auto px-4 2xl:px-28">
             <div class="mt-[40px]">
-                <span class="mr-[10px] font-semibold"><a href="##"
+                <span class="mr-[10px] font-semibold"><a href="{{ route('home') }}"
                                                          class="text-custom-main hover:text-[#5E18AF] transition-all duration-300">Главная</a></span>
                 <span class="mr-[10px]"><i class="fal fa-angle-right text-custom-main"></i></span>
-                <span class="mr-[10px] font-semibold"><a href="##"
+                <span class="mr-[10px] font-semibold"><a href="{{ route('news.index') }}"
                                                          class="text-custom-main hover:text-[#5E18AF] transition-all duration-300">Новости</a></span>
                 <span class="mr-[10px]"><i class="fal fa-angle-right text-custom-main"></i></span>
-                <span class="font-semibold">Название статьи</span>
+                <span class="font-semibold">{{ $item->getProperty('title') }}</span>
             </div>
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-[60px]">
-                <div class="mb-[30px]">
-                    <a href="##"
-                       class="py-[12px] px-[14px] border bg-white text-custom-main rounded-[10px] hover:bg-custom-main duration-300 transition-all hover:text-white">
-                        Подразделение
-                    </a>
+                <div class="">
+{{--                    <a href="##"--}}
+{{--                       class="py-[12px] px-[14px] border bg-white text-custom-main rounded-[10px] hover:bg-custom-main duration-300 transition-all hover:text-white">--}}
+{{--                        Подразделение--}}
+{{--                    </a>--}}
                 </div>
                 <div class="flex items-center">
                     <div class="flex items-center mr-[20px]">
@@ -39,11 +39,26 @@
                 </div>
             </div>
             <div class="mt-[20px] border-t py-[30px]">
-                <h1 class="text-lg 2xl:text-[42px] font-bold">{{ $item->getProperty('title') }}</h1>
+                <h1 class="text-lg xl:leading-[60px]  2xl:text-[42px] font-bold">{{ $item->getProperty('title') }}</h1>
             </div>
-            <div class="mt-[40px] w-full rounded-[30px] overflow-hidden border">
-                <img src="/assets/images/test/test-02.jpg" alt="{{ $item->getProperty('title') }}" class="w-full object-cover">
+            @if($item->images)
+            <div class="mt-[40px] w-full h-[500px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
+                <div class="swiper news-slider w-full h-full">
+                    <div class="swiper-wrapper w-full h-full">
+                        @foreach($item->images as $image)
+                            <div class="swiper-slide w-full h-full">
+                                <img src="/{{ $image }}" alt="{{ $image }}" class="w-full h-full object-cover">
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
             </div>
+            @else
+                <div class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
+                    <img src="{{ $item->getProperty('preview') }}" alt="{{ $item->getProperty('title') }}" class="object-cover w-full h-full">
+                </div>
+            @endif
             <div class="content mt-[30px] pt-[30px] border-t">
                 {!! $item->getProperty('text') !!}
             </div>

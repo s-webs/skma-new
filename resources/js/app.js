@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 import Swiper from 'swiper';
-import {Autoplay} from "swiper/modules";
+import {Autoplay, Pagination} from "swiper/modules";
 import 'swiper/css';
 
 const gallerySlider = new Swiper(".gallery-slider", {
@@ -158,16 +158,23 @@ const servicesSmSlider = new Swiper(".slider-sm-services", {
     loop: true,
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const nextButton = document.querySelector("#services-next");
+    const prevButton = document.querySelector("#services-prev");
 
-const nextButton = document.querySelector("#services-next");
-const prevButton = document.querySelector("#services-prev");
-
-nextButton.addEventListener("click", () => servicesSlider.slideNext());
-nextButton.addEventListener("click", () => servicesMdSlider.slideNext());
-nextButton.addEventListener("click", () => servicesSmSlider.slideNext());
-prevButton.addEventListener("click", () => servicesSlider.slidePrev());
-prevButton.addEventListener("click", () => servicesMdSlider.slidePrev());
-prevButton.addEventListener("click", () => servicesSmSlider.slidePrev());
+    if (nextButton && prevButton) { // Проверяем, существуют ли элементы
+        nextButton.addEventListener("click", () => {
+            if (servicesSlider) servicesSlider.slideNext();
+            if (servicesMdSlider) servicesMdSlider.slideNext();
+            if (servicesSmSlider) servicesSmSlider.slideNext();
+        });
+        prevButton.addEventListener("click", () => {
+            if (servicesSlider) servicesSlider.slidePrev();
+            if (servicesMdSlider) servicesMdSlider.slidePrev();
+            if (servicesSmSlider) servicesSmSlider.slidePrev();
+        });
+    }
+})
 
 const partnersSlider = new Swiper(".partners-slider", {
     modules: [Autoplay],
@@ -197,6 +204,16 @@ const partnersSmSlider = new Swiper(".partners-sm-slider", {
     slidesPerView: 3,
     spaceBetween: 30,
     freeMode: true,
+});
+
+const newsSlider = new Swiper(".news-slider", {
+    modules: [Autoplay, Pagination],
+    autoplay: {
+        delay: 2500,
+    },
+    pagination: {
+        el: ".swiper-pagination",
+    },
 });
 
 Alpine.start();

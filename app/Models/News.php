@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends BaseModel
 {
+    protected $casts = [
+        'images' => 'json',
+    ];
+
     public function scopePublished($query)
     {
         return $query->where('published', 1);
