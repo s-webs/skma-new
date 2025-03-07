@@ -42,7 +42,7 @@
                 <h1 class="text-lg xl:leading-[60px]  2xl:text-[42px] font-bold">{{ $item->getProperty('title') }}</h1>
             </div>
             @if($item->images)
-            <div class="mt-[40px] w-full h-[500px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
+            <div class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
                 <div class="swiper news-slider w-full h-full">
                     <div class="swiper-wrapper w-full h-full">
                         @foreach($item->images as $image)
