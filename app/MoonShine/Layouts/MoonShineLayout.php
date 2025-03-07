@@ -47,6 +47,7 @@ use App\MoonShine\Resources\GalleryResource;
 use App\MoonShine\Resources\AwardResource;
 use App\MoonShine\Resources\PartnerResource;
 use App\MoonShine\Resources\DepartmentResource;
+use App\MoonShine\Resources\DivisionResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -83,6 +84,7 @@ final class MoonShineLayout extends CompactLayout
                 MenuItem::make('Users', UserResource::class),
                 MenuItem::make('Roles', RolesResource::class),
             ], 'users'),
+            MenuItem::make('Подразделения', DivisionResource::class),
         ];
     }
 

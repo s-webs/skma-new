@@ -4,15 +4,13 @@
     <div>
         <div class="container mx-auto px-4 2xl:px-28">
             <div class="mt-[40px]">
-                <span class="mr-[10px] font-semibold"><a href="{{ route('home') }}"
-                                                         class="text-custom-main hover:text-[#5E18AF] transition-all duration-300">Главная</a></span>
-                <span class="mr-[10px]"><i class="fal fa-angle-right text-custom-main"></i></span>
-                <span class="mr-[10px] font-semibold"><a href="{{ route('news.index') }}"
-                                                         class="text-custom-main hover:text-[#5E18AF] transition-all duration-300">Новости</a></span>
-                <span class="mr-[10px]"><i class="fal fa-angle-right text-custom-main"></i></span>
-                <span class="font-semibold">{{ $item->getProperty('title') }}</span>
+                <x-breadcrumbs :items="[
+                ['title' => __('public.pageHome'), 'url' => route('home')],
+                ['title' => __('home.academyNews'), 'url' => route('news.index')],
+                ['title' => $item->getProperty('short')],
+            ]"/>
             </div>
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-[60px]">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between pb-[30px] md:pb-0 mt-[30px] xl:mt-[60px]">
                 <div class="">
 {{--                    <a href="##"--}}
 {{--                       class="py-[12px] px-[14px] border bg-white text-custom-main rounded-[10px] hover:bg-custom-main duration-300 transition-all hover:text-white">--}}
@@ -38,8 +36,8 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-[20px] border-t py-[30px]">
-                <h1 class="text-lg xl:leading-[60px]  2xl:text-[42px] font-bold">{{ $item->getProperty('title') }}</h1>
+            <div class="md:mt-[20px] border-t py-[10px] xl:py-[30px]">
+                <x-page-title>{{ $item->getProperty('title') }}</x-page-title>
             </div>
             @if($item->images)
             <div class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
@@ -86,7 +84,7 @@
                 </form>
             </div>
             <div class="py-[60px] border-t">
-                <div class="text-[24px] font-semibold">Комментарии (2)</div>
+                <div class="text-[24px] font-semibold">{{ __('public.comments') }} ({{ $item->comments->count() }})</div>
                 <div class="mt-[24px]">
                     <form action="{{ route('comment.store', $item->id) }}" method="post">
                         @csrf

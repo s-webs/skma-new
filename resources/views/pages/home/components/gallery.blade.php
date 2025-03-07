@@ -5,7 +5,7 @@
                 <h3>{{ __('home.academyGallery') }}</h3>
             </div>
             <div class="hidden md:block">
-                <a href="##"
+                <a href="{{ route('gallery.index') }}"
                    class="relative flex justify-between items-center mt-[20px] md:mt-[0px] bg-custom-main rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
                     <div
                         class="text-[14px] lg:text-[18px] pl-[31px] font-semibold text-white relative z-10 transition-all duration-300">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="md:hidden max-w-[80%]">
-            <a href="##"
+            <a href="{{ route('gallery.index') }}"
                class="relative flex justify-between items-center mt-[20px] md:mt-[0px] bg-custom-main rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
                 <div
                     class="text-[14px] lg:text-[18px] pl-[31px] font-semibold text-white relative z-10 transition-all duration-300">

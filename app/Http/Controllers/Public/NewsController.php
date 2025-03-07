@@ -42,7 +42,10 @@ class NewsController extends Controller
 
         if ($item) {
             $item->formatted_date = Carbon::parse($item->created_at)->translatedFormat('j F Y');
-            $item->formatted_time = Carbon::parse($item->created_at)->translatedFormat('H:i'); // Добавляем форматированное время
+            $item->formatted_time = Carbon::parse($item->created_at)->translatedFormat('H:i');
+            $item->short_ru = Str::limit($item->title_ru, 30, '...');
+            $item->short_kz = Str::limit($item->title_kz, 30, '...');
+            $item->short_en = Str::limit($item->title_en, 30, '...');
         }
 
         return view('pages.news.show', compact('item'));

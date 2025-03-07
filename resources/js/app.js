@@ -218,4 +218,20 @@ const newsSlider = new Swiper(".news-slider", {
 
 Alpine.start();
 
+import lightGallery from 'lightgallery';
 
+// Plugins
+import lgThumbnail from 'lightgallery/plugins/thumbnail'
+import lgZoom from 'lightgallery/plugins/zoom'
+import 'lightgallery/css/lightgallery.css'
+import 'lightgallery/css/lg-zoom.css'
+import 'lightgallery/css/lg-thumbnail.css'
+
+lightGallery(document.getElementById('lightgallery'), {
+    plugins: [lgThumbnail],
+    animateThumb: false,
+    zoomFromOrigin: false,
+    allowMediaOverlap: true,
+    toggleThumb: true,
+    // ... other settings
+});

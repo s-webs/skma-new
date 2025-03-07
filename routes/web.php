@@ -22,7 +22,12 @@ Route::group([
     Route::get('/', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
     Route::get('/news', [\App\Http\Controllers\Public\NewsController::class, 'index'])->name('news.index');
     Route::get('/news/{slug}', [\App\Http\Controllers\Public\NewsController::class, 'show'])->name('news.show');
-    Route::get('/academy-structure', [\App\Http\Controllers\Public\HomeController::class, 'academyStructure'])->name('academy.structure');
+//    Route::get('/academy-structure', [\App\Http\Controllers\Public\HomeController::class, 'academyStructure'])->name('academy.structure');
+    Route::get('/gallery', [\App\Http\Controllers\Public\GalleryController::class, 'index'])->name('gallery.index');
+    Route::get('/awards', [\App\Http\Controllers\Public\AwardsController::class, 'index'])->name('awards.index');
+
+    Route::get('/structure', [\App\Http\Controllers\Public\DivisionsController::class, 'index'])->name('structure.index');
+    Route::get('/structure/{slug}', [\App\Http\Controllers\Public\DivisionsController::class, 'show'])->name('structure.show');
 });
 
 Route::get('/dashboard', function () {
