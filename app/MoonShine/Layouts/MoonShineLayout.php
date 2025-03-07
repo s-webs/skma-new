@@ -46,6 +46,7 @@ use App\MoonShine\Resources\AdvertResource;
 use App\MoonShine\Resources\GalleryResource;
 use App\MoonShine\Resources\AwardResource;
 use App\MoonShine\Resources\PartnerResource;
+use App\MoonShine\Resources\DepartmentResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -62,21 +63,26 @@ final class MoonShineLayout extends CompactLayout
             ...parent::menu(),
             MenuGroup::make('Об академии', [
                 MenuItem::make('Счетчики', CounterResource::class, 'variable'),
-                MenuItem::make('Структура правления', OrgNodeResource::class, 'share'),
+//                MenuItem::make('Структура правления', OrgNodeResource::class, 'share'),
+                MenuItem::make('Сервисы', ServiceResource::class),
+                MenuItem::make('Меню', MenuResource::class),
+                MenuItem::make('Галерея', GalleryResource::class),
+                MenuItem::make('Награды и достижения', AwardResource::class),
+                MenuItem::make('Партнеры', PartnerResource::class),
             ], 'academic-cap'),
+            MenuGroup::make('Пресса', [
+                MenuItem::make('Анонсы', AnnounceResource::class),
+                MenuItem::make('Новости', NewsResource::class),
+                MenuItem::make('Отзывы студентов', FeedbackResource::class),
+                MenuItem::make('Объявления', AdvertResource::class),
+            ]),
+            MenuGroup::make('Структура', [
+                MenuItem::make('Кафедры', DepartmentResource::class),
+            ]),
             MenuGroup::make('Пользователи сайта', [
                 MenuItem::make('Users', UserResource::class),
                 MenuItem::make('Roles', RolesResource::class),
             ], 'users'),
-            MenuItem::make('Меню', MenuResource::class),
-            MenuItem::make('Сервисы', ServiceResource::class),
-            MenuItem::make('Новости', NewsResource::class),
-            MenuItem::make('Анонсы', AnnounceResource::class),
-            MenuItem::make('Отзывы студентов', FeedbackResource::class),
-            MenuItem::make('Объявления', AdvertResource::class),
-            MenuItem::make('Галерея', GalleryResource::class),
-            MenuItem::make('Награды и достижения', AwardResource::class),
-            MenuItem::make('Партнеры', PartnerResource::class),
         ];
     }
 

@@ -53,9 +53,9 @@ class HomeController extends Controller
             ->where('published', '=', 1)
             ->orderBy('created_at', 'desc')
             ->when($latestArticle, function ($query) use ($latestArticle) {
-                $query->where('id', '!=', $latestArticle->id); // Исключаем самую свежую новость
+                $query->where('id', '!=', $latestArticle->id);
             })
-            ->take(5) // Берем остальные 5 новостей
+            ->take(5)
             ->get()
             ->map(function ($newsItem) {
                 $newsItem->formatted_date = Carbon::parse($newsItem->created_at)->translatedFormat('j F Y');
