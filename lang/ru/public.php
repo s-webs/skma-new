@@ -9,6 +9,6 @@ return [
     'documents' => 'Документы',
     'faculties' => 'Факультеты',
     'contacts' => 'Контакты',
-    'enterSearch' => 'Введите запрос...',
+    'enterRequest' => 'Введите запрос...',
     'search' => 'Поиск',
 ];

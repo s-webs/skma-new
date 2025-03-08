@@ -9,6 +9,6 @@ return [
     'documents' => 'Documents',
     'faculties' => 'Faculties',
     'contacts' => 'Contacts',
-    'enterSearch' => 'Enter a request...',
+    'enterRequest' => 'Enter a request...',
     'search' => 'Search',
 ];

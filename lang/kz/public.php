@@ -9,6 +9,6 @@ return [
     'documents' => 'Құжаттар',
     'faculties' => 'Факультеттер',
     'contacts' => 'Байланыс',
-    'enterSearch' => 'Сұрауды енгізіңіз...',
+    'enterRequest' => 'Сұрауды енгізіңіз...',
     'search' => 'Іздеу',
 ];
