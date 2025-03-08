@@ -68,7 +68,7 @@
                 </ul>
             </div>
             <div class="hidden lg:block">
-                <button
+                <button id="openSearchModal"
                     class="bg-custom-main w-[44px] h-[44px] rounded-full text-white hover:bg-[#5E18AF] transition-colors duration-300">
                     <i class="fas fa-search"></i>
                 </button>

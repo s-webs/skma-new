@@ -17,6 +17,8 @@
 </head>
 <body class="bg-custom-halftone font-openSans">
 
+@include('layouts.components.search')
+
 @include('layouts.components.mobile-sidebar', compact('menus'))
 
 @include('layouts.components.header', compact('menus'))

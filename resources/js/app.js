@@ -254,3 +254,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchModal = document.getElementById("searchModal");
+    const openSearchModal = document.getElementById("openSearchModal");
+    const closeSearchModal = document.getElementById("closeSearchModal");
+
+    function openModal() {
+        searchModal.classList.remove("invisible", "opacity-0", "-translate-y-10");
+        searchModal.classList.add("opacity-100", "translate-y-0");
+    }
+
+    function closeModal() {
+        searchModal.classList.remove("opacity-100", "translate-y-0");
+        searchModal.classList.add("opacity-0", "-translate-y-10");
+        setTimeout(() => {
+            searchModal.classList.add("invisible");
+        }, 300); // Задержка равна duration-300 в Tailwind
+    }
+
+    // Открытие модального окна
+    openSearchModal.addEventListener("click", openModal);
+
+    // Закрытие при клике вне формы
+    searchModal.addEventListener("click", function (event) {
+        if (event.target === searchModal) {
+            closeModal();
+        }
+    });
+
+    // Закрытие при нажатии Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !searchModal.classList.contains("invisible")) {
+            closeModal();
+        }
+    });
+
+    // Закрытие по клику на кнопку "X"
+    closeSearchModal.addEventListener("click", closeModal);
+});
+
+
+
