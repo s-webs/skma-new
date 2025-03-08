@@ -8,5 +8,7 @@ return [
     'staff' => 'Staff',
     'documents' => 'Documents',
     'faculties' => 'Faculties',
-    'contacts' => 'Contacts'
+    'contacts' => 'Contacts',
+    'enterSearch' => 'Enter a request...',
+    'search' => 'Search',
 ];

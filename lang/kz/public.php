@@ -8,5 +8,7 @@ return [
     'staff' => 'Қызметкерлер',
     'documents' => 'Құжаттар',
     'faculties' => 'Факультеттер',
-    'contacts' => 'Байланыс'
+    'contacts' => 'Байланыс',
+    'enterSearch' => 'Сұрауды енгізіңіз...',
+    'search' => 'Іздеу',
 ];
