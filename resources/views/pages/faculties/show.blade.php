@@ -5,7 +5,7 @@
         <div class="mt-[40px] md:mt-[60px] xl:mt-[40px]">
             <x-breadcrumbs :items="[
                 ['title' => __('public.pageHome'), 'url' => route('home')],
-                ['title' => __('public.structure'), 'url' => route('structure.index')],
+                ['title' => __('public.faculties'), 'url' => route('faculties.index')],
                 ['title' => $item->getProperty('name')],
             ]"/>
         </div>
@@ -52,9 +52,7 @@
                         </div>
                     @else
                         <div class="">
-                            <div>
-                                        <span
-                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
+                            <div><span class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
                             </div>
                             @if($item->children)
                                 <div class="pl-[20px]">
@@ -152,7 +150,7 @@
                         <div>
                             @if($item->parent)
                                 <div>
-                                    <a href="{{ route('structure.show', $item->parent->getProperty('slug')) }}"
+                                    <a href="{{ route('faculties.show', $item->parent->getProperty('slug')) }}"
                                        class="font-semibold">
                                         {{ $item->parent->getProperty('name') }}
                                     </a>
@@ -165,7 +163,7 @@
                                                     class="text-custom-main font-semibold">{{ $item->getProperty('name') }}
                                                 </span>
                                             @else
-                                                <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
+                                                <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
                                                    class="">{{ $child->getProperty('name') }}
                                                 </a>
                                             @endif
@@ -175,7 +173,7 @@
                                         <div class="pl-[20px]">
                                             @foreach($item->children as $child)
                                                 <div>
-                                                    <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
+                                                    <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
                                                        class="">{{ $child->getProperty('name') }}</a>
                                                 </div>
                                             @endforeach
@@ -192,7 +190,7 @@
                                         <div class="pl-[20px]">
                                             @foreach($item->children as $child)
                                                 <div>
-                                                    <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
+                                                    <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
                                                        class="">{{ $child->getProperty('name') }}</a>
                                                 </div>
                                             @endforeach

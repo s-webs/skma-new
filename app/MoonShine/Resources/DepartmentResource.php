@@ -7,6 +7,8 @@ namespace App\MoonShine\Resources;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Department;
 
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Support\Enums\PageType;
 use MoonShine\TinyMce\Fields\TinyMce;
@@ -55,6 +57,8 @@ class DepartmentResource extends ModelResource
         return [
             Box::make([
                 ID::make(),
+                BelongsTo::make('Факультет', 'parent', 'name_ru', FacultyResource::class)
+                ->nullable(),
                 Tabs::make([
                     Tab::make('RU', [
                         Text::make('Название', 'name_ru'),
@@ -80,6 +84,7 @@ class DepartmentResource extends ModelResource
                                 Text::make('Значение на русском', 'value')
                             ])
                             ->removable(),
+                        Slug::make('Slug', 'slug_ru')->from('name_ru')
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название', 'name_kz'),
@@ -105,6 +110,7 @@ class DepartmentResource extends ModelResource
                                 Text::make('Значение на казахском', 'value')
                             ])
                             ->removable(),
+                        Slug::make('Slug', 'slug_kz')->from('name_kz')
                     ]),
                     Tab::make('EN', [
                         Text::make('Название', 'name_en'),
@@ -130,6 +136,7 @@ class DepartmentResource extends ModelResource
                                 Text::make('Значение на английском', 'value')
                             ])
                             ->removable(),
+                        Slug::make('Slug', 'slug_en')->from('name_en')
                     ]),
                 ]),
                 Image::make('Превью', 'preview')

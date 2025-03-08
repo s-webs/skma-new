@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends BaseModel
+class Faculty extends BaseModel
 {
     protected $casts = [
         'staff_ru' => 'json',
@@ -39,8 +39,8 @@ class Department extends BaseModel
         return $transformedDocuments;
     }
 
-    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany|Faculty
     {
-        return $this->belongsTo(Faculty::class, 'parent_id', 'id');
+        return $this->hasMany(Department::class, 'parent_id', 'id');
     }
 }

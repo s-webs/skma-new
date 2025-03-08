@@ -48,6 +48,7 @@ use App\MoonShine\Resources\AwardResource;
 use App\MoonShine\Resources\PartnerResource;
 use App\MoonShine\Resources\DepartmentResource;
 use App\MoonShine\Resources\DivisionResource;
+use App\MoonShine\Resources\FacultyResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -70,21 +71,24 @@ final class MoonShineLayout extends CompactLayout
                 MenuItem::make('Галерея', GalleryResource::class),
                 MenuItem::make('Награды и достижения', AwardResource::class),
                 MenuItem::make('Партнеры', PartnerResource::class),
+            ], 'building-library'),
+            MenuGroup::make('Структура', [
+                MenuItem::make('Подразделения', DivisionResource::class),
+            ], 'bars-3-bottom-left'),
+            MenuGroup::make('Учебный процесс', [
+                MenuItem::make('Факультеты', FacultyResource::class),
+                MenuItem::make('Кафедры', DepartmentResource::class),
             ], 'academic-cap'),
             MenuGroup::make('Пресса', [
                 MenuItem::make('Анонсы', AnnounceResource::class),
                 MenuItem::make('Новости', NewsResource::class),
                 MenuItem::make('Отзывы студентов', FeedbackResource::class),
                 MenuItem::make('Объявления', AdvertResource::class),
-            ]),
-            MenuGroup::make('Структура', [
-                MenuItem::make('Кафедры', DepartmentResource::class),
-            ]),
+            ], 'newspaper'),
             MenuGroup::make('Пользователи сайта', [
                 MenuItem::make('Users', UserResource::class),
                 MenuItem::make('Roles', RolesResource::class),
             ], 'users'),
-            MenuItem::make('Подразделения', DivisionResource::class),
         ];
     }
 

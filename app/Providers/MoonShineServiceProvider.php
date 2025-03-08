@@ -29,6 +29,7 @@ use App\MoonShine\Pages\AwardIndexPage;
 use App\MoonShine\Resources\PartnerResource;
 use App\MoonShine\Resources\DepartmentResource;
 use App\MoonShine\Resources\DivisionResource;
+use App\MoonShine\Resources\FacultyResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -60,6 +61,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 PartnerResource::class,
                 DepartmentResource::class,
                 DivisionResource::class,
+                FacultyResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
