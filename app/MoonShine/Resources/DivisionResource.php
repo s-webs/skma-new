@@ -71,10 +71,6 @@ class DivisionResource extends ModelResource
                                     Position::make(),
                                     Image::make('Фотография', 'photo')
                                         ->dir('uploads/divisions/staff')
-                                        ->customName(function ($file, $field) {
-                                            $timestamp = now()->format('Y_m_d_His');
-                                            return 'staff_' . $timestamp . "_RU_." . $file->extension();
-                                        })
                                         ->removable(),
                                     Text::make('Имя на русском', 'name'),
                                     Text::make('Должность на русском', 'position')
@@ -107,10 +103,6 @@ class DivisionResource extends ModelResource
                                     Position::make(),
                                     Image::make('Фотография', 'photo')
                                         ->dir('uploads/divisions/staff')
-                                        ->customName(function ($file, $field) {
-                                            $timestamp = now()->format('Y_m_d_His');
-                                            return 'staff_' . $timestamp . "_RU_." . $file->extension();
-                                        })
                                         ->removable(),
                                     Text::make('Имя на казахском', 'name'),
                                     Text::make('Должность на казахском', 'position')
@@ -143,10 +135,6 @@ class DivisionResource extends ModelResource
                                     Position::make(),
                                     Image::make('Фотография', 'photo')
                                         ->dir('uploads/divisions/staff')
-                                        ->customName(function ($file, $field) {
-                                            $timestamp = now()->format('Y_m_d_His');
-                                            return 'staff_' . $timestamp . "_RU_." . $file->extension();
-                                        })
                                         ->removable(),
                                     Text::make('Имя на английском', 'name'),
                                     Text::make('Должность на английском', 'position')

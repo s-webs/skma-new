@@ -84,12 +84,37 @@
                         <div class="mt-[30px]">
                             {!! $item->getProperty('description') !!}
                         </div>
-                        @if($item->getProperty('documents'))
-                            <div class="mt-[40px]">
+
+                        @if(!empty(json_decode($item->getProperty('staff'))))
+                            <div class="mt-[60px]">
+                                <div>
+                                    <x-inner-heading>{{ __('public.staff') }}</x-inner-heading>
+                                </div>
+                                <div class="flex flex-wrap justify-between mt-[30px]">
+                                    @foreach(json_decode($item->getProperty('staff')) as $member)
+                                        <div
+                                            class="border border-custom-main w-full md:w-[48%] mb-[20px] p-[20px] rounded-[15px]">
+                                            <div class="">
+                                                <img src="/{{ $member->photo }}" alt="{{ $member->name }}"
+                                                     class="w-[120px] h-[120px] rounded-full object-cover">
+                                            </div>
+                                            <div class="font-semibold mt-[24px]">{{ $member->name }}</div>
+                                            <div>{{ $member->position }}</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+                            @if(!empty(json_decode($item->getProperty('documents'))))
+                            <div class="mt-[60px]">
+                                <div class="mb-[30px]">
+                                    <x-inner-heading>{{ __('public.documents') }}</x-inner-heading>
+                                </div>
                                 @foreach(json_decode($item->getProperty('documents')) as $document)
                                     <div class="mb-[40px]">
                                         <a href="/{{ $document->path }}" target="_blank"
-                                           class="px-[15px] py-[10px] border border-custom-main rounded-full hover:bg-custom-main hover:text-white font-semibold transition-all duration-300">
+                                           class="hover:text-custom-main font-semibold text-md transition-all duration-300">
                                             @if($document->extension === 'pdf')
                                                 <i class="fal fa-file-pdf"></i>
                                             @elseif($document->extension === 'doc' || $document->extension === 'docx')
