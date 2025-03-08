@@ -7,4 +7,6 @@ return [
     'menu' => 'Menu',
     'staff' => 'Staff',
     'documents' => 'Documents',
+    'faculties' => 'Faculties',
+    'contacts' => 'Contacts'
 ];
