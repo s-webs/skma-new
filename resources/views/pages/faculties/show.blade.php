@@ -1,4 +1,4 @@
-@extends('layouts.public', ['kzLink' => 'structure/' . $item->slug_kz, 'ruLink' => 'structure/' . $item->slug_ru, 'enLink' => 'structure/' . $item->slug_en])
+@extends('layouts.public', ['kzLink' => 'faculties/' . $item->slug_kz, 'ruLink' => 'faculties/' . $item->slug_ru, 'enLink' => 'faculties/' . $item->slug_en])
 
 @section('content')
     <div class="container mx-auto px-2">

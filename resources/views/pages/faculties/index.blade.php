@@ -1,11 +1,11 @@
-@extends('layouts.public', ['kzLink' => 'structure/', 'ruLink' => 'structure/', 'enLink' => 'structure/'])
+@extends('layouts.public', ['kzLink' => 'faculties/', 'ruLink' => 'faculties/', 'enLink' => 'faculties/'])
 
 @section('content')
     <div class="container mx-auto px-4">
         <div class="mt-[40px]">
             <x-breadcrumbs :items="[
                 ['title' => __('public.pageHome'), 'url' => route('home')],
-                ['title' => ('public.faculties')],
+                ['title' => __('public.faculties')],
             ]"/>
         </div>
 
