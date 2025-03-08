@@ -84,6 +84,12 @@
                         @if($item->preview)
                             <div class="mt-[60px] mb-[60px]">
                                 <img src="/{{ $item->preview }}" alt="{{ $item->getProperty('name') }}"
+                                     class="w-full lg:w-[70%] rounded-[15px] mx-auto">
+                            </div>
+                        @endif
+                        @if($item->preview)
+                            <div class="mt-[60px] mb-[60px]">
+                                <img src="/{{ $item->preview }}" alt="{{ $item->getProperty('name') }}"
                                      class="w-[70%] rounded-[15px] mx-auto">
                             </div>
                         @endif
