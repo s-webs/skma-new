@@ -1,8 +1,8 @@
 @extends('layouts.public', ['kzLink' => 'news/', 'ruLink' => 'news/', 'enLink' => 'news/'])
 
 @section('content')
-    <div class="container mx-auto px-4 2xl:px-28">
-        <div class="mt-[40px]">
+    <div class="container mx-auto px-4 2xl:px-28 bg-white py-[40px] my-[40px] rounded-[15px] shadow-md">
+        <div class="">
             <x-breadcrumbs :items="[
                 ['title' => __('public.pageHome'), 'url' => route('home')],
                 ['title' => __('home.academyNews')]
@@ -36,7 +36,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="pb-[50px] xl:pb-[100px] pt-[40px]">
+            <div class="pt-[40px]">
                 {{ $news->links() }}
             </div>
         </div>

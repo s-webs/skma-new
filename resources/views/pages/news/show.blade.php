@@ -2,8 +2,8 @@
 
 @section('content')
     <div>
-        <div class="container mx-auto px-4 2xl:px-28">
-            <div class="mt-[40px]">
+        <div class="container mx-auto px-4 2xl:px-28 bg-white py-[40px] my-[40px] rounded-[15px] shadow-md">
+            <div class="">
                 <x-breadcrumbs :items="[
                 ['title' => __('public.pageHome'), 'url' => route('home')],
                 ['title' => __('home.academyNews'), 'url' => route('news.index')],
@@ -83,7 +83,7 @@
                     @endif
                 </form>
             </div>
-            <div class="py-[60px] border-t">
+            <div class="pt-[60px] border-t">
                 <div class="text-[24px] font-semibold">{{ __('public.comments') }} ({{ $item->comments->count() }})</div>
                 <div class="mt-[24px]">
                     <form action="{{ route('comment.store', $item->id) }}" method="post">
