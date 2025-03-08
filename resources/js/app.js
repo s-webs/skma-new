@@ -233,5 +233,24 @@ lightGallery(document.getElementById('lightgallery'), {
     zoomFromOrigin: false,
     allowMediaOverlap: true,
     toggleThumb: true,
-    // ... other settings
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleStructureMenu = document.getElementById('toggleStructureMenu');
+    const structureMenu = document.getElementById('structureMenu');
+    const menuIcon = document.getElementById('structureMenuIcon');
+
+    if (toggleStructureMenu && structureMenu && menuIcon) {
+        structureMenu.style.display = 'none';
+
+        toggleStructureMenu.addEventListener('click', function() {
+            if (structureMenu.style.display === 'none' || structureMenu.style.display === '') {
+                structureMenu.style.display = 'block';
+                menuIcon.classList.add('rotate-90');
+            } else {
+                structureMenu.style.display = 'none';
+                menuIcon.classList.remove('rotate-90');
+            }
+        });
+    }
 });

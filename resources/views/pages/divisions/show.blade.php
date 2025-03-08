@@ -1,23 +1,85 @@
 @extends('layouts.public', ['kzLink' => 'structure/' . $item->slug_kz, 'ruLink' => 'structure/' . $item->slug_ru, 'enLink' => 'structure/' . $item->slug_en])
 
 @section('content')
-    <div class="container mx-auto">
-        <div class="mt-[40px]">
+    <div class="container mx-auto px-2">
+        <div class="mt-[40px] md:mt-[60px] xl:mt-[40px]">
             <x-breadcrumbs :items="[
                 ['title' => __('public.pageHome'), 'url' => route('home')],
                 ['title' => __('public.structure'), 'url' => route('structure.index')],
                 ['title' => $item->getProperty('name')],
             ]"/>
         </div>
+        <div class="lg:hidden mt-[60px] rounded-[15px] overflow-hidden shadow-md">
+            <div>
+                <div id="toggleStructureMenu" class="bg-custom-main px-[25px] py-[15px]">
+                    <div class="flex items-center justify-between text-white font-semibold">
+                        <span class="">{{ __('public.menu') }}</span>
+                        <i id="structureMenuIcon" class="fal fa-angle-right transition-all duration-300"></i>
+                    </div>
+                </div>
+                <div id="structureMenu" class="bg-white px-[25px] py-[15px]">
+                    @if($item->parent)
+                        <div>
+                            <a href="{{ route('structure.show', $item->parent->getProperty('slug')) }}"
+                               class="font-semibold">
+                                {{ $item->parent->getProperty('name') }}
+                            </a>
+                        </div>
+                        <div class="pl-[20px]">
+                            @foreach($item->parent->children as $child)
+                                <div>
+                                    @if($child->id === $item->id)
+                                        <span
+                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}
+                                                </span>
+                                    @else
+                                        <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
+                                           class="">{{ $child->getProperty('name') }}
+                                        </a>
+                                    @endif
+                                </div>
+                            @endforeach
+                            @if($item->children)
+                                <div class="pl-[20px]">
+                                    @foreach($item->children as $child)
+                                        <div>
+                                            <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
+                                               class="">{{ $child->getProperty('name') }}</a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    @else
+                        <div class="">
+                            <div>
+                                        <span
+                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
+                            </div>
+                            @if($item->children)
+                                <div class="pl-[20px]">
+                                    @foreach($item->children as $child)
+                                        <div>
+                                            <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
+                                               class="">{{ $child->getProperty('name') }}</a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
     <div class="mt-[40px] pb-[50px] xl:pb-[100px]">
-        <div class="px-[120px]">
-            <div class="bg-white p-[20px]">
-                <div class="flex flex-1 mr-[40px]">
-                    <div>
+        <div class="container mx-auto px-2 lg:max-w-full 2xl:px-[120px]">
+            <div class="bg-white p-[20px] rounded-[15px] shadow-md">
+                <div class="flex justify-between">
+                    <div class="flex-1 mr-[0px] lg:mr-[20px] 2xl:mr-[40px]">
                         {{--                        <div>tabs</div>--}}
-                        <div>
-                            <h1 class="text-[44px] font-bold">{{ $item->getProperty('name') }}</h1>
+                        <div class="border-b pb-[20px]">
+                            <x-page-title>{{ $item->getProperty('name') }}</x-page-title>
                         </div>
                         <div class="mt-[30px]">
                             {!! $item->getProperty('description') !!}
@@ -42,7 +104,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="w-[625px] p-[20px] flex-shrink-0 border-l px-[20px]">
+                    <div class="hidden lg:block lg:w-[400px] 2xl:w-[625px] p-[20px] flex-shrink-0 border-l px-[20px]">
                         <div>
                             @if($item->parent)
                                 <div>
@@ -60,7 +122,7 @@
                                                 </span>
                                             @else
                                                 <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                                    class="">{{ $child->getProperty('name') }}
+                                                   class="">{{ $child->getProperty('name') }}
                                                 </a>
                                             @endif
                                         </div>
