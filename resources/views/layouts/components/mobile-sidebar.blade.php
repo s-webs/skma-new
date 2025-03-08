@@ -1,6 +1,6 @@
 <div id="sidebarMobile"
      class="lg:hidden flex flex-col h-[100vh] w-[100%] fixed bg-custom-halftone z-20 -translate-x-full transition-transform duration-300">
-    <div class="flex justify-end px-[16px] bg-custom-main text-white py-[8px]">
+    <div class="flex justify-end px-[16px] bg-custom-heading text-white py-[8px]">
         <button class="text-[24px]" id="closeMobileSidebar"><i class="fas fa-times"></i></button>
     </div>
     {{-- MobileSearch --}}
@@ -67,10 +67,10 @@
     </div>
     {{-- /MobileMenu --}}
     {{-- MobileSidebarFooter --}}
-    <div class="text-center bg-custom-main py-[22px]">
+    <div class="text-center bg-custom-heading py-[22px]">
         <div class="text-white text-[16px]">
-            <a href="##" class="mr-[22px]">
-                <i class="fas fa-phone-alt mr-[7.69px]"></i>+7 7252 57 35 35
+            <a href="tel:87252573535" class="mr-[22px]">
+                <i class="fas fa-phone-alt mr-[7.69px]"></i>8 7252 57 35 35
             </a>
             <a href="mailto:info@skma.kz">
                 <i class="fas fa-envelope-open mr-[7.69px]"></i>info@skma.kz
