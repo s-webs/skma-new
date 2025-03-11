@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advert;
+use App\Models\ViewLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -31,8 +32,11 @@ class AdsController extends Controller
             Carbon::setLocale('kk');
         }
 
+        $locale = app()->getLocale();
+
         $localizedSlugColumn = 'slug_' . app()->getLocale();
         $item = Advert::query()->published()->where($localizedSlugColumn, $slug)->first();
+        ViewLog::trackView($item, $locale);
 
         if ($item) {
             $item->formatted_date = Carbon::parse($item->created_at)->translatedFormat('j F Y');
