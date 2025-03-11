@@ -9,68 +9,7 @@
                 ['title' => $item->getProperty('name')],
             ]"/>
         </div>
-        <div class="lg:hidden mt-[60px] rounded-[15px] overflow-hidden shadow-md">
-            <div>
-                <div id="toggleStructureMenu" class="bg-custom-main px-[25px] py-[15px]">
-                    <div class="flex items-center justify-between text-white font-semibold">
-                        <span class="">{{ __('public.menu') }}</span>
-                        <i id="structureMenuIcon" class="fal fa-angle-right transition-all duration-300"></i>
-                    </div>
-                </div>
-                <div id="structureMenu" class="bg-white px-[25px] py-[15px]">
-                    @if($item->parent)
-                        <div>
-                            <a href="{{ route('structure.show', $item->parent->getProperty('slug')) }}"
-                               class="font-semibold">
-                                {{ $item->parent->getProperty('name') }}
-                            </a>
-                        </div>
-                        <div class="pl-[20px]">
-                            @foreach($item->parent->children as $child)
-                                <div>
-                                    @if($child->id === $item->id)
-                                        <span
-                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}
-                                                </span>
-                                    @else
-                                        <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                           class="">{{ $child->getProperty('name') }}
-                                        </a>
-                                    @endif
-                                </div>
-                            @endforeach
-                            @if($item->children)
-                                <div class="pl-[20px]">
-                                    @foreach($item->children as $child)
-                                        <div>
-                                            <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                               class="">{{ $child->getProperty('name') }}</a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
-                    @else
-                        <div class="">
-                            <div>
-                                        <span
-                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
-                            </div>
-                            @if($item->children)
-                                <div class="pl-[20px]">
-                                    @foreach($item->children as $child)
-                                        <div>
-                                            <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                               class="">{{ $child->getProperty('name') }}</a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
+        <x-mobile-structure-menu :item="$item" title="{{ __('public.structure') }}" />
     </div>
     <div class="mt-[40px] pb-[50px] xl:pb-[100px]">
         <div class="container mx-auto px-2 lg:max-w-full 2xl:px-[120px]">
@@ -87,12 +26,6 @@
                                      class="w-full lg:w-[70%] rounded-[15px] mx-auto">
                             </div>
                         @endif
-                        @if($item->preview)
-                            <div class="mt-[60px] mb-[60px]">
-                                <img src="/{{ $item->preview }}" alt="{{ $item->getProperty('name') }}"
-                                     class="w-[70%] rounded-[15px] mx-auto">
-                            </div>
-                        @endif
                         <div class="mt-[30px]">
                             {!! $item->getProperty('description') !!}
                         </div>
@@ -107,8 +40,14 @@
                                         <div
                                             class="border border-custom-main w-full md:w-[48%] mb-[20px] p-[20px] rounded-[15px]">
                                             <div class="">
-                                                <img src="/{{ $member->photo }}" alt="{{ $member->name }}"
-                                                     class="w-[120px] h-[120px] rounded-full object-cover">
+
+                                                @if($member->photo)
+                                                    <img src="/{{ $member->photo }}" alt="{{ $member->name }}"
+                                                         class="w-[120px] h-[120px] rounded-full object-cover">
+                                                @else
+                                                    <img src="/assets/images/no_photo.png" alt="{{ $member->name }}"
+                                                         class="w-[120px] h-[120px] rounded-full object-cover border">
+                                                @endif
                                             </div>
                                             <div class="font-semibold mt-[24px]">{{ $member->name }}</div>
                                             <div>{{ $member->position }}</div>
@@ -158,52 +97,19 @@
                         <div>
                             @if($item->parent)
                                 <div>
-                                    <a href="{{ route('structure.show', $item->parent->getProperty('slug')) }}"
-                                       class="font-semibold">
+                                    <a href="{{ route('structure.show', $item->parent->getProperty('slug')) }}" class="font-semibold">
                                         {{ $item->parent->getProperty('name') }}
                                     </a>
                                 </div>
                                 <div class="pl-[20px]">
-                                    @foreach($item->parent->children as $child)
-                                        <div>
-                                            @if($child->id === $item->id)
-                                                <span
-                                                    class="text-custom-main font-semibold">{{ $item->getProperty('name') }}
-                                                </span>
-                                            @else
-                                                <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                                   class="">{{ $child->getProperty('name') }}
-                                                </a>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                    @if($item->children)
-                                        <div class="pl-[20px]">
-                                            @foreach($item->children as $child)
-                                                <div>
-                                                    <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                                       class="">{{ $child->getProperty('name') }}</a>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
+                                    @include('custom-components.divisions-list', ['divisions' => $item->parent->children, 'currentId' => $item->id])
                                 </div>
                             @else
-                                <div class="">
-                                    <div>
-                                        <span
-                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
-                                    </div>
-                                    @if($item->children)
-                                        <div class="pl-[20px]">
-                                            @foreach($item->children as $child)
-                                                <div>
-                                                    <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                                       class="">{{ $child->getProperty('name') }}</a>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
+                                <div>
+                                    <span class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
+                                </div>
+                                <div class="pl-[20px]">
+                                    @include('custom-components.divisions-list', ['divisions' => $item->children, 'currentId' => $item->id])
                                 </div>
                             @endif
                         </div>

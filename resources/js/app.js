@@ -295,4 +295,48 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleDivisions = document.querySelectorAll('.toggle-division');
+
+    toggleDivisions.forEach(function(toggleDivision) {
+        toggleDivision.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const divisionId = this.dataset.id;
+            const childrenDiv = document.getElementById('children-' + divisionId);
+
+            if (childrenDiv) {
+                childrenDiv.classList.toggle('hidden');
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleStructureMenu = document.getElementById('toggleStructureMenu');
+    const structureMenu = document.getElementById('structureMenu');
+    const structureMenuIcon = document.getElementById('structureMenuIcon');
+
+    toggleStructureMenu.addEventListener('click', function() {
+        structureMenu.classList.toggle('hidden');
+        structureMenuIcon.classList.toggle('rotate-90');
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleMobileDivisions = document.querySelectorAll('.toggle-mobile-division');
+
+    toggleMobileDivisions.forEach(function(toggleMobileDivision) {
+        toggleMobileDivision.addEventListener('click', function() {
+            const divisionId = this.dataset.id;
+            const childrenDiv = document.getElementById('mobile-children-' + divisionId);
+
+            if (childrenDiv) {
+                childrenDiv.classList.toggle('hidden');
+            }
+        });
+    });
+});
+
+
 

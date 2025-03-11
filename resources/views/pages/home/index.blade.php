@@ -18,7 +18,3 @@
     @include('pages.home.components.partners', compact('partners'))
 
 @endsection
-
-@push('scripts')
-
-@endpush

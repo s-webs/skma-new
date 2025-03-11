@@ -2,10 +2,35 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Division extends BaseModel
 {
+    protected $fillable = [
+        'preview',
+        'name_ru',
+        'name_kz',
+        'name_en',
+        'description_ru',
+        'description_kz',
+        'description_en',
+        'staff_ru',
+        'staff_kz',
+        'staff_en',
+        'documents_ru',
+        'documents_kz',
+        'documents_en',
+        'contacts_ru',
+        'contacts_kz',
+        'contacts_en',
+        'slug_ru',
+        'slug_kz',
+        'slug_en',
+        'parent_id',
+        'sort_order',
+    ];
+
     protected $casts = [
         'staff_ru' => 'json',
         'staff_kz' => 'json',
@@ -17,6 +42,21 @@ class Division extends BaseModel
         'documents_kz' => 'json',
         'documents_en' => 'json',
     ];
+
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('sort_order');
+        });
+
+        static::addGlobalScope('childrenOrder', function (Builder $builder) {
+            $builder->with(['children' => function ($query) {
+                $query->orderBy('sort_order', 'asc');
+            }]);
+        });
+    }
 
     public function transformDocuments($documents): array
     {

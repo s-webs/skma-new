@@ -30,6 +30,7 @@ use App\MoonShine\Resources\PartnerResource;
 use App\MoonShine\Resources\DepartmentResource;
 use App\MoonShine\Resources\DivisionResource;
 use App\MoonShine\Resources\FacultyResource;
+use App\MoonShine\Pages\DivisionsIndexPage;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -68,6 +69,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 MenuIndexPage::class,
                 OrgNodeIndexPage::class,
                 AwardIndexPage::class,
+                DivisionsIndexPage::class,
             ]);
     }
 }
