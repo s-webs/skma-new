@@ -13,4 +13,9 @@ return [
     'search' => 'Search',
     'version_for_the_visually_impaired' => 'Version for the visually impaired',
     'ads' => 'Advertisement',
+
+    'statistics' => 'Statistics',
+    'visits' => 'Attendance',
+    'departments_and_faculties' => 'Departments and faculties',
+    'news' => 'News',
 ];

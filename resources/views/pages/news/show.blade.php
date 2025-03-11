@@ -10,12 +10,13 @@
                 ['title' => $item->getProperty('short')],
             ]"/>
             </div>
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between pb-[30px] md:pb-0 mt-[30px] xl:mt-[60px]">
+            <div
+                class="flex flex-col md:flex-row items-start md:items-center justify-between pb-[30px] md:pb-0 mt-[30px] xl:mt-[60px]">
                 <div class="">
-{{--                    <a href="##"--}}
-{{--                       class="py-[12px] px-[14px] border bg-white text-custom-main rounded-[10px] hover:bg-custom-main duration-300 transition-all hover:text-white">--}}
-{{--                        Подразделение--}}
-{{--                    </a>--}}
+                    {{--                    <a href="##"--}}
+                    {{--                       class="py-[12px] px-[14px] border bg-white text-custom-main rounded-[10px] hover:bg-custom-main duration-300 transition-all hover:text-white">--}}
+                    {{--                        Подразделение--}}
+                    {{--                    </a>--}}
                 </div>
                 <div class="flex items-center">
                     <div class="flex items-center mr-[20px]">
@@ -40,21 +41,24 @@
                 <x-page-title>{{ $item->getProperty('title') }}</x-page-title>
             </div>
             @if($item->images)
-            <div class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
-                <div class="swiper news-slider w-full h-full">
-                    <div class="swiper-wrapper w-full h-full">
-                        @foreach($item->images as $image)
-                            <div class="swiper-slide w-full h-full">
-                                <img src="/{{ $image }}" alt="{{ $image }}" class="w-full h-full object-cover">
-                            </div>
-                        @endforeach
+                <div
+                    class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
+                    <div class="swiper news-slider w-full h-full">
+                        <div class="swiper-wrapper w-full h-full">
+                            @foreach($item->images as $image)
+                                <div class="swiper-slide w-full h-full">
+                                    <img src="/{{ $image }}" alt="{{ $image }}" class="w-full h-full object-cover">
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="swiper-pagination"></div>
                     </div>
-                    <div class="swiper-pagination"></div>
                 </div>
-            </div>
             @else
-                <div class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
-                    <img src="{{ $item->getProperty('preview') }}" alt="{{ $item->getProperty('title') }}" class="object-cover w-full h-full">
+                <div
+                    class="mt-[40px] w-full xl:w-[70%] mx-auto h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
+                    <img src="{{ $item->getProperty('preview') }}" alt="{{ $item->getProperty('title') }}"
+                         class="object-cover w-full h-full">
                 </div>
             @endif
             <div class="content mt-[30px] pt-[30px] border-t">
@@ -84,7 +88,8 @@
                 </form>
             </div>
             <div class="pt-[60px] border-t">
-                <div class="text-[24px] font-semibold">{{ __('public.comments') }} ({{ $item->comments->count() }})</div>
+                <div class="text-[24px] font-semibold">{{ __('public.comments') }} ({{ $item->comments->count() }})
+                </div>
                 <div class="mt-[24px]">
                     <form action="{{ route('comment.store', $item->id) }}" method="post">
                         @csrf

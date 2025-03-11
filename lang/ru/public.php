@@ -13,4 +13,9 @@ return [
     'search' => 'Поиск',
     'version_for_the_visually_impaired' => 'Версия для слабовидящих',
     'ads' => 'Объявления',
+
+    'statistics' => 'Статистика',
+    'visits' => 'Посещаемость',
+    'departments_and_faculties' => 'Кафедры и факультеты',
+    'news' => 'Новости',
 ];

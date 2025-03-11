@@ -36,6 +36,7 @@ Route::group([
     Route::get('/ads/{slug}', [\App\Http\Controllers\Public\AdsController::class, 'show'])->name('ads.show');
 
     Route::get('/statistics/visits', [\App\Http\Controllers\Admin\StatisticsController::class, 'visits'])->name('statistics.visits');
+    Route::get('/search', [\App\Http\Controllers\Public\SearchController::class, 'index'])->name('search.index');
 });
 
 Route::get('/dashboard', function () {

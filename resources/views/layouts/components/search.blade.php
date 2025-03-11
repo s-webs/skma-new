@@ -8,8 +8,9 @@
                 <img src="/assets/images/logos/logo.png" alt="logo">
             </object>
         </div>
-        <form action="" class="flex items-center">
-            <input type="text" placeholder="{{ __('public.enterRequest') }}"
+        <form action="{{ route('search.index') }}" class="flex items-center">
+            @csrf
+            <input type="text" name="query" placeholder="{{ __('public.enterRequest') }}"
                    class="px-[15px] appearance-none outline-none focus:ring-0 w-full border border-custom-main rounded-full mr-[20px]">
             <button type="submit"
                     class="border border-custom-main hover:bg-custom-main text-custom-main hover:text-white px-[50px] py-[10px] rounded-full font-semibold transition-all duration-300">

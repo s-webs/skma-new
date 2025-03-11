@@ -13,4 +13,9 @@ return [
     'search' => 'Іздеу',
     'version_for_the_visually_impaired' => 'Көру қабілеті төмен адамдарға арналған',
     'ads' => 'Хабарландырулар',
+
+    'statistics' => 'Статистика',
+    'visits' => 'Сабаққа қатысу',
+    'departments_and_faculties' => 'Кафедралар мен факультеттер',
+    'news' => 'Жаңалықтар',
 ];
