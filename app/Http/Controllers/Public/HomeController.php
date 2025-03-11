@@ -71,7 +71,7 @@ class HomeController extends Controller
             ->map(function ($item) {
                 $item->formatted_date = Carbon::parse($item->created_at)->translatedFormat('j F Y');
                 return $item;
-            });;
+            });
 
         $gallery = Gallery::all()->take('5');
 

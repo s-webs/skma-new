@@ -31,6 +31,11 @@ Route::group([
 
     Route::get('/faculties', [\App\Http\Controllers\Public\FacultiesController::class, 'index'])->name('faculties.index');
     Route::get('/faculties/{slug}', [\App\Http\Controllers\Public\FacultiesController::class, 'show'])->name('faculties.show');
+
+    Route::get('/ads', [\App\Http\Controllers\Public\AdsController::class, 'index'])->name('ads.index');
+    Route::get('/ads/{slug}', [\App\Http\Controllers\Public\AdsController::class, 'show'])->name('ads.show');
+
+    Route::get('/test', [\App\Http\Controllers\Admin\ViewLogsController::class, 'test'])->name('test');
 });
 
 Route::get('/dashboard', function () {

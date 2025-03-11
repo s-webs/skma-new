@@ -5,7 +5,7 @@
                 <h3>{{ __('home.academyAnnouncement') }}</h3>
             </div>
             <div class="hidden md:block">
-                <a href="##"
+                <a href="{{ route('ads.index') }}"
                    class="relative flex justify-between items-center mt-[20px] md:mt-[0px] bg-custom-main rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
                     <div
                         class="text-[14px] lg:text-[18px] pl-[31px] font-semibold text-white relative z-10 transition-all duration-300">
@@ -27,7 +27,7 @@
                         <span class="group-hover:text-white">{{ $item->formatted_date }}</span>
                     </div>
                     <div class="flex items-center h-[100px] overflow-hidden font-semibold">
-                        <a href="##" class="group-hover:text-white">
+                        <a href="{{ route('ads.show', $item->getProperty('slug')) }}" class="group-hover:text-white">
                             {{ $item->getProperty('title') }}
                         </a>
                     </div>
