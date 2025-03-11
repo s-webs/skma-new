@@ -11,4 +11,6 @@ return [
     'contacts' => 'Contacts',
     'enterRequest' => 'Enter a request...',
     'search' => 'Search',
+    'version_for_the_visually_impaired' => 'Version for the visually impaired',
+    'ads' => 'Advertisement',
 ];

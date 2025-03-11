@@ -20,7 +20,7 @@
                 <div id="structureMenu" class="bg-white px-[25px] py-[15px]">
                     @if($item->parent)
                         <div>
-                            <a href="{{ route('faculties.show.show', $item->parent->getProperty('slug')) }}"
+                            <a href="{{ route('faculties.show', $item->parent->getProperty('slug')) }}"
                                class="font-semibold">
                                 {{ $item->parent->getProperty('name') }}
                             </a>
@@ -33,7 +33,7 @@
                                             class="text-custom-main font-semibold">{{ $item->getProperty('name') }}
                                                 </span>
                                     @else
-                                        <a href="{{ route('faculties.show.show', $child->getProperty('slug')) }}"
+                                        <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
                                            class="">{{ $child->getProperty('name') }}
                                         </a>
                                     @endif
@@ -43,7 +43,7 @@
                                 <div class="pl-[20px]">
                                     @foreach($item->children as $child)
                                         <div>
-                                            <a href="{{ route('faculties.show.show', $child->getProperty('slug')) }}"
+                                            <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
                                                class="">{{ $child->getProperty('name') }}</a>
                                         </div>
                                     @endforeach
@@ -58,7 +58,7 @@
                                 <div class="pl-[20px]">
                                     @foreach($item->children as $child)
                                         <div>
-                                            <a href="{{ route('faculties.show.show', $child->getProperty('slug')) }}"
+                                            <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
                                                class="">{{ $child->getProperty('name') }}</a>
                                         </div>
                                     @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\ViewLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -37,8 +38,11 @@ class NewsController extends Controller
             Carbon::setLocale('kk');
         }
 
+        $locale = app()->getLocale();
+
         $localizedSlugColumn = 'slug_' . app()->getLocale();
         $item = News::query()->published()->where($localizedSlugColumn, $slug)->first();
+        ViewLog::trackView($item, $locale);
 
         if ($item) {
             $item->formatted_date = Carbon::parse($item->created_at)->translatedFormat('j F Y');

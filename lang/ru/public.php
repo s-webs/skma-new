@@ -11,4 +11,6 @@ return [
     'contacts' => 'Контакты',
     'enterRequest' => 'Введите запрос...',
     'search' => 'Поиск',
+    'version_for_the_visually_impaired' => 'Версия для слабовидящих',
+    'ads' => 'Объявления',
 ];

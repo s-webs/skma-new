@@ -11,4 +11,6 @@ return [
     'contacts' => 'Байланыс',
     'enterRequest' => 'Сұрауды енгізіңіз...',
     'search' => 'Іздеу',
+    'version_for_the_visually_impaired' => 'Көру қабілеті төмен адамдарға арналған',
+    'ads' => 'Хабарландырулар',
 ];

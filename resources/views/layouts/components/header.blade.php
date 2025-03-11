@@ -19,7 +19,7 @@
             <div>
                 <button id="enable-pc-impaired" class="text-white flex items-center">
                     <i class="fas fa-eye mr-[6.75px]"></i>
-                    <span class="hidden md:block">Версия для слабовидящих</span>
+                    <span class="hidden md:block">{{ __('public.version_for_the_visually_impaired') }}</span>
                 </button>
             </div>
             <div class="text-white ml-[16px] md:ml-[44px]">
