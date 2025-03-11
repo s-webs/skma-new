@@ -16,5 +16,4 @@
     @include('pages.home.components.gallery', compact('gallery'))
     @include('pages.home.components.awards', compact('awards'))
     @include('pages.home.components.partners', compact('partners'))
-
 @endsection
