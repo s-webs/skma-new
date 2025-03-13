@@ -11,6 +11,14 @@ class AwardsController extends Controller
     public function index()
     {
         $awards = Award::all();
-        return view('pages.awards.index', compact('awards'));
+
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.awards.winterIndex', compact('awards')),
+                default => view('pages.awards.index', compact('awards')),
+            };
+        } else {
+            return view('pages.awards.index', compact('awards'));
+        }
     }
 }

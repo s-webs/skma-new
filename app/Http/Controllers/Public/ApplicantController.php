@@ -12,6 +12,13 @@ class ApplicantController extends Controller
     {
         $counters = Counter::all();
 
-        return view('pages.applicant.index', compact('counters'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.applicant.winterIndex', compact('counters')),
+                default => view('pages.applicant.index', compact('counters')),
+            };
+        } else {
+            return view('pages.applicant.index', compact('counters'));
+        }
     }
 }

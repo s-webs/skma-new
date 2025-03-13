@@ -1,16 +1,35 @@
-<div class="">
-    @foreach ($items as $item)
-        @if ($loop->last)
-            <span class="font-semibold">{{ $item['title'] }}</span>
-        @else
-            <span class="mr-[10px] font-semibold">
+@if($activeTheme->code === 'winter')
+    <div class="">
+        @foreach ($items as $item)
+            @if ($loop->last)
+                <span class="font-semibold">{{ $item['title'] }}</span>
+            @else
+                <span class="mr-[10px] font-semibold">
+                <a href="{{ $item['url'] }}" class="text-winter-main hover:text-winter-extra transition-all duration-300">
+                    {{ $item['title'] }}
+                </a>
+            </span>
+                <span class="mr-[10px]">
+                <i class="fal fa-angle-right text-winter-main"></i>
+            </span>
+            @endif
+        @endforeach
+    </div>
+@else
+    <div class="">
+        @foreach ($items as $item)
+            @if ($loop->last)
+                <span class="font-semibold">{{ $item['title'] }}</span>
+            @else
+                <span class="mr-[10px] font-semibold">
                 <a href="{{ $item['url'] }}" class="text-custom-main hover:text-[#5E18AF] transition-all duration-300">
                     {{ $item['title'] }}
                 </a>
             </span>
-            <span class="mr-[10px]">
+                <span class="mr-[10px]">
                 <i class="fal fa-angle-right text-custom-main"></i>
             </span>
-        @endif
-    @endforeach
-</div>
+            @endif
+        @endforeach
+    </div>
+@endif

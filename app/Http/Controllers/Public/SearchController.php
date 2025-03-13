@@ -59,14 +59,32 @@ class SearchController extends Controller
             ->orWhere('description_en', 'LIKE', "%{$query}%")
             ->get();
 
-
-        return view('pages.search.index', [
-            'advertResults' => $advertResults,
-            'newsResults' => $newsResults,
-            'divisionsResults' => $divisionsResults,
-            'departmentsResults' => $departmentsResults,
-            'query' => $query,
-        ]);
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.search.winterIndex', [
+                    'advertResults' => $advertResults,
+                    'newsResults' => $newsResults,
+                    'divisionsResults' => $divisionsResults,
+                    'departmentsResults' => $departmentsResults,
+                    'query' => $query,
+                ]),
+                default => view('pages.search.index', [
+                    'advertResults' => $advertResults,
+                    'newsResults' => $newsResults,
+                    'divisionsResults' => $divisionsResults,
+                    'departmentsResults' => $departmentsResults,
+                    'query' => $query,
+                ]),
+            };
+        } else {
+            return view('pages.search.index', [
+                'advertResults' => $advertResults,
+                'newsResults' => $newsResults,
+                'divisionsResults' => $divisionsResults,
+                'departmentsResults' => $departmentsResults,
+                'query' => $query,
+            ]);
+        }
 
     }
 }

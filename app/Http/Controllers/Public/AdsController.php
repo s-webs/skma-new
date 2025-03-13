@@ -23,7 +23,15 @@ class AdsController extends Controller
                 return $item;
             });
 
-        return view('pages.ads.index', compact('ads'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.ads.winterIndex', compact('ads')),
+                default => view('pages.ads.index', compact('ads')),
+            };
+        } else {
+            return view('pages.ads.index', compact('ads'));
+        }
+
     }
 
     public function show($slug)
@@ -46,7 +54,14 @@ class AdsController extends Controller
             $item->short_en = Str::limit($item->title_en, 30, '...');
         }
 
-        return view('pages.ads.show', compact('item'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.ads.winterShow', compact('item')),
+                default => view('pages.ads.show', compact('item')),
+            };
+        } else {
+            return view('pages.ads.show', compact('item'));
+        }
 
     }
 }

@@ -29,7 +29,14 @@ class NewsController extends Controller
         });
 
 
-        return view('pages.news.index', compact('news'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.news.winterIndex', compact('news')),
+                default => view('pages.news.index', compact('news')),
+            };
+        } else {
+            return view('pages.news.index', compact('news'));
+        }
     }
 
     public function show($slug)
@@ -52,6 +59,13 @@ class NewsController extends Controller
             $item->short_en = Str::limit($item->title_en, 30, '...');
         }
 
-        return view('pages.news.show', compact('item'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.news.winterShow', compact('item')),
+                default => view('pages.news.show', compact('item')),
+            };
+        } else {
+            return view('pages.news.show', compact('item'));
+        }
     }
 }

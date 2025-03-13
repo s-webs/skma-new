@@ -14,7 +14,14 @@ class DivisionsController extends Controller
     {
         $divisions = Division::whereNull('parent_id')->with('children')->get();
 
-        return view('pages.divisions.index', compact('divisions'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.divisions.winterIndex', compact('divisions')),
+                default => view('pages.divisions.index', compact('divisions')),
+            };
+        } else {
+            return view('pages.divisions.index', compact('divisions'));
+        }
     }
 
     public function show($slug)
@@ -29,6 +36,13 @@ class DivisionsController extends Controller
         $parent = $item->parent;
         $children = $item->children;
 
-        return view('pages.divisions.show', compact('item', 'parent', 'children'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.divisions.winterShow', compact('item', 'parent', 'children')),
+                default => view('pages.divisions.show', compact('item', 'parent', 'children')),
+            };
+        } else {
+            return view('pages.divisions.show', compact('item', 'parent', 'children'));
+        }
     }
 }

@@ -12,6 +12,13 @@ class GalleryController extends Controller
     {
         $images = Gallery::all();
 
-        return view('pages.gallery.index', compact('images'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.gallery.winterIndex', compact('images')),
+                default => view('pages.gallery.index', compact('images')),
+            };
+        } else {
+            return view('pages.gallery.index', compact('images'));
+        }
     }
 }

@@ -32,6 +32,10 @@ class ThemeResource extends ModelResource
     {
         return [
             ID::make()->sortable(),
+            Image::make('Скриншот', 'image'),
+            Text::make('Название', 'name'),
+            Text::make('Код темы', 'code'),
+            Switcher::make('Активно', 'active')
         ];
     }
 
@@ -43,7 +47,7 @@ class ThemeResource extends ModelResource
         return [
             Box::make([
                 ID::make(),
-                Text::make('Название'),
+                Text::make('Название', 'name'),
                 Image::make('Скриншот', 'image')
                     ->dir('uploads/themes/')
                     ->customName(function ($file, $field) {

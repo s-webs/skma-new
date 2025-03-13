@@ -4,10 +4,17 @@
         @if(count($results) > 0)
         @foreach($results as $item)
             <div class="mb-[20px]">
-                <a href="{{ route($route, $item->getProperty('slug')) }}"
-                   class="hover:text-custom-main transition-all duration-300">
-                    {{ $item->getProperty($field) }}
-                </a>
+                @if($activeTheme->code === 'winter')
+                    <a href="{{ route($route, $item->getProperty('slug')) }}"
+                       class="hover:text-winter-main transition-all duration-300">
+                        {{ $item->getProperty($field) }}
+                    </a>
+                @else
+                    <a href="{{ route($route, $item->getProperty('slug')) }}"
+                       class="hover:text-custom-main transition-all duration-300">
+                        {{ $item->getProperty($field) }}
+                    </a>
+                @endif
             </div>
         @endforeach
         @else

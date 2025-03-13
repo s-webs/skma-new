@@ -80,7 +80,15 @@ class HomeController extends Controller
         $awards = Award::query()->where('is_published', '=', 1)->take('4')->get();
         $partners = Partner::all();
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners'));
+        if ($this->activeTheme) {
+            return match ($this->activeTheme->code) {
+                'winter' => view('pages.home.winter-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
+                default => view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
+            };
+        } else {
+            // Обработка случая, когда activeTheme равен null
+            return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')); // Или другой шаблон по умолчанию
+        }
     }
 
     public function academyStructure()

@@ -31,6 +31,7 @@ export default {
                     secondary: '#9392B6',
                     primary: '#DEEEFF',
                     heading: '#11111B',
+                    extra: '#1F62FF',
                 },
                 primary: {
                     main: '#302C76',
