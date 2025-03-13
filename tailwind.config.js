@@ -24,6 +24,14 @@ export default {
                     primary: '#EADDFF',
                     heading: '#11111B',
                 },
+                winter: {
+                    dark: '#1E1E1E',
+                    halftone: '#F0F7FF',
+                    main: '#268FFF',
+                    secondary: '#9392B6',
+                    primary: '#DEEEFF',
+                    heading: '#11111B',
+                },
                 primary: {
                     main: '#302C76',
                     secondary: '#64649A',

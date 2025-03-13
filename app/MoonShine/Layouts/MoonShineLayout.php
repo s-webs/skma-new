@@ -49,6 +49,7 @@ use App\MoonShine\Resources\PartnerResource;
 use App\MoonShine\Resources\DepartmentResource;
 use App\MoonShine\Resources\DivisionResource;
 use App\MoonShine\Resources\FacultyResource;
+use App\MoonShine\Resources\ThemeResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -89,6 +90,7 @@ final class MoonShineLayout extends CompactLayout
                 MenuItem::make('Users', UserResource::class),
                 MenuItem::make('Roles', RolesResource::class),
             ], 'users'),
+            MenuItem::make('Themes', ThemeResource::class),
         ];
     }
 
