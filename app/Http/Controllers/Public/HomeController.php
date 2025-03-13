@@ -83,6 +83,8 @@ class HomeController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.home.winter-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
+                'spring' => view('pages.home.spring-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
+                'summer' => view('pages.home.summer-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
                 default => view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
             };
         } else {

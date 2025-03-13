@@ -9,6 +9,11 @@
                        class="hover:text-winter-main transition-all duration-300">
                         {{ $item->getProperty($field) }}
                     </a>
+                @elseif($activeTheme->code === 'summer')
+                    <a href="{{ route($route, $item->getProperty('slug')) }}"
+                       class="hover:text-summer-main transition-all duration-300">
+                        {{ $item->getProperty($field) }}
+                    </a>
                 @else
                     <a href="{{ route($route, $item->getProperty('slug')) }}"
                        class="hover:text-custom-main transition-all duration-300">

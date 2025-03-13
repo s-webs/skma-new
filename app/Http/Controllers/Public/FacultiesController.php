@@ -16,6 +16,7 @@ class FacultiesController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.faculties.winterIndex', compact('faculties')),
+                'summer' => view('pages.faculties.summerIndex', compact('faculties')),
                 default => view('pages.faculties.index', compact('faculties')),
             };
         } else {
@@ -41,6 +42,7 @@ class FacultiesController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.faculties.winterShow', compact('item', 'parent', 'children')),
+                'summer' => view('pages.faculties.summerShow', compact('item', 'parent', 'children')),
                 default => view('pages.faculties.show', compact('item', 'parent', 'children')),
             };
         } else {

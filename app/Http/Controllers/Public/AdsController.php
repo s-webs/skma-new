@@ -26,6 +26,7 @@ class AdsController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.ads.winterIndex', compact('ads')),
+                'summer' => view('pages.ads.summerIndex', compact('ads')),
                 default => view('pages.ads.index', compact('ads')),
             };
         } else {
@@ -57,6 +58,7 @@ class AdsController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.ads.winterShow', compact('item')),
+                'summer' => view('pages.ads.summerShow', compact('item')),
                 default => view('pages.ads.show', compact('item')),
             };
         } else {

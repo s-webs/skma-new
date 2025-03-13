@@ -15,6 +15,8 @@ class ApplicantController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.applicant.winterIndex', compact('counters')),
+                'spring' => view('pages.applicant.springIndex', compact('counters')),
+                'summer' => view('pages.applicant.summerIndex', compact('counters')),
                 default => view('pages.applicant.index', compact('counters')),
             };
         } else {

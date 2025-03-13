@@ -15,6 +15,7 @@ class GalleryController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.gallery.winterIndex', compact('images')),
+                'summer' => view('pages.gallery.summerIndex', compact('images')),
                 default => view('pages.gallery.index', compact('images')),
             };
         } else {

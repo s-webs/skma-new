@@ -1,0 +1,15 @@
+@extends('layouts.public', ['kzLink' => null, 'ruLink' => null, 'enLink' => null])
+
+@section('content')
+        @include('pages.home.springComponents.announce', compact('announcements'))
+        @include('pages.home.springComponents.mobileAnnounce', compact('announcements'))
+        @include('pages.home.springComponents.counters', compact('counters'))
+        @include('pages.home.springComponents.newsComponent', compact('news', 'latestArticle'))
+        @include('pages.home.springComponents.feedback', compact('feedbacks'))
+        @include('pages.home.springComponents.ads', compact('adverts'))
+        @include('pages.home.springComponents.services', compact('services'))
+        @include('pages.home.springComponents.information')
+        @include('pages.home.springComponents.gallery', compact('gallery'))
+        @include('pages.home.springComponents.awards', compact('awards'))
+        @include('pages.home.springComponents.partners', compact('partners'))
+@endsection

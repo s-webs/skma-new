@@ -32,6 +32,7 @@ class NewsController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.news.winterIndex', compact('news')),
+                'summer' => view('pages.news.summerIndex', compact('news')),
                 default => view('pages.news.index', compact('news')),
             };
         } else {
@@ -62,6 +63,7 @@ class NewsController extends Controller
         if ($this->activeTheme) {
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.news.winterShow', compact('item')),
+                'summer' => view('pages.news.summerShow', compact('item')),
                 default => view('pages.news.show', compact('item')),
             };
         } else {
