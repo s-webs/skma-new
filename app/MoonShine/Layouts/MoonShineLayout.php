@@ -90,7 +90,9 @@ final class MoonShineLayout extends CompactLayout
                 MenuItem::make('Users', UserResource::class),
                 MenuItem::make('Roles', RolesResource::class),
             ], 'users'),
-            MenuItem::make('Themes', ThemeResource::class),
+            MenuGroup::make('Настройки', [
+                MenuItem::make('Темы', ThemeResource::class),
+            ], 'wrench-screwdriver'),
         ];
     }
 

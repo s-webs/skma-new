@@ -17,6 +17,7 @@ class ApplicantController extends Controller
                 'winter' => view('pages.applicant.winterIndex', compact('counters')),
                 'spring' => view('pages.applicant.springIndex', compact('counters')),
                 'summer' => view('pages.applicant.summerIndex', compact('counters')),
+                'autumn' => view('pages.applicant.autumnIndex', compact('counters')),
                 default => view('pages.applicant.index', compact('counters')),
             };
         } else {

@@ -75,6 +75,13 @@ class SearchController extends Controller
                     'departmentsResults' => $departmentsResults,
                     'query' => $query,
                 ]),
+                'autumn' => view('pages.search.autumnIndex', [
+                    'advertResults' => $advertResults,
+                    'newsResults' => $newsResults,
+                    'divisionsResults' => $divisionsResults,
+                    'departmentsResults' => $departmentsResults,
+                    'query' => $query,
+                ]),
                 default => view('pages.search.index', [
                     'advertResults' => $advertResults,
                     'newsResults' => $newsResults,

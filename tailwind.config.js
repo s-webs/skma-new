@@ -42,6 +42,15 @@ export default {
                     heading: '#11111B',
                     extra: '#10791B',
                 },
+                autumn: {
+                    dark: '#1E1E1E',
+                    halftone: '#FFF3F1',
+                    main: '#D23C2D',
+                    secondary: '#BD9995',
+                    primary: '#FFE1DE',
+                    heading: '#11111B',
+                    extra: '#AF272D',
+                },
                 primary: {
                     main: '#302C76',
                     secondary: '#64649A',

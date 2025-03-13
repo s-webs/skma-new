@@ -1,11 +1,11 @@
-@extends('layouts.summerLayout', ['kzLink' => 'for-the-applicant/', 'ruLink' => 'for-the-applicant/', 'enLink' => 'for-the-applicant/'])
+@extends('layouts.autumnLayout', ['kzLink' => 'for-the-applicant/', 'ruLink' => 'for-the-applicant/', 'enLink' => 'for-the-applicant/'])
 
 @section('content')
     <div class="w-full py-[60px] h-auto xl:h-[600px] 2xl:h-[700px] overflow-hidden relative">
-        <div class="w-full h-full absolute top-0 left-0 bg-summer-main">
+        <div class="w-full h-full absolute top-0 left-0 bg-autumn-main">
             <img src="/assets/images/for-applicant.png" alt="/assets/images/for-applicant.png"
                  class="w-full h-full object-cover absolute top-0 left-0 z-[3]">
-            <div class="w-full h-full bg-summer-main bg-opacity-50 absolute top-0 left-0 z-[4]"></div>
+            <div class="w-full h-full bg-autumn-main bg-opacity-50 absolute top-0 left-0 z-[4]"></div>
         </div>
         <div class="relative z-[5] flex justify-center items-center h-full">
             <div class="container mx-auto px-4">
@@ -24,10 +24,10 @@
             </div>
         </div>
     </div>
-    <div class="bg-summer-main overflow-hidden mt-[60px]">
+    <div class="bg-autumn-main overflow-hidden mt-[60px]">
         <div class="py-[60px] flex flex-wrap items-center justify-center relative">
             <div class="absolute left-[0] top-[0] w-full h-full">
-                <img src="/assets/images/cliparts/summer_01.png" alt="" class="w-full h-full object-cover opacity-20 z-[3]">
+                <img src="/assets/images/cliparts/autumn_01.png" alt="" class="w-full h-full object-cover opacity-20 z-[3]">
             </div>
 
             @foreach($counters as $counter)
@@ -43,7 +43,7 @@
     <div class="my-[60px]">
         <div class="container mx-auto px-4">
             <div x-data="{ open: false }" class="overflow-hidden bg-white rounded-[15px] box-border">
-                <h3 @click="open = !open" class="cursor-pointer flex justify-between items-center bg-summer-main py-[16px] px-[24px] rounded-[15px] text-white shadow-md font-semibold">
+                <h3 @click="open = !open" class="cursor-pointer flex justify-between items-center bg-autumn-main py-[16px] px-[24px] rounded-[15px] text-white shadow-md font-semibold">
                     <span class="mr-[20px]">{{ __('applicant.list_of_offered_training_programs') }}</span>
                     <i :class="open ? 'fal fa-angle-up' : 'fal fa-angle-down'"></i>
                 </h3>

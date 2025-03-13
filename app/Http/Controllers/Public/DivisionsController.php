@@ -18,6 +18,7 @@ class DivisionsController extends Controller
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.divisions.winterIndex', compact('divisions')),
                 'summer' => view('pages.divisions.summerIndex', compact('divisions')),
+                'autumn' => view('pages.divisions.autumnIndex', compact('divisions')),
                 default => view('pages.divisions.index', compact('divisions')),
             };
         } else {
@@ -41,6 +42,7 @@ class DivisionsController extends Controller
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.divisions.winterShow', compact('item', 'parent', 'children')),
                 'summer' => view('pages.divisions.summerShow', compact('item', 'parent', 'children')),
+                'autumn' => view('pages.divisions.autumnShow', compact('item', 'parent', 'children')),
                 default => view('pages.divisions.show', compact('item', 'parent', 'children')),
             };
         } else {

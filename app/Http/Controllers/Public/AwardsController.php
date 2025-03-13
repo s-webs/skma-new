@@ -16,6 +16,7 @@ class AwardsController extends Controller
             return match ($this->activeTheme->code) {
                 'winter' => view('pages.awards.winterIndex', compact('awards')),
                 'summer' => view('pages.awards.summerIndex', compact('awards')),
+                'autumn' => view('pages.awards.autumnIndex', compact('awards')),
                 default => view('pages.awards.index', compact('awards')),
             };
         } else {
