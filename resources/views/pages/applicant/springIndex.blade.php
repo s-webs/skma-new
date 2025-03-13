@@ -31,7 +31,7 @@
             </div>
 
             @foreach($counters as $counter)
-                <div class="w-[160px] h-[160px] xl:w-[250px] xl:h-[250px] m-[14px] rounded-full flex flex-col justify-center items-center text-center p-5 text-white bg-[#914EFF] bg-opacity-70 border-[5px] xl:border-[20px] border-[#9757FF] relative z-[5]">
+                <div class="w-[160px] h-[160px] xl:w-[250px] xl:h-[250px] m-[14px] rounded-full flex flex-col justify-center items-center text-center p-5 text-white bg-white bg-opacity-20 border-[5px] xl:border-[20px] border-white border-opacity-10 relative z-[5]">
                     <div class="text-[24px] xl:text-[44px] font-semibold">
                         <span class="counter" data-count="{{ $counter->count }}">0</span>
                     </div>

@@ -5,7 +5,7 @@
         <div class="w-full h-full absolute top-0 left-0 bg-winter-main">
             <img src="/assets/images/for-applicant.png" alt="/assets/images/for-applicant.png"
                  class="w-full h-full object-cover absolute top-0 left-0 z-[3]">
-            <div class="w-full h-full bg-winter-main bg-opacity-70 absolute top-0 left-0 z-[4]"></div>
+            <div class="w-full h-full bg-winter-main bg-opacity-40 absolute top-0 left-0 z-[4]"></div>
         </div>
         <div class="relative z-[5] flex justify-center items-center h-full">
             <div class="container mx-auto px-4">
@@ -31,7 +31,7 @@
             </div>
 
             @foreach($counters as $counter)
-                <div class="w-[160px] h-[160px] xl:w-[250px] xl:h-[250px] m-[14px] rounded-full flex flex-col justify-center items-center text-center p-5 text-white bg-winter-extra bg-opacity-50 border-[5px] xl:border-[20px] border-opacity-90 border-winter-extra relative z-[5]">
+                <div class="w-[160px] h-[160px] xl:w-[250px] xl:h-[250px] m-[14px] rounded-full flex flex-col justify-center items-center text-center p-5 text-white bg-white bg-opacity-20 border-[5px] xl:border-[20px] border-opacity-10 border-white relative z-[5]">
                     <div class="text-[24px] xl:text-[44px] font-semibold">
                         <span class="counter" data-count="{{ $counter->count }}">0</span>
                     </div>

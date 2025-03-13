@@ -5,7 +5,7 @@
         <div class="w-full h-full absolute top-0 left-0 bg-autumn-main">
             <img src="/assets/images/for-applicant.png" alt="/assets/images/for-applicant.png"
                  class="w-full h-full object-cover absolute top-0 left-0 z-[3]">
-            <div class="w-full h-full bg-autumn-main bg-opacity-50 absolute top-0 left-0 z-[4]"></div>
+            <div class="w-full h-full bg-autumn-main bg-opacity-30 absolute top-0 left-0 z-[4]"></div>
         </div>
         <div class="relative z-[5] flex justify-center items-center h-full">
             <div class="container mx-auto px-4">
