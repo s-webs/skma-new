@@ -36,8 +36,12 @@
         this.restartSlideshow();
     }
 }" class="relative">
-    <div class="h-auto xl:h-[840px] bg-custom-main relative">
-        <img src="/assets/images/cliparts/wave-02.png" alt="" class="absolute z-[3] w-full h-full object-cover">
+    <div class="h-auto xl:h-[840px] bg-[var(--color-main)] relative">
+        @if($activeTheme->code === 'default')
+            <img src="/assets/images/cliparts/wave-02.png" alt="" class="absolute z-[3] w-full h-full object-cover">
+        @else
+            <img src="/{{ $activeTheme->pattern_02 }}" alt="" class="absolute z-[3] opacity-20 w-full h-full object-cover">
+        @endif
         <div class="px-1 xs:px-2 xl:container flex items-center justify-center h-full mx-auto pt-[50px] xl:pt-[0px]">
             <div class="flex flex-col xl:flex-row items-center relative z-[5]">
                 <div
@@ -60,7 +64,7 @@
                         <div>
                             <div class="text-[18px] text-custom-heading font-bold"
                                  x-text="reviews[currentIndex].name"></div>
-                            <div class="text-[14px] text-custom-secondary mt-[8px]"
+                            <div class="text-[14px] text-[var(--color-secondary)] mt-[8px]"
                                  x-text="reviews[currentIndex].about"></div>
                         </div>
                     </div>
@@ -72,21 +76,21 @@
                         <div class="flex items-center">
                             <template x-for="(review, index) in reviews" :key="index">
                                 <div class="h-[8px] mr-[8px] rounded-full"
-                                     :class="{'bg-custom-main w-[30px]': currentIndex === index, 'bg-[#DBC5FF] w-[8px]': currentIndex !== index}"></div>
+                                     :class="{'bg-[var(--color-main)] w-[30px]': currentIndex === index, 'bg-[var(--color-secondary)] w-[8px]': currentIndex !== index}"></div>
                             </template>
                         </div>
                         <div class="flex items-center">
                             <button @click="toggleSlideshow()"
-                                    class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[10px] xl:text-[14px] text-white hover:text-custom-main mr-[12px] bg-custom-main hover:bg-custom-halftone transition-colors duration-300">
+                                    class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[10px] xl:text-[14px] text-white hover:text-[var(--color-main)] mr-[12px] bg-[var(--color-main)] hover:bg-[var(--color-halftone)] transition-colors duration-300">
                                 <i class="fas"
                                    :class="{'fa-pause': !isPlaying, 'fa-play': isPlaying}"></i>
                             </button>
                             <button @click="prevSlide()"
-                                    class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-custom-main mr-[12px] bg-custom-main hover:bg-custom-halftone transition-colors duration-300">
+                                    class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-[var(--color-main)] mr-[12px] bg-[var(--color-main)] hover:bg-[var(--color-halftone)] transition-colors duration-300">
                                 <i class="fas fa-angle-left translate-y-[1px]"></i>
                             </button>
                             <button @click="nextSlide()"
-                                    class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-custom-main bg-custom-main hover:bg-custom-halftone transition-colors duration-300">
+                                    class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-[var(--color-main)] bg-[var(--color-main)] hover:bg-[var(--color-halftone)] transition-colors duration-300">
                                 <i class="fas fa-angle-right translate-y-[1px]"></i>
                             </button>
                         </div>

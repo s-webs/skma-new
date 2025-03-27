@@ -23,6 +23,7 @@ export default {
                     secondary: '#9392B6',
                     primary: '#EADDFF',
                     heading: '#11111B',
+                    extra: '#914EFF'
                 },
                 winter: {
                     dark: '#1E1E1E',

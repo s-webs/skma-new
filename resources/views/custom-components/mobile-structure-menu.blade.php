@@ -2,7 +2,7 @@
 
 <div class="lg:hidden mt-[60px] rounded-[15px] overflow-hidden shadow-md">
     <div>
-        <div id="toggleStructureMenu" class="bg-custom-main px-[25px] py-[15px] cursor-pointer">
+        <div id="toggleStructureMenu" class="bg-[var(--color-main)] px-[25px] py-[15px] cursor-pointer">
             <div class="flex items-center justify-between text-white font-semibold">
                 <span class="">{{ $title }}</span>
                 <i id="structureMenuIcon" class="fal fa-angle-right transition-all duration-300"></i>
@@ -21,7 +21,7 @@
             @else
                 <div class="">
                     <div>
-                        <span class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
+                        <span class="text-[var(--color-main)] font-semibold">{{ $item->getProperty('name') }}</span>
                     </div>
                     <div class="pl-[20px]">
                         @include('custom-components.mobile-divisions-list', ['divisions' => $item->children, 'currentId' => $item->id])

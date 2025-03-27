@@ -6,35 +6,35 @@
                     <img src="{{ $latestArticle->preview_ru }}" alt="{{ $latestArticle->getProperty('title') }}"
                          class="w-full h-full object-cover">
                 </div>
-                <div class="flex items-center mt-[24px] md:mt-[37px] text-[14px] sm:text-[16px] text-custom-heading">
+                <div class="flex items-center mt-[24px] md:mt-[37px] text-[14px] sm:text-[16px] text-[var(--color-heading)]">
                     <div class="flex items-center mr-[20px]">
-                        <i class="fad fa-calendar-alt text-custom-secondary"></i><span
+                        <i class="fad fa-calendar-alt text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $latestArticle->formatted_date }}</span>
                     </div>
                     <div class="flex items-center mr-[20px]">
-                        <i class="fas fa-eye text-custom-secondary"></i><span
+                        <i class="fas fa-eye text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $latestArticle->getProperty('views') }}</span>
                     </div>
                     <div class="flex items-center mr-[20px]">
-                        <i class="fas fa-heart text-custom-secondary"></i><span
+                        <i class="fas fa-heart text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $latestArticle->likes->count() }}</span>
                     </div>
                     <div class="flex items-center">
-                        <i class="fas fa-comment text-custom-secondary"></i><span
+                        <i class="fas fa-comment text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $latestArticle->comments->count() }}</span>
                     </div>
                 </div>
                 <div
-                    class="text-[18px] md:text-[32px] mt-[24px] font-bold text-custom-heading">{{ $latestArticle->getProperty('title') }}</div>
+                    class="text-[18px] md:text-[32px] mt-[24px] font-bold text-[var(--color-heading)]">{{ $latestArticle->getProperty('title') }}</div>
                 <div class="mt-[24px] flex">
                     <a href="{{ route('news.show', $latestArticle->getProperty('slug')) }}"
-                       class="relative flex justify-between items-center bg-custom-main rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
+                       class="relative flex justify-between items-center bg-[var(--color-main)] rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
                         <div
                             class="text-[14px] lg:text-[18px] pl-[31px] font-semibold text-white relative z-10 transition-all duration-300">
                             {{ __('home.readArticle') }}
                         </div>
                         <div
-                            class="flex items-center justify-center ml-[21px] w-[40px] md:w-[64px] h-[40px] md:h-[64px] bg-[#914EFF] text-white rounded-full relative z-10 transition-all duration-300 group-hover:bg-[#6835B8] group-hover:scale-110">
+                            class="flex items-center justify-center ml-[21px] w-[40px] md:w-[64px] h-[40px] md:h-[64px] bg-[var(--color-extra)] text-white rounded-full relative z-10 transition-all duration-300 group-hover:bg-[var(--color-extra)] group-hover:scale-110">
                             <i class="fal fa-arrow-right text-[20px]"></i>
                         </div>
                     </a>
@@ -46,7 +46,7 @@
                 <div class="flex items-center justify-between mb-[24px]">
                     <h3 class="uppercase text-[14px] xl:text-[24px] font-bold">{{ __('home.academyNews') }}</h3>
                     <a href="{{ route('news.index') }}"
-                       class="font-semibold text-[14px] xl:text-[18px] text-custom-main flex items-center group">
+                       class="font-semibold text-[14px] xl:text-[18px] text-[var(--color-main)] flex items-center group">
                         <span class="mr-[5px] xl:mr-[10px]">{{ __('home.allNews') }}</span>
                         <i class="fal fa-angle-right text-[14px] xl:text-[24px] translate-y-[2px] group-hover:translate-x-[5px] transition-transform duration-300"></i>
                     </a>
@@ -60,11 +60,11 @@
                         </a>
                         <div class="text-[12px] xs:text-[16px] font-semibold">
                             <div class="h-[53px] xs:h-auto">
-                                <a href="{{ route('news.show', $item->getProperty('slug')) }}" class="transition-colors duration-300 group-hover:text-custom-main">
+                                <a href="{{ route('news.show', $item->getProperty('slug')) }}" class="transition-colors duration-300 group-hover:text-[var(--color-main)]">
                                     {{ $item->getProperty('title') }}
                                 </a>
                             </div>
-                            <div class="flex items-center mt-[5px] xs:mt-[24px] text-[10px] xs:text-[14px] text-custom-secondary">
+                            <div class="flex items-center mt-[5px] xs:mt-[24px] text-[10px] xs:text-[14px] text-[var(--color-secondary)]">
                                 <div class="flex items-center mr-[16px]">
                                     <i class="fad fa-calendar-alt xs:translate-y-[2px]"></i>
                                     <span class="ml-[6px]">{{ $item->formatted_date }}</span>

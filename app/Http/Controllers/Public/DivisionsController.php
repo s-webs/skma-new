@@ -14,16 +14,7 @@ class DivisionsController extends Controller
     {
         $divisions = Division::whereNull('parent_id')->with('children')->get();
 
-        if ($this->activeTheme) {
-            return match ($this->activeTheme->code) {
-                'winter' => view('pages.divisions.winterIndex', compact('divisions')),
-                'summer' => view('pages.divisions.summerIndex', compact('divisions')),
-                'autumn' => view('pages.divisions.autumnIndex', compact('divisions')),
-                default => view('pages.divisions.index', compact('divisions')),
-            };
-        } else {
-            return view('pages.divisions.index', compact('divisions'));
-        }
+        return view('pages.divisions.index', compact('divisions'));
     }
 
     public function show($slug)
@@ -38,15 +29,6 @@ class DivisionsController extends Controller
         $parent = $item->parent;
         $children = $item->children;
 
-        if ($this->activeTheme) {
-            return match ($this->activeTheme->code) {
-                'winter' => view('pages.divisions.winterShow', compact('item', 'parent', 'children')),
-                'summer' => view('pages.divisions.summerShow', compact('item', 'parent', 'children')),
-                'autumn' => view('pages.divisions.autumnShow', compact('item', 'parent', 'children')),
-                default => view('pages.divisions.show', compact('item', 'parent', 'children')),
-            };
-        } else {
-            return view('pages.divisions.show', compact('item', 'parent', 'children'));
-        }
+        return view('pages.divisions.show', compact('item', 'parent', 'children'));
     }
 }

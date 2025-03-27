@@ -14,25 +14,25 @@
                 class="flex flex-col md:flex-row items-start md:items-center justify-between pb-[30px] md:pb-0 mt-[30px] xl:mt-[60px]">
                 <div class="">
                     {{--                    <a href="##"--}}
-                    {{--                       class="py-[12px] px-[14px] border bg-white text-custom-main rounded-[10px] hover:bg-custom-main duration-300 transition-all hover:text-white">--}}
+                    {{--                       class="py-[12px] px-[14px] border bg-white text-[var(--color-main)] rounded-[10px] hover:bg-[var(--color-main)] duration-300 transition-all hover:text-white">--}}
                     {{--                        Подразделение--}}
                     {{--                    </a>--}}
                 </div>
                 <div class="flex items-center">
                     <div class="flex items-center mr-[20px]">
-                        <i class="fad fa-calendar-alt text-custom-secondary"></i><span
+                        <i class="fad fa-calendar-alt text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $item->formatted_date }}</span>
                     </div>
                     <div class="flex items-center mr-[20px]">
-                        <i class="fas fa-eye text-custom-secondary"></i><span
+                        <i class="fas fa-eye text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $item->getProperty('views') }}</span>
                     </div>
                     <div class="flex items-center mr-[20px]">
-                        <i class="fas fa-heart text-custom-secondary"></i><span
+                        <i class="fas fa-heart text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $item->likes->count() }}</span>
                     </div>
                     <div class="flex items-center">
-                        <i class="fas fa-comment text-custom-secondary"></i><span
+                        <i class="fas fa-comment text-[var(--color-secondary)]"></i><span
                             class="ml-[6px]">{{ $item->comments->count() }}</span>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             </div>
             @if($item->images)
                 <div
-                    class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
+                    class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-[var(--color-main)] border-opacity-20">
                     <div class="swiper news-slider w-full h-full">
                         <div class="swiper-wrapper w-full h-full">
                             @foreach($item->images as $image)
@@ -56,7 +56,7 @@
                 </div>
             @else
                 <div
-                    class="mt-[40px] w-full xl:w-[70%] mx-auto h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-custom-main/25">
+                    class="mt-[40px] w-full xl:w-[70%] mx-auto h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[5px] border-[var(--color-halftone)]">
                     <img src="{{ $item->getProperty('preview') }}" alt="{{ $item->getProperty('title') }}"
                          class="object-cover w-full h-full">
                 </div>
@@ -65,9 +65,9 @@
                 {!! $item->getProperty('text') !!}
             </div>
             {{--            <div class="mt-[30px]">--}}
-            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-custom-main hover:bg-custom-main hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
-            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-custom-main hover:bg-custom-main hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
-            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-custom-main hover:bg-custom-main hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
+            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
+            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
+            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
             {{--            </div>--}}
             <div class="mt-[60px] pb-[60px]">
                 <form action="{{ route('like.store', $item->id)  }}" method="post">
@@ -96,7 +96,7 @@
                         <textarea name="message" placeholder="Напишите комментарий"
                                   class="resize-none w-full p-[16px] pb-[50px] rounded-[10px]"></textarea>
                         <button type="submit"
-                                class="bg-custom-main hover:bg-[#5E18AF] transition-all duration-300 text-white px-[15px] py-[10px] mt-[10px] rounded-[5px]">
+                                class="bg-[var(--color-main)] hover:bg-[var(--color-extra)] transition-all duration-300 text-white px-[15px] py-[10px] mt-[10px] rounded-[5px]">
                             Опубликовать
                         </button>
                     </form>

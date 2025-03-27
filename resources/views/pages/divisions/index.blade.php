@@ -22,13 +22,13 @@
                                 @foreach($divisions as $parent)
                                     <div>
                                         <a href="{{ route('structure.show', $parent->getProperty('slug')) }}"
-                                           class="text-sm md:text-lg xl:text-xl block mb-[16px] px-[24px] py-[10px] font-semibold text-custom-main hover:text-white bg-white hover:bg-custom-main border border-custom-main rounded-[10px] transition-all duration-300">{{ $parent->getProperty('name') }}</a>
+                                           class="text-sm md:text-lg xl:text-xl block mb-[16px] px-[24px] py-[10px] font-semibold text-[var(--color-main)] hover:text-white bg-white hover:bg-[var(--color-main)] border border-[var(--color-main)] rounded-[10px] transition-all duration-300">{{ $parent->getProperty('name') }}</a>
                                         @if($parent->children->isNotEmpty())
                                             <ul class="pl-[20px] xl:pl-[40px]">
                                                 @foreach($parent->children as $child)
                                                     <li class="">
                                                         <a href="{{ route('structure.show', $child->getProperty('slug')) }}"
-                                                           class="text-sm md:text-lg xl:text-xl block border border-custom-main py-[5px] px-[15px] mb-[16px] rounded-[10px] text-custom-main hover:text-white bg-white hover:bg-custom-main transition-all duration-300">{{ $child->getProperty('name') }}</a>
+                                                           class="text-sm md:text-lg xl:text-xl block border border-[var(--color-main)] py-[5px] px-[15px] mb-[16px] rounded-[10px] text-[var(--color-main)] hover:text-white bg-white hover:bg-[var(--color-main)] transition-all duration-300">{{ $child->getProperty('name') }}</a>
                                                     </li>
                                                 @endforeach
                                             </ul>

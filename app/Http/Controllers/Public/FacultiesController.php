@@ -13,16 +13,7 @@ class FacultiesController extends Controller
     {
         $faculties = Faculty::query()->with('children')->get();
 
-        if ($this->activeTheme) {
-            return match ($this->activeTheme->code) {
-                'winter' => view('pages.faculties.winterIndex', compact('faculties')),
-                'summer' => view('pages.faculties.summerIndex', compact('faculties')),
-                'autumn' => view('pages.faculties.autumnIndex', compact('faculties')),
-                default => view('pages.faculties.index', compact('faculties')),
-            };
-        } else {
-            return view('pages.faculties.index', compact('faculties'));
-        }
+        return view('pages.faculties.index', compact('faculties'));
     }
 
     public function show($slug)
@@ -40,15 +31,6 @@ class FacultiesController extends Controller
         $parent = $item->parent;
         $children = $item->children;
 
-        if ($this->activeTheme) {
-            return match ($this->activeTheme->code) {
-                'winter' => view('pages.faculties.winterShow', compact('item', 'parent', 'children')),
-                'summer' => view('pages.faculties.summerShow', compact('item', 'parent', 'children')),
-                'autumn' => view('pages.faculties.autumnShow', compact('item', 'parent', 'children')),
-                default => view('pages.faculties.show', compact('item', 'parent', 'children')),
-            };
-        } else {
-            return view('pages.faculties.show', compact('item', 'parent', 'children'));
-        }
+        return view('pages.faculties.show', compact('item', 'parent', 'children'));
     }
 }

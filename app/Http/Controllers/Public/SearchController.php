@@ -59,38 +59,6 @@ class SearchController extends Controller
             ->orWhere('description_en', 'LIKE', "%{$query}%")
             ->get();
 
-        if ($this->activeTheme) {
-            return match ($this->activeTheme->code) {
-                'winter' => view('pages.search.winterIndex', [
-                    'advertResults' => $advertResults,
-                    'newsResults' => $newsResults,
-                    'divisionsResults' => $divisionsResults,
-                    'departmentsResults' => $departmentsResults,
-                    'query' => $query,
-                ]),
-                'summer' => view('pages.search.summerIndex', [
-                    'advertResults' => $advertResults,
-                    'newsResults' => $newsResults,
-                    'divisionsResults' => $divisionsResults,
-                    'departmentsResults' => $departmentsResults,
-                    'query' => $query,
-                ]),
-                'autumn' => view('pages.search.autumnIndex', [
-                    'advertResults' => $advertResults,
-                    'newsResults' => $newsResults,
-                    'divisionsResults' => $divisionsResults,
-                    'departmentsResults' => $departmentsResults,
-                    'query' => $query,
-                ]),
-                default => view('pages.search.index', [
-                    'advertResults' => $advertResults,
-                    'newsResults' => $newsResults,
-                    'divisionsResults' => $divisionsResults,
-                    'departmentsResults' => $departmentsResults,
-                    'query' => $query,
-                ]),
-            };
-        } else {
             return view('pages.search.index', [
                 'advertResults' => $advertResults,
                 'newsResults' => $newsResults,
@@ -98,7 +66,5 @@ class SearchController extends Controller
                 'departmentsResults' => $departmentsResults,
                 'query' => $query,
             ]);
-        }
-
     }
 }

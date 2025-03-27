@@ -7,11 +7,11 @@
             <div class="hidden md:block">
                 <div class="flex items-center">
                     <button id="services-prev"
-                            class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-custom-main mr-[12px] bg-custom-main hover:bg-custom-halftone transition-colors duration-300">
+                            class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-[var(--color-main)] mr-[12px] bg-[var(--color-main)] hover:bg-[var(--color-halftone)] transition-colors duration-300">
                         <i class="fas fa-angle-left translate-y-[1px]"></i>
                     </button>
                     <button id="services-next"
-                            class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-custom-main bg-custom-main hover:bg-custom-halftone transition-colors duration-300">
+                            class="border flex justify-center items-center border-[#E2E2E2] w-[35px] xl:w-[64px] h-[35px] xl:h-[64px] rounded-full text-[16px] xl:text-[30px] text-white hover:text-[var(--color-main)] bg-[var(--color-main)] hover:bg-[var(--color-halftone)] transition-colors duration-300">
                         <i class="fas fa-angle-right translate-y-[1px]"></i>
                     </button>
                 </div>
@@ -31,7 +31,7 @@
                                     </a>
                                 </div>
                                 <div
-                                    class="absolute bottom-[0] left-[0] w-full h-[120px] group-hover:h-[180px] bg-gradient-to-t from-custom-main to-white/0 transition-all duration-300 z-[3]">
+                                    class="absolute bottom-[0] left-[0] w-full h-[120px] group-hover:h-[180px] bg-gradient-to-t from-[var(--color-main)] to-white/0 transition-all duration-300 z-[3]">
                                 </div>
                             </div>
                         @endforeach
@@ -51,7 +51,7 @@
                                     </a>
                                 </div>
                                 <div
-                                    class="absolute bottom-[0] left-[0] w-full h-[120px] bg-gradient-to-t from-custom-main to-white/0">
+                                    class="absolute bottom-[0] left-[0] w-full h-[120px] bg-gradient-to-t from-[var(--color-main)] to-white/0">
                                 </div>
                             </div>
                         @endforeach
@@ -71,7 +71,7 @@
                                 </a>
                             </div>
                             <div
-                                class="absolute bottom-[0] left-[0] w-full h-[120px] bg-gradient-to-t from-custom-main to-white/0">
+                                class="absolute bottom-[0] left-[0] w-full h-[120px] bg-gradient-to-t from-[var(--color-main)] to-white/0">
                             </div>
                         </div>
                     @endforeach

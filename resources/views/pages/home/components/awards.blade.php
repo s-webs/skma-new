@@ -6,13 +6,13 @@
             </div>
             <div class="hidden md:block">
                 <a href="{{ route('awards.index') }}"
-                   class="relative flex justify-between items-center mt-[20px] md:mt-[0px] bg-custom-main rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
+                   class="relative flex justify-between items-center mt-[20px] md:mt-[0px] bg-[var(--color-main)] rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
                     <div
                             class="text-[14px] lg:text-[18px] pl-[31px] font-semibold text-white relative z-10 transition-all duration-300">
                         {{ __('home.allAwards') }}
                     </div>
                     <div
-                            class="flex items-center justify-center ml-[21px] w-[40px] md:w-[64px] h-[40px] md:h-[64px] bg-[#914EFF] text-white rounded-full relative z-10 transition-all duration-300 group-hover:bg-[#6835B8] group-hover:scale-110">
+                            class="flex items-center justify-center ml-[21px] w-[40px] md:w-[64px] h-[40px] md:h-[64px] bg-[var(--color-extra)] text-white rounded-full relative z-10 transition-all duration-300 group-hover:bg-[var(--color-extra)] group-hover:scale-110">
                         <i class="fal fa-arrow-right text-[20px]"></i>
                     </div>
                 </a>
@@ -31,13 +31,13 @@
         </div>
         <div class="md:hidden max-w-[80%]">
             <a href="{{ route('awards.index') }}"
-               class="relative flex justify-between items-center mt-[20px] md:mt-[0px] bg-custom-main rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
+               class="relative flex justify-between items-center mt-[20px] md:mt-[0px] bg-[var(--color-main)] rounded-full overflow-hidden group transition-all duration-300 hover:shadow-lg hover:scale-105">
                 <div
                     class="text-[14px] lg:text-[18px] pl-[31px] font-semibold text-white relative z-10 transition-all duration-300">
                     {{ __('home.allAwards') }}
                 </div>
                 <div
-                    class="flex items-center justify-center ml-[21px] w-[40px] md:w-[64px] h-[40px] md:h-[64px] bg-[#914EFF] text-white rounded-full relative z-10 transition-all duration-300 group-hover:bg-[#6835B8] group-hover:scale-110">
+                    class="flex items-center justify-center ml-[21px] w-[40px] md:w-[64px] h-[40px] md:h-[64px] bg-[var(--color-extra)] text-white rounded-full relative z-10 transition-all duration-300 group-hover:bg-[var(--color-extra)] group-hover:scale-110">
                     <i class="fal fa-arrow-right text-[20px]"></i>
                 </div>
             </a>

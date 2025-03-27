@@ -11,7 +11,7 @@
         </div>
         <div class="lg:hidden mt-[60px] rounded-[15px] overflow-hidden shadow-md">
             <div>
-                <div id="toggleStructureMenu" class="bg-custom-main px-[25px] py-[15px]">
+                <div id="toggleStructureMenu" class="bg-[var(--color-main)] px-[25px] py-[15px]">
                     <div class="flex items-center justify-between text-white font-semibold">
                         <span class="">{{ __('public.menu') }}</span>
                         <i id="structureMenuIcon" class="fal fa-angle-right transition-all duration-300"></i>
@@ -30,7 +30,7 @@
                                 <div>
                                     @if($child->id === $item->id)
                                         <span
-                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}
+                                            class="text-[var(--color-main)] font-semibold">{{ $item->getProperty('name') }}
                                                 </span>
                                     @else
                                         <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
@@ -52,7 +52,7 @@
                         </div>
                     @else
                         <div class="">
-                            <div><span class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
+                            <div><span class="text-[var(--color-main)] font-semibold">{{ $item->getProperty('name') }}</span>
                             </div>
                             @if($item->children)
                                 <div class="pl-[20px]">
@@ -97,7 +97,7 @@
                                 <div class="flex flex-wrap justify-between mt-[30px]">
                                     @foreach(json_decode($item->getProperty('staff')) as $member)
                                         <div
-                                            class="border border-custom-main w-full md:w-[48%] mb-[20px] p-[20px] rounded-[15px]">
+                                            class="border border-[var(--color-main)] w-full md:w-[48%] mb-[20px] p-[20px] rounded-[15px]">
                                             <div class="">
                                                 <img src="/{{ $member->photo }}" alt="{{ $member->name }}"
                                                      class="w-[120px] h-[120px] rounded-full object-cover">
@@ -118,7 +118,7 @@
                                 @foreach(json_decode($item->getProperty('documents')) as $document)
                                     <div class="mb-[40px]">
                                         <a href="/{{ $document->path }}" target="_blank"
-                                           class="hover:text-custom-main font-semibold text-md transition-all duration-300">
+                                           class="hover:text-[var(--color-main)] font-semibold text-md transition-all duration-300">
                                             @if($document->extension === 'pdf')
                                                 <i class="fal fa-file-pdf"></i>
                                             @elseif($document->extension === 'doc' || $document->extension === 'docx')
@@ -160,7 +160,7 @@
                                         <div>
                                             @if($child->id === $item->id)
                                                 <span
-                                                    class="text-custom-main font-semibold">{{ $item->getProperty('name') }}
+                                                    class="text-[var(--color-main)] font-semibold">{{ $item->getProperty('name') }}
                                                 </span>
                                             @else
                                                 <a href="{{ route('faculties.show', $child->getProperty('slug')) }}"
@@ -184,7 +184,7 @@
                                 <div class="">
                                     <div>
                                         <span
-                                            class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
+                                            class="text-[var(--color-main)] font-semibold">{{ $item->getProperty('name') }}</span>
                                     </div>
                                     @if($item->children)
                                         <div class="pl-[20px]">

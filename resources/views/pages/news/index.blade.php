@@ -29,7 +29,7 @@
                         </div>
                         <div class="mt-[20px]">
                             <a href="{{ route('news.show', $item->getProperty('slug')) }}"
-                               class="font-semibold group-hover:text-custom-main transition-all duration-300">
+                               class="font-semibold group-hover:text-[var(--color-main)] transition-all duration-300">
                                 {{ $item->getProperty('title') }}
                             </a>
                         </div>

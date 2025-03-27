@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('menus', $menus);
 
             // Получаем активную тему
-            $activeTheme = Theme::query()->where('active', true)->first();
+            $activeTheme = Theme::getActive();
             $view->with('activeTheme', $activeTheme);
         });
     }

@@ -80,37 +80,6 @@ class HomeController extends Controller
         $awards = Award::query()->where('is_published', '=', 1)->take('4')->get();
         $partners = Partner::all();
 
-        if ($this->activeTheme) {
-            return match ($this->activeTheme->code) {
-                'winter' => view('pages.home.winter-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
-                'spring' => view('pages.home.spring-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
-                'summer' => view('pages.home.summer-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
-                'autumn' => view('pages.home.autumn-index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
-                default => view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')),
-            };
-        } else {
-            // Обработка случая, когда activeTheme равен null
-            return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')); // Или другой шаблон по умолчанию
-        }
-    }
-
-    public function academyStructure()
-    {
-        $nodes = OrgNode::all(); // Загружаем все узлы
-        $data = $this->buildTree($nodes);
-
-        return view('pages.about.structure', compact('data'));
-    }
-
-    private function buildTree($nodes, $parentId = null)
-    {
-        return $nodes->where('parent_id', $parentId)->map(function ($node) use ($nodes) {
-            return [
-                'id' => $node->id,
-                'name' => $node->name_ru,
-                'description' => $node->description_ru,
-                'children' => $this->buildTree($nodes, $node->id),
-            ];
-        });
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')); // Или другой шаблон по умолчанию
     }
 }

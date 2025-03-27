@@ -38,7 +38,7 @@
                                 <div class="flex flex-wrap justify-between mt-[30px]">
                                     @foreach(json_decode($item->getProperty('staff')) as $member)
                                         <div
-                                            class="border border-custom-main w-full md:w-[48%] mb-[20px] p-[20px] rounded-[15px]">
+                                            class="border border-[var(--color-main)] w-full md:w-[48%] mb-[20px] p-[20px] rounded-[15px]">
                                             <div class="">
 
                                                 @if($member->photo)
@@ -65,7 +65,7 @@
                                 @foreach(json_decode($item->getProperty('documents')) as $document)
                                     <div class="mb-[40px]">
                                         <a href="/{{ $document->path }}" target="_blank"
-                                           class="hover:text-custom-main font-semibold text-md transition-all duration-300">
+                                           class="hover:text-[var(--color-main)] font-semibold text-md transition-all duration-300">
                                             @if($document->extension === 'pdf')
                                                 <i class="fal fa-file-pdf"></i>
                                             @elseif($document->extension === 'doc' || $document->extension === 'docx')
@@ -106,7 +106,7 @@
                                 </div>
                             @else
                                 <div>
-                                    <span class="text-custom-main font-semibold">{{ $item->getProperty('name') }}</span>
+                                    <span class="text-[var(--color-main)] font-semibold">{{ $item->getProperty('name') }}</span>
                                 </div>
                                 <div class="pl-[20px]">
                                     @include('custom-components.divisions-list', ['divisions' => $item->children, 'currentId' => $item->id])

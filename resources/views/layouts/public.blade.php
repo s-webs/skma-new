@@ -12,10 +12,20 @@
     <link rel="stylesheet" href="/assets/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/bvi.min.css">
     @vite('resources/css/app.css')
-    @stack('styles')
+    <style>
+        :root {
+            --color-dark: {{ $activeTheme->dark }};
+            --color-halftone: {{ $activeTheme->halftone }};
+            --color-main: {{ $activeTheme->main }};
+            --color-secondary: {{ $activeTheme->secondary }};
+            --color-primary: {{ $activeTheme->primary }};
+            --color-heading: {{ $activeTheme->heading }};
+            --color-extra: {{ $activeTheme->extra }};
+        }
+    </style>
     <title>SKMA</title>
 </head>
-<body class="bg-custom-halftone font-openSans">
+<body class="bg-[var(--color-halftone)] font-openSans">
 
 @include('layouts.components.search')
 
