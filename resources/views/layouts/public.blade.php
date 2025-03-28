@@ -25,6 +25,7 @@
     </style>
     <title>SKMA</title>
 </head>
+@stack('styles')
 <body class="bg-[var(--color-halftone)] font-openSans">
 
 @include('layouts.components.search')

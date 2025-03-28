@@ -23,7 +23,7 @@
                     <div class="swiper-wrapper">
                         @foreach($services as $item)
                             <div class="swiper-slide w-[400px] max-h-[300px] rounded-[20px] overflow-hidden relative group transition-all duration-300">
-                                <img src="{{ $item->getProperty('image') }}" alt="{{ $item->getProperty('name') }}"
+                                <img src="/{{ $item->getProperty('image') }}" alt="{{ $item->getProperty('name') }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition-all duration-300">
                                 <div class=" absolute bottom-[20px] left-[20px] z-[5]">
                                     <a href="{{ $item->getProperty('link') }}" class="text-[24px] font-semibold flex items-center text-white">
@@ -43,7 +43,7 @@
                     <div class="swiper-wrapper">
                         @foreach($services as $item)
                             <div class="swiper-slide w-[400px] max-h-[200px] rounded-[20px] overflow-hidden relative">
-                                <img src="{{ $item->getProperty('image') }}" alt="{{ $item->getProperty('name') }}"
+                                <img src="/{{ $item->getProperty('image') }}" alt="{{ $item->getProperty('name') }}"
                                      class="w-full h-full object-cover">
                                 <div class=" absolute bottom-[20px] left-[20px] z-[5]">
                                     <a href="{{ $item->getProperty('link') }}" class="text-[14px] font-semibold flex items-center text-white">
@@ -63,7 +63,7 @@
                 <div class="swiper-wrapper">
                     @foreach($services as $item)
                         <div class="swiper-slide w-[400px] max-h-[200px] rounded-[20px] overflow-hidden relative">
-                            <img src="{{ $item->getProperty('image') }}" alt="{{ $item->getProperty('name') }}"
+                            <img src="/{{ $item->getProperty('image') }}" alt="{{ $item->getProperty('name') }}"
                                  class="w-full h-full object-cover">
                             <div class=" absolute bottom-[20px] left-[20px] z-[5]">
                                 <a href="{{ $item->getProperty('link') }}" class="text-[14px] font-semibold flex items-center text-white">

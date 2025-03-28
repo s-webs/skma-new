@@ -48,6 +48,7 @@ Route::group([
     Route::get('/search', [\App\Http\Controllers\Public\SearchController::class, 'index'])->name('search.index');
 
     Route::get('for-the-applicant', [\App\Http\Controllers\Public\ApplicantController::class, 'index'])->name('applicant.index');
+    Route::get('for-the-student', [\App\Http\Controllers\Public\StudentsController::class, 'index'])->name('applicant.index');
 });
 
 Route::get('/dashboard', function () {

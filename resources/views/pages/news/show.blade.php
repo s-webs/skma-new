@@ -11,7 +11,7 @@
             ]"/>
             </div>
             <div
-                class="flex flex-col md:flex-row items-start md:items-center justify-between pb-[30px] md:pb-0 mt-[30px] xl:mt-[60px]">
+                class="flex flex-col md:flex-row items-start md:items-center justify-between mt-[30px] xl:mt-[60px] border-b pb-[15px]">
                 <div class="">
                     {{--                    <a href="##"--}}
                     {{--                       class="py-[12px] px-[14px] border bg-white text-[var(--color-main)] rounded-[10px] hover:bg-[var(--color-main)] duration-300 transition-all hover:text-white">--}}
@@ -37,31 +37,33 @@
                     </div>
                 </div>
             </div>
-            <div class="md:mt-[20px] border-t py-[10px] xl:py-[30px]">
+            <div class="md:mt-[20px] py-[10px] xl:py-[30px] max-w-[910px] mx-auto">
                 <x-page-title>{{ $item->getProperty('title') }}</x-page-title>
             </div>
-            @if($item->images)
-                <div
-                    class="mt-[40px] w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[10px] border-[var(--color-main)] border-opacity-20">
-                    <div class="swiper news-slider w-full h-full">
-                        <div class="swiper-wrapper w-full h-full">
-                            @foreach($item->images as $image)
-                                <div class="swiper-slide w-full h-full">
-                                    <img src="/{{ $image }}" alt="{{ $image }}" class="w-full h-full object-cover">
-                                </div>
-                            @endforeach
+            <div class="max-w-[910px] mx-auto mt-[40px]">
+                @if($item->images)
+                    <div
+                        class="w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden">
+                        <div class="swiper news-slider w-full h-full">
+                            <div class="swiper-wrapper w-full h-full">
+                                @foreach($item->images as $image)
+                                    <div class="swiper-slide w-full h-full">
+                                        <img src="/{{ $image }}" alt="{{ $image }}" class="w-full h-full object-cover">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="swiper-pagination"></div>
                         </div>
-                        <div class="swiper-pagination"></div>
                     </div>
-                </div>
-            @else
-                <div
-                    class="mt-[40px] w-full xl:w-[70%] mx-auto h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden border-[5px] border-[var(--color-halftone)]">
-                    <img src="{{ $item->getProperty('preview') }}" alt="{{ $item->getProperty('title') }}"
-                         class="object-cover w-full h-full">
-                </div>
-            @endif
-            <div class="content mt-[30px] pt-[30px] border-t">
+                @else
+                    <div
+                        class="w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden">
+                        <img src="{{ $item->getProperty('preview') }}" alt="{{ $item->getProperty('title') }}"
+                             class="object-cover w-full h-full">
+                    </div>
+                @endif
+            </div>
+            <div class="content mt-[30px] pt-[30px] border-t max-w-[910px] mx-auto">
                 {!! $item->getProperty('text') !!}
             </div>
             {{--            <div class="mt-[30px]">--}}
@@ -131,13 +133,11 @@
 @push('styles')
     <style>
         .content p {
-            font-size: 1.1rem;
+            font-size: 18px;
         }
 
-        .content img {
-            height: auto !important;
+        .content p img {
             margin: 30px auto;
-            text-align: center;
         }
     </style>
 @endpush

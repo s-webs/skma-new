@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Counter;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
