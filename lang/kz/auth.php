@@ -1,20 +1,30 @@
 <?php
 
 return [
+    'failed' => 'Деректер қате енгізілді.',
+    'password' => 'Енгізілген құпия сөз дұрыс емес.',
+    'throttle' => 'Кіру әрекеттері тым көп. :seconds секундтан кейін қайталап көріңіз.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
-
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'sign_in_cabinet' => 'Жеке кабинетке кіру',
+    'registration' => 'Тіркелу',
+    'sign_in' => 'Кіру',
+    'or' => 'немесе',
+    'register' => 'Тіркелу',
+    'email' => 'Электрондық пошта',
+    'enter_email' => 'Электрондық поштаңызды енгізіңіз',
+    'password_label' => 'Құпия сөз',
+    'enter_password' => 'Құпия сөзіңізді енгізіңіз',
+    'repeat_password' => 'Құпия сөзді қайталаңыз',
+    'forgot_password' => 'Құпия сөзді ұмыттыңыз ба?',
+    'remember_me' => 'Мені есте сақтау',
+    'full_name' => 'Аты-жөні',
+    'enter_full_name' => 'Аты-жөніңізді енгізіңіз',
+    'forgot_your_password_enter_email' => 'Құпия сөзіңізді ұмыттыңыз ба? Электрондық поштаңызды енгізіңіз, біз сізге құпия сөзді қалпына келтіру сілтемесін жібереміз.',
+    'send' => 'Жіберу',
+    'thanks_for_signing_up' => 'Тіркелгеніңіз үшін рахмет! Тіркелгіңізді белсендіру үшін электрондық поштаңызға жіберілген сілтемеге өтіңіз.',
+    'resend_verification_email' => 'Хат жіберуді қайталау',
+    'logout' => 'Шығу',
+    'new_verification_link' => 'Сіздің электрондық поштаңызға жаңа растау сілтемесі жіберілді.',
+    'confirm_your_password_before_continuing' => 'Бұл қорғалған аймақ. Жалғастыру үшін құпия сөзіңізді растаңыз.',
+    'confirm' => 'Растау',
 ];

@@ -1,39 +1,33 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('layouts.guest', ['kzLink' => 'reset-password/', 'ruLink' => 'reset-password/', 'enLink' => 'reset-password/'])
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+@section('content')
+    <div class="mt-[30px] md:mt-[70px] px-4">
+        <form method="POST" action="{{ route('password.store') }}">
+            @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <!-- Password Reset Token -->
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div class="mb-[24px]">
+                <x-input-block label="{{ __('auth.email') }}" name="email" type="email" placeholder="{{ __('auth.enter_email') }}"/>
+                <x-input-error :messages="$errors->get('email')" class="mt-2"/>
+            </div>
+            <div class="mb-[24px]">
+                <x-input-block label="{{ __('auth.password_label') }}" name="password" type="password" placeholder="{{ __('auth.enter_password') }}"/>
+                <x-input-error :messages="$errors->get('password')" class="mt-2"/>
+            </div>
+            <div class="mb-[24px]">
+                <x-input-block label="{{ __('auth.repeat_password') }}" name="password_confirmation" type="password"
+                               placeholder="{{ __('auth.repeat_password') }}"/>
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2"/>
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            <div class="">
+                <button type="submit"
+                        class="w-full bg-custom-main border border-custom-main font-semibold py-[17px] text-center text-white rounded-[14px] hover:bg-custom-extra duration-300 transition-all">
+                    {{ __('auth.reset_password') }}
+                </button>
+            </div>
+        </form>
+    </div>
+@endsection

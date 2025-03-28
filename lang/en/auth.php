@@ -1,20 +1,30 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
-
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
+    'failed' => 'The credentials are incorrect.',
+    'password' => 'The entered password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'sign_in_cabinet' => 'Sign in to your personal account',
+    'registration' => 'Registration',
+    'sign_in' => 'Sign in',
+    'or' => 'or',
+    'register' => 'Register',
+    'email' => 'Email',
+    'enter_email' => 'Enter your email',
+    'password_label' => 'Password',
+    'enter_password' => 'Enter your password',
+    'repeat_password' => 'Repeat your password',
+    'forgot_password' => 'Forgot password?',
+    'remember_me' => 'Remember me',
+    'full_name' => 'Full name',
+    'enter_full_name' => 'Enter your full name',
+    'forgot_your_password_enter_email' => 'Forgot your password? Enter your email and we will send you a password reset link.',
+    'send' => 'Send',
+    'thanks_for_signing_up' => 'Thank you for signing up! To activate your account, please follow the link sent to your email.',
+    'resend_verification_email' => 'Resend verification email',
+    'logout' => 'Log out',
+    'new_verification_link' => 'A new verification link has been sent to your email.',
+    'confirm_your_password_before_continuing' => 'This is a secured area. Please confirm your password before continuing.',
+    'confirm' => 'Confirm',
 ];

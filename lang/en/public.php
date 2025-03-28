@@ -18,4 +18,7 @@ return [
     'visits' => 'Attendance',
     'departments_and_faculties' => 'Departments and faculties',
     'news' => 'News',
+
+    'sign_in' => 'Login',
+    'logout' => 'Logout',
 ];

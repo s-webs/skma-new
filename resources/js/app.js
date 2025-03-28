@@ -10,16 +10,24 @@ const sidebarMobile = document.getElementById('sidebarMobile');
 const closeMobileSidebar = document.getElementById('closeMobileSidebar');
 const openMobileSidebar = document.getElementById('openMobileSidebar');
 
-closeMobileSidebar.addEventListener('click', () => {
-    sidebarMobile.classList.add('-translate-x-full')
-    sidebarMobile.classList.remove('translate-x-full');
-})
+if (closeMobileSidebar) {
+    closeMobileSidebar.addEventListener('click', () => {
+        sidebarMobile.classList.add('-translate-x-full')
+        sidebarMobile.classList.remove('translate-x-full');
+    });
+} else {
+    console.warn("closeMobileSidebar не найден в DOM");
+}
 
-openMobileSidebar.addEventListener('click', () => {
-    console.log('click')
-    sidebarMobile.classList.add('translate-x-none')
-    sidebarMobile.classList.remove('-translate-x-full')
-})
+if (openMobileSidebar) {
+    openMobileSidebar.addEventListener('click', () => {
+        console.log('click');
+        sidebarMobile.classList.add('translate-x-none')
+        sidebarMobile.classList.remove('-translate-x-full')
+    });
+} else {
+    console.warn("openMobileSidebar не найден в DOM");
+}
 
 new isvek.Bvi({
     target: '#enable-pc-impaired',
@@ -273,15 +281,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 300); // Задержка равна duration-300 в Tailwind
     }
 
-    // Открытие модального окна
-    openSearchModal.addEventListener("click", openModal);
+    if (openSearchModal) {
+        openSearchModal.addEventListener("click", openModal);
+    } else {
+        console.warn("⚠️ Элемент #openSearchModal не найден в DOM");
+    }
 
-    // Закрытие при клике вне формы
-    searchModal.addEventListener("click", function (event) {
-        if (event.target === searchModal) {
-            closeModal();
-        }
-    });
+    if (searchModal) {
+        searchModal.addEventListener("click", function (event) {
+            if (event.target === searchModal) {
+                closeModal();
+            }
+        });
+    } else {
+        console.warn("⚠️ Элемент #searchModal не найден в DOM");
+    }
 
     // Закрытие при нажатии Escape
     document.addEventListener("keydown", function (event) {
@@ -290,8 +304,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Закрытие по клику на кнопку "X"
-    closeSearchModal.addEventListener("click", closeModal);
+    if (closeSearchModal) {
+        closeSearchModal.addEventListener("click", closeModal);
+    } else {
+        console.warn("⚠️ Элемент #closeSearchModal не найден в DOM");
+    }
 });
 
 
@@ -317,10 +334,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const structureMenu = document.getElementById('structureMenu');
     const structureMenuIcon = document.getElementById('structureMenuIcon');
 
-    toggleStructureMenu.addEventListener('click', function() {
-        structureMenu.classList.toggle('hidden');
-        structureMenuIcon.classList.toggle('rotate-90');
-    });
+    if (toggleStructureMenu && structureMenu && structureMenuIcon) {
+        toggleStructureMenu.addEventListener('click', function() {
+            structureMenu.classList.toggle('hidden');
+            structureMenuIcon.classList.toggle('rotate-90');
+        });
+    } else {
+        console.warn("⚠️ Один из элементов не найден: #toggleStructureMenu, #structureMenu, #structureMenuIcon");
+    }
 });
 
 document.addEventListener('DOMContentLoaded', function() {

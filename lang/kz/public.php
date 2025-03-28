@@ -18,4 +18,7 @@ return [
     'visits' => 'Сабаққа қатысу',
     'departments_and_faculties' => 'Кафедралар мен факультеттер',
     'news' => 'Жаңалықтар',
+
+    'sign_in' => 'Кіру',
+    'logout' => 'Шығу',
 ];

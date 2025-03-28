@@ -18,4 +18,8 @@ return [
     'visits' => 'Посещаемость',
     'departments_and_faculties' => 'Кафедры и факультеты',
     'news' => 'Новости',
+
+
+    'sign_in' => 'Войти',
+    'logout' => 'Выйти',
 ];

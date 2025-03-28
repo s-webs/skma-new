@@ -1,27 +1,24 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+@extends('layouts.guest', ['kzLink' => 'confirm-password/', 'ruLink' => 'confirm-password/', 'enLink' => 'confirm-password/'])
+
+@section('content')
+    <div class="mt-[30px] md:mt-[70px] px-4">
+        <div class="mb-4 text-sm text-gray-600">
+            {{ __('auth.confirm_your_password_before_continuing') }}
+        </div>
+
+        <form method="POST" action="{{ route('password.confirm') }}">
+            @csrf
+            <div class="mb-[24px]">
+                <x-input-block label="{{ __('auth.password_label') }}" name="password" type="password" placeholder="{{ __('auth.enter_password') }}"/>
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
+
+            <div class="">
+                <button type="submit"
+                        class="w-full bg-custom-main border border-custom-main font-semibold py-[17px] text-center text-white rounded-[14px] hover:bg-custom-extra duration-300 transition-all">
+                    {{ __('auth.confirm') }}
+                </button>
+            </div>
+        </form>
     </div>
-
-    <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
-
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@endsection

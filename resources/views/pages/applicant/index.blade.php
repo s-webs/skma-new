@@ -4,12 +4,12 @@
     <div class="w-full py-[60px] h-auto xl:h-[600px] 2xl:h-[700px] overflow-hidden relative">
         <div class="w-full h-full absolute top-0 left-0 bg-[var(--color-main)]">
             <img src="/assets/images/for-applicant.png" alt="/assets/images/for-applicant.png"
-                 class="w-full h-full object-cover absolute top-0 left-0 z-[3]">
-            <div class="w-full h-full bg-[var(--color-main)] opacity-30 absolute top-0 left-0 z-[4]"></div>
+                 class="w-full h-full object-cover absolute top-0 left-0 z-[2]">
+            <div class="w-full h-full bg-[var(--color-main)] opacity-30 absolute top-0 left-0 z-[2]"></div>
         </div>
-        <div class="relative z-[5] flex justify-center items-center h-full">
+        <div class="relative flex justify-center items-center h-full">
             <div class="container mx-auto px-4">
-                <div class="w-full">
+                <div class="relative w-full z-[3]">
                     <div class="text-white text-xl md:text-[36px] font-bold">
                         <h1>{{ __('applicant.dear_entrant_welcome_skma!') }}</h1>
                     </div>

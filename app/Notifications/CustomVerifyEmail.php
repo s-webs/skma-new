@@ -11,7 +11,7 @@ class CustomVerifyEmail extends VerifyEmail
 {
     use Queueable;
 
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         $verificationUrl = $this->verificationUrl($notifiable);
 

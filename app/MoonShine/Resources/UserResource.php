@@ -9,9 +9,11 @@ use App\Models\User;
 
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Fields\Email;
 use MoonShine\UI\Fields\ID;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\ComponentContract;
+use MoonShine\UI\Fields\Text;
 
 /**
  * @extends ModelResource<User>
@@ -29,6 +31,8 @@ class UserResource extends ModelResource
     {
         return [
             ID::make()->sortable(),
+            Text::make('name')->sortable(),
+            Email::make('email')->sortable(),
         ];
     }
 
