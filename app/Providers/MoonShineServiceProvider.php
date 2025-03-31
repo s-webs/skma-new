@@ -32,6 +32,7 @@ use App\MoonShine\Resources\DivisionResource;
 use App\MoonShine\Resources\FacultyResource;
 use App\MoonShine\Pages\DivisionsIndexPage;
 use App\MoonShine\Resources\ThemeResource;
+use App\MoonShine\Resources\ForStudentResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -65,6 +66,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 DivisionResource::class,
                 FacultyResource::class,
                 ThemeResource::class,
+                ForStudentResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

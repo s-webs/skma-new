@@ -50,6 +50,7 @@ use App\MoonShine\Resources\DepartmentResource;
 use App\MoonShine\Resources\DivisionResource;
 use App\MoonShine\Resources\FacultyResource;
 use App\MoonShine\Resources\ThemeResource;
+use App\MoonShine\Resources\ForStudentResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -93,6 +94,7 @@ final class MoonShineLayout extends CompactLayout
             MenuGroup::make('Настройки', [
                 MenuItem::make('Темы', ThemeResource::class),
             ], 'wrench-screwdriver'),
+            MenuItem::make('ForStudents', ForStudentResource::class),
         ];
     }
 

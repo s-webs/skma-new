@@ -11,26 +11,25 @@
             <div class="container mx-auto px-4">
                 <div class="relative w-full z-[3]">
                     <div class="text-white text-xl md:text-[36px] font-bold">
-                        <h1>{{ __('student.dear_student_welcome_skma') }}</h1>
+                        <h1>{{ $information->getProperty('title') }}</h1>
                     </div>
                     <div class="text-md md:text-[18px] text-white mt-[20px] max-w-[500px]">
-                        {{ __('applicant.carefully_study_this_page') }}
+                        {{ $information->getProperty('description') }}
                     </div>
                     <div class="flex flex-wrap xl:flex-nowrap items-center w-full mt-[40px]">
-                        <x-link-card url="/assets/files/price-bakalavr-2025.pdf"
-                                     title="{{ __('applicant.education_and_accommodation') }}"
-                                     subtitle="{{ __('applicant.price_list') }}"/>
-                        <x-link-card url="/assets/files/pravila-priema-bakalavr-2025.pdf"
-                                     title="{{ __('applicant.admission_rules_for_training') }}"
-                                     subtitle="{{ __('applicant.bakalavriat') }}"/>
+                        @foreach(json_decode($information->getProperty('cards')) as $item)
+                            @if($item->title !== null)
+                                <x-link-card url="/{{ $item->file }}"
+                                             title="{{ $item->subtitle }}"
+                                             subtitle="{{ $item->title }}"/>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="">
-        @include('pages.home.components.services', compact('services'))
-    </div>
+    @include('pages.home.components.services', compact('services'))
     <div class="container mx-auto px-4 py-[50px] xl:py-[100px]">
         <div class="text-[24px] md:text-[36px] font-bold">
             <h3>Расписание</h3>
