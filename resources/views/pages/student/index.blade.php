@@ -29,10 +29,41 @@
             </div>
         </div>
     </div>
-    @include('pages.home.components.services', compact('services'))
+    <div>
+        @include('pages.home.components.services', compact('services'))
+    </div>
     <div class="container mx-auto px-4 py-[50px] xl:py-[100px]">
-        <div class="text-[24px] md:text-[36px] font-bold">
-            <h3>Расписание</h3>
+        <div class="">
+            <div class="flex flex-wrap">
+                <div class="flex-1 md:mr-[30px]">
+                    <div class="text-[24px] md:text-[36px] font-bold">
+                        <h3>Расписание занятий</h3>
+                    </div>
+                    <div class="mt-[30px]">
+                        @foreach($scheduleLessons as $item)
+                            <div class="my-[15px]">
+                                <div>
+                                    <x-info-card title="{{ $item['title'] }}" link="{{ $item['link'] }}" />
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="text-[24px] md:text-[36px] font-bold">
+                        <h3>Расписание экзаменов</h3>
+                    </div>
+                    <div class="mt-[30px]">
+                        @foreach($scheduleExam as $item)
+                            <div class="my-[15px]">
+                                <div>
+                                    <x-info-card title="{{ $item['title'] }}" link="{{ $item['link'] }}" />
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

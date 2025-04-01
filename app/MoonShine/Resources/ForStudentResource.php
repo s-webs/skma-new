@@ -123,27 +123,29 @@ class ForStudentResource extends ModelResource
                     ->fields([
                         Position::make(),
                         Text::make('Название на русском', 'shedule_title_ru'),
-                        Text::make('Название на русском', 'shedule_title_kz'),
-                        Text::make('Название на русском', 'shedule_title_en'),
-                        File::make('Файл', 'file')
-                            ->dir('uploads/for-students/schedule_lesson/')
-                            ->keepOriginalFileName()
-                            ->sortable()
-                            ->multiple()
-                            ->removable(),
+                        Text::make('Название на казахском', 'shedule_title_kz'),
+                        Text::make('Название на английском', 'shedule_title_en'),
+                        Text::make('Ссылка', 'link'),
+//                        File::make('Файл', 'file')
+//                            ->dir('uploads/for-students/schedule_lesson/')
+//                            ->keepOriginalFileName()
+//                            ->sortable()
+//                            ->multiple()
+//                            ->removable(),
                     ])->vertical(),
                 Json::make('Расписание экзаменов', 'schedule_exam')
                     ->fields([
                         Position::make(),
                         Text::make('Название на русском', 'shedule_title_ru'),
-                        Text::make('Название на русском', 'shedule_title_kz'),
-                        Text::make('Название на русском', 'shedule_title_en'),
-                        File::make('Файл', 'file')
-                            ->dir('uploads/for-students/schedule_lesson/')
-                            ->keepOriginalFileName()
-                            ->sortable()
-                            ->multiple()
-                            ->removable(),
+                        Text::make('Название на казахском', 'shedule_title_ru'),
+                        Text::make('Название на английском', 'shedule_title_ru'),
+                        Text::make('Ссылка', 'link'),
+//                        File::make('Файл', 'file')
+//                            ->dir('uploads/for-students/schedule_lesson/')
+//                            ->keepOriginalFileName()
+//                            ->sortable()
+//                            ->multiple()
+//                            ->removable(),
                     ])->vertical(),
             ])
         ];

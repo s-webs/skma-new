@@ -10,7 +10,7 @@ class ForStudent extends baseModel
         'cards_ru' => 'array',
         'cards_kz' => 'array',
         'cards_en' => 'array',
-        'schedule_lesson' => 'array',
-        'schedule_exam' => 'array',
+        'schedule_lesson' => 'collection',
+        'schedule_exam' => 'collection',
     ];
 }

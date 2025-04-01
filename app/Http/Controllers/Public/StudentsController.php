@@ -13,7 +13,28 @@ class StudentsController extends Controller
     {
         $services = Service::all();
         $information = ForStudent::query()->first();
+        $scheduleLessons = collect(json_decode($information->schedule_lesson, true))
+            ->map(function ($item) {
+                $locale = app()->getLocale();
+                $localizedKey = "shedule_title_{$locale}";
 
-        return view('pages.student.index', compact('services', 'information'));
+                return [
+                    'link' => $item['link'] ?? null,
+                    'title' => $item[$localizedKey] ?? null,
+                ];
+            });
+
+        $scheduleExam = collect(json_decode($information->schedule_exam, true))
+            ->map(function ($item) {
+                $locale = app()->getLocale();
+                $localizedKey = "shedule_title_{$locale}";
+
+                return [
+                    'link' => $item['link'] ?? null,
+                    'title' => $item[$localizedKey] ?? null,
+                ];
+            });
+
+        return view('pages.student.index', compact('services', 'information', 'scheduleLessons', 'scheduleExam'));
     }
 }
