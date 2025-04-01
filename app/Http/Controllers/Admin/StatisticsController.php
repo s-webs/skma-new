@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ViewLog;
+use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class StatisticsController extends Controller
         $iso3166 = new ISO3166();
 
         foreach ($periods as $periodName => $startDate) {
-            $visits = ViewLog::select('country_code', DB::raw('count(*) as count'))
+            $visits = Visitor::query()->select('country_code', DB::raw('count(*) as count'))
                 ->where('created_at', '>=', $startDate)
                 ->groupBy('country_code')
                 ->orderByDesc('count')
