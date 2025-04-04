@@ -6,16 +6,41 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends BaseModel
 {
+
+    protected $fillable = [
+        'preview',
+        'name_ru',
+        'name_kz',
+        'name_en',
+        'description_ru',
+        'description_kz',
+        'description_en',
+        'staff',
+        'umkd',
+        'documents',
+        'portfolio',
+        'documents_ru',
+        'documents_kz',
+        'documents_en',
+        'contacts_ru',
+        'contacts_kz',
+        'contacts_en',
+        'parent_id',
+        'slug_ru',
+        'slug_kz',
+        'slug_en',
+        'sort_order'
+    ];
+
     protected $casts = [
-        'staff_ru' => 'json',
-        'staff_kz' => 'json',
-        'staff_en' => 'json',
+        'staff' => 'json',
         'contacts_ru' => 'json',
         'contacts_kz' => 'json',
         'contacts_en' => 'json',
         'documents_ru' => 'json',
         'documents_kz' => 'json',
         'documents_en' => 'json',
+        'umkd' => 'collection',
     ];
 
     public function transformDocuments($documents): array

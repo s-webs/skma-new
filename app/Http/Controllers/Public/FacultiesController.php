@@ -31,6 +31,19 @@ class FacultiesController extends Controller
         $parent = $item->parent;
         $children = $item->children;
 
+        $item->umkd = $item->umkd->map(function ($umkd) {
+            $languageKey = 'type_' . app()->getLocale();
+
+            $umkd = [
+                'type' => $umkd[$languageKey],
+                'files' => $umkd['files'],
+            ];
+
+            return $umkd;
+        });
+
+        dd($item->umkd);
+
         return view('pages.faculties.show', compact('item', 'parent', 'children'));
     }
 }

@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\ForStudent;
 
 use MoonShine\Laravel\Resources\ModelResource;
+use MoonShine\UI\Components\Collapse;
 use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Components\Layout\Divider;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Fields\File;
@@ -20,6 +22,8 @@ use MoonShine\UI\Fields\Position;
 use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
+use Sweet1s\MoonshineFileManager\FileManager;
+use Sweet1s\MoonshineFileManager\FileManagerTypeEnum;
 
 /**
  * @extends ModelResource<ForStudent>
@@ -117,36 +121,30 @@ class ForStudentResource extends ModelResource
                             ->vertical()
                             ->removable(),
                         Text::make('Slug', 'slug_en'),
+                    ]),
+                    Tab::make('РАСПИСАНИЯ', [
+                        Collapse::make('Расписание занятий', [
+                            Json::make('Расписание занятий', 'schedule_lesson')
+                                ->fields([
+                                    Position::make(),
+                                    Text::make('Название на русском', 'shedule_title_ru'),
+                                    Text::make('Название на казахском', 'shedule_title_kz'),
+                                    Text::make('Название на английском', 'shedule_title_en'),
+                                    Text::make('Ссылка', 'link'),
+                                ])->vertical(),
+                        ]),
+                        Collapse::make('Расписание экзаменов', [
+                            Json::make('Расписание экзаменов', 'schedule_exam')
+                                ->fields([
+                                    Position::make(),
+                                    Text::make('Название на русском', 'shedule_title_ru'),
+                                    Text::make('Название на казахском', 'shedule_title_kz'),
+                                    Text::make('Название на английском', 'shedule_title_en'),
+                                    Text::make('Ссылка', 'link'),
+                                ])->vertical(),
+                        ]),
                     ])
                 ]),
-                Json::make('Расписание занятий', 'schedule_lesson')
-                    ->fields([
-                        Position::make(),
-                        Text::make('Название на русском', 'shedule_title_ru'),
-                        Text::make('Название на казахском', 'shedule_title_kz'),
-                        Text::make('Название на английском', 'shedule_title_en'),
-                        Text::make('Ссылка', 'link'),
-//                        File::make('Файл', 'file')
-//                            ->dir('uploads/for-students/schedule_lesson/')
-//                            ->keepOriginalFileName()
-//                            ->sortable()
-//                            ->multiple()
-//                            ->removable(),
-                    ])->vertical(),
-                Json::make('Расписание экзаменов', 'schedule_exam')
-                    ->fields([
-                        Position::make(),
-                        Text::make('Название на русском', 'shedule_title_ru'),
-                        Text::make('Название на казахском', 'shedule_title_ru'),
-                        Text::make('Название на английском', 'shedule_title_ru'),
-                        Text::make('Ссылка', 'link'),
-//                        File::make('Файл', 'file')
-//                            ->dir('uploads/for-students/schedule_lesson/')
-//                            ->keepOriginalFileName()
-//                            ->sortable()
-//                            ->multiple()
-//                            ->removable(),
-                    ])->vertical(),
             ])
         ];
     }

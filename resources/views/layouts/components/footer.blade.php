@@ -1,19 +1,19 @@
 <footer class="">
     <div class="bg-custom-heading py-[16px]">
-        <div class="border-b border-b-[#282831]">
-            <div class="container mx-auto">
-                <div class="flex items-center justify-center">
-                    <div class="w-[85px] md:w-[123px]  py-[60px] mr-[30px] md:mr-[60px]">
-                        <img src="/assets/images/cliparts/antikor.png" alt="">
-                    </div>
-                    <div class="text-[16px] md:text-[36px] font-bold">
-                        <a href="##" class="text-white">
-                            Вместе против коррупции
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--        <div class="border-b border-b-[#282831]">--}}
+{{--            <div class="container mx-auto">--}}
+{{--                <div class="flex items-center justify-center">--}}
+{{--                    <div class="w-[85px] md:w-[123px]  py-[60px] mr-[30px] md:mr-[60px]">--}}
+{{--                        <img src="/assets/images/cliparts/antikor.png" alt="">--}}
+{{--                    </div>--}}
+{{--                    <div class="text-[16px] md:text-[36px] font-bold">--}}
+{{--                        <a href="##" class="text-white">--}}
+{{--                            Вместе против коррупции--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="border-b border-b-[#282831]">
             <div class="container mx-auto">
                 <div class="flex flex-col xl:flex-row items-start xl:items-center justify-center">

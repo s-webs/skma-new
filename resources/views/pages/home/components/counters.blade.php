@@ -14,7 +14,7 @@
             @else
                 <div class="absolute right-[0px] bottom-[0px] z-[3] h-full w-full">
                     <img src="/{{ $activeTheme->pattern_02 }}" alt=""
-                         class="w-full h-full md:h-[150px] 2xl:h-auto opacity-20 object-cover">
+                         class="w-full h-full opacity-20 object-cover">
                 </div>
             @endif
         @endif
