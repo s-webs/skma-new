@@ -23,7 +23,7 @@
 
 <div x-data="fileManager()" class="h-full" @click.away="contextMenu.show = false">
     <div class="bg-gray-700">
-        <h1 class="text-2xl p-4 text-white font-semibold">S-FILES</h1>
+        <h1 class="text-2xl p-4 text-white font-semibold">Laravel S-FILES</h1>
     </div>
 
     <div class="flex h-full">
@@ -88,7 +88,7 @@
                    : 'text-gray-500 hover:text-gray-700'"
                            class="transition-colors">
                             <template x-if="part === 'root'">
-                                <i class="ph ph-house-simple text-lg"></i>
+                                <i class="ph ph-house text-lg"></i>
                             </template>
                             <template x-if="part !== 'root'">
                                 <span x-text="part"></span>
@@ -111,13 +111,10 @@
                          class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
                             <h2 class="text-lg font-bold mb-4">Загрузите файлы</h2>
-
                             <form action="/files/upload" class="dropzone h-[300px] overflow-auto" id="uploadZone">
                                 <input type="hidden" name="path" x-model="currentPath">
                                 @csrf
                             </form>
-
-
                             <!-- Кнопка закрытия -->
                             <button @click="showModal = false" class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md">
                                 Закрыть
@@ -171,6 +168,7 @@
             files: [],
             newFolder: '',
             breadcrumbs: [],
+            dropzoneInstance: null,
 
             contextMenu: {
                 show: false,
@@ -190,7 +188,8 @@
                             path: file.path
                         }));
                         this.updateBreadcrumbs();
-                    });
+                    })
+                    .catch(error => console.error('Error fetching files:', error));
             },
 
             updateBreadcrumbs() {
@@ -317,14 +316,36 @@
 
             init() {
                 this.fetchFiles();
-                Dropzone.options.uploadZone = {
-                    paramName: "file",
-                    maxFilesize: 10,
+                const self = this;
+
+                Dropzone.autoDiscover = false;
+
+                if (this.dropzoneInstance) {
+                    this.dropzoneInstance.destroy();
+                }
+
+                this.dropzoneInstance = new Dropzone("#uploadZone", {
+                    paramName: "file", // Имя параметра для файла
+                    maxFilesize: 10, // Максимальный размер файла
+                    renameFile: function (file) { // Отключаем авто-переименование
+                        return file.name;
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                    },
                     init: function () {
-                        this.on("success", () => fileManager().fetchFiles());
+                        this.on("success", function (file, response) {
+                            self.fetchFiles(); // Добавляем обработчик успешной загрузки
+                        });
+
+                        this.on("totaluploadprogress", function (progress) {
+                            self.totalProgress = Math.round(progress * 100);
+                        });
+
+                        // Остальные обработчики...
                     }
-                };
-            }
+                });
+            },
         };
     }
 

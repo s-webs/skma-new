@@ -28,16 +28,50 @@ Route::get('/files', function (Request $request) {
     ]);
 });
 
+use Illuminate\Support\Str;
+
 Route::post('/files/upload', function (Request $request) {
     $request->validate([
         'file' => 'required|file|max:10240',
         'path' => 'nullable|string'
     ]);
 
+    $file = $request->file('file');
     $path = $request->input('path', '');
-    $filePath = $request->file('file')->store($path, 'public');
 
-    return response()->json(['path' => $filePath]);
+    // Получаем оригинальное имя файла
+    $filename = $file->getClientOriginalName();
+
+    // Убираем опасные символы, но сохраняем пробелы и кириллицу
+    $filename = preg_replace([
+        '/\//', // Слэши
+        '/\x00/', // Null-байты
+        '/[\x00-\x1F\x7F]/', // Управляющие символы
+        '/[\/:\\|<>?*"]/' // Спецсимволы в именах файлов
+    ], '_', $filename);
+
+    // Обработка дубликатов
+    $counter = 1;
+    $originalName = pathinfo($filename, PATHINFO_FILENAME);
+    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+    while (Storage::disk('public')->exists("$path/$filename")) {
+        $filename = "{$originalName} ({$counter}).{$extension}";
+        $counter++;
+    }
+
+    // Сохраняем файл
+    $filePath = $file->storeAs(
+        $path,
+        $filename,
+        'public'
+    );
+
+    return response()->json([
+        'success' => true,
+        'path' => $filePath,
+        'filename' => $filename
+    ]);
 });
 
 Route::post('/files/create-folder', function (Request $request) {

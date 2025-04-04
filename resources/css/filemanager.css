@@ -7,3 +7,22 @@
     border: 1px solid #e5e7eb;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
+
+/* Прогресс-бар */
+.dz-progress {
+    @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+}
+
+.dz-upload {
+    @apply h-full bg-blue-500 transition-all duration-300;
+}
+
+/* Иконка загрузки */
+.dz-uploading .dz-preview {
+    @apply opacity-50;
+}
+
+.dz-uploading .dz-preview::after {
+    content: "⏳";
+    @apply absolute inset-0 flex items-center justify-center text-2xl bg-white bg-opacity-80;
+}
