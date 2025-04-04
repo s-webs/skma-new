@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+
 
 Route::get('/fmanager', function () {
     return view('utils.filemanager');
@@ -27,8 +29,6 @@ Route::get('/files', function (Request $request) {
         'files' => $files
     ]);
 });
-
-use Illuminate\Support\Str;
 
 Route::post('/files/upload', function (Request $request) {
     $request->validate([
@@ -99,3 +99,4 @@ Route::post('/files/delete-folder', function (Request $request) {
     Storage::disk('public')->deleteDirectory($request->input('path'));
     return response()->json(['success' => true]);
 });
+

@@ -8,21 +8,19 @@
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Прогресс-бар */
-.dz-progress {
-    @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+.form-checkbox {
+    @apply h-4 w-4 text-blue-600 transition duration-150 ease-in-out;
 }
 
-.dz-upload {
-    @apply h-full bg-blue-500 transition-all duration-300;
+.form-checkbox:checked {
+    @apply bg-blue-600 border-blue-600;
 }
 
-/* Иконка загрузки */
-.dz-uploading .dz-preview {
-    @apply opacity-50;
+.preview-modal {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
 }
 
-.dz-uploading .dz-preview::after {
-    content: "⏳";
-    @apply absolute inset-0 flex items-center justify-center text-2xl bg-white bg-opacity-80;
+.preview-content {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }

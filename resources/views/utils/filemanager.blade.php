@@ -23,7 +23,7 @@
 
 <div x-data="fileManager()" class="h-full" @click.away="contextMenu.show = false">
     <div class="bg-gray-700">
-        <h1 class="text-2xl p-4 text-white font-semibold">Laravel S-FILES</h1>
+        <h1 class="text-2xl p-4 text-white font-semibold">SKMA Files</h1>
     </div>
 
     <div class="flex h-full">
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-4 flex-1 overflow-hidden flex flex-col justify-between">
+        <div class="p-4 flex-1 max-h-[93vh] overflow-hidden flex flex-col justify-between relative">
             <div class="px-4 py-2 bg-gray-100 rounded-[10px]">
                 <template x-for="(part, index) in breadcrumbs" :key="index">
                     <div class="inline-flex items-center">
@@ -99,7 +99,7 @@
                     </div>
                 </template>
             </div>
-            <div class="flex items-center mt-2">
+            <div class="flex justify-between items-center mt-2">
                 <!-- Модальное окно -->
                 <div x-data="{ showModal: false }">
                     <button @click="showModal = true"
@@ -108,7 +108,7 @@
                     </button>
 
                     <div x-show="showModal"
-                         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[5]">
                         <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
                             <h2 class="text-lg font-bold mb-4">Загрузите файлы</h2>
                             <form action="/files/upload" class="dropzone h-[300px] overflow-auto" id="uploadZone">
@@ -122,44 +122,158 @@
                         </div>
                     </div>
                 </div>
+                <div class="flex items-center">
+                    <label class="flex items-center bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 text-white font-semibold rounded-md mr-4">
+                        <input
+                            type="checkbox"
+                            @change="toggleAllFiles($event.target.checked)"
+                            x-bind:checked="allFilesSelected"
+                            class="form-checkbox mr-4">
+                        Выбрать все
+                    </label>
+                    <button
+                        @click="deleteSelectedFiles()"
+                        :disabled="!selectedFiles.length"
+                        class="bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 text-white font-semibold rounded-md">
+                        Удалить выбранное (<span x-text="selectedFiles.length"></span>)
+                    </button>
+                </div>
             </div>
             <div class="overflow-auto flex-1 my-8 pb-8">  <!-- Установите желаемую высоту -->
                 <ul class="w-full flex flex-wrap p-2 overflow-auto">
                     <template x-for="file in files" :key="file.path">
-                        <li class="m-[5px]">
-                            <a :href="'/' + file.path" target="_blank"
-                               class="border bg-white w-[120px] h-[120px] flex flex-col justify-between items-center p-2 rounded-md">
-                                <template x-if="isImage(file)">
-                                    <img :src="'/' + file.path" class="w-full h-[70px] object-cover rounded-md"
-                                         alt="Thumbnail">
-                                </template>
+                        <li class="m-[5px] relative">
+                            <div class="absolute top-1 left-1 z-[3]">
+                                <input
+                                    type="checkbox"
+                                    :value="file.path"
+                                    x-model="selectedFiles"
+                                    class="form-checkbox">
+                            </div>
 
-                                <template x-if="!isImage(file)">
-                                    <div class="text-4xl text-gray-600">
-                                        <i :class="getFileIcon(file)"></i>
+                            <div
+                                @contextmenu.prevent="
+                                    fileContextMenu.file = file;
+                                    fileContextMenu.show = true;
+                                    fileContextMenu.x = $event.clientX;
+                                    fileContextMenu.y = $event.clientY;
+                                "
+                                class="relative">
+                                <a :href="'/' + file.path" target="_blank"
+                                   class="border bg-white w-[120px] h-[120px] flex flex-col justify-between items-center p-2 rounded-md">
+                                    <template x-if="isImage(file)">
+                                        <img :src="'/' + file.path" class="w-full h-[70px] object-cover rounded-md"
+                                             alt="Thumbnail">
+                                    </template>
+
+                                    <template x-if="!isImage(file)">
+                                        <div class="text-4xl text-gray-600">
+                                            <i :class="getFileIcon(file)"></i>
+                                        </div>
+                                    </template>
+
+                                    <div class="w-full text-center text-xs truncate">
+                                        <span x-text="file.name"></span>
                                     </div>
-                                </template>
-
-                                <div class="w-full text-center text-xs truncate">
-                                    <span x-text="file.name"></span>
-                                </div>
-                                <div class="w-full text-center text-xs text-gray-500">
-                                    <span x-text="formatFileSize(file.size)"></span> <!-- Добавляем размер файла -->
-                                </div>
-                            </a>
+                                    <div class="w-full text-center text-xs text-gray-500">
+                                        <span x-text="formatFileSize(file.size)"></span> <!-- Добавляем размер файла -->
+                                    </div>
+                                </a>
+                            </div>
                         </li>
                     </template>
+
+                    <div
+                        x-show="fileContextMenu.show"
+                        :style="`top: ${fileContextMenu.y + 5}px; left: ${fileContextMenu.x + 5}px`"
+                        class="fixed bg-white shadow-lg rounded-md p-2 z-50 border border-gray-200 min-w-[150px]">
+                        <button
+                            @click="previewFile(fileContextMenu.file)"
+                            class="flex items-center w-full px-4 py-2 hover:bg-gray-100 rounded-md">
+                            <i class="ph ph-eye mr-2"></i>
+                            Просмотр
+                        </button>
+                        <button
+                            @click="deleteFile(fileContextMenu.file); fileContextMenu.show = false"
+                            class="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-md">
+                            <i class="ph ph-trash mr-2"></i>
+                            Удалить
+                        </button>
+                    </div>
+
+                    <!-- Добавляем модальное окно для предпросмотра -->
+                    <div x-show="previewModal.show"
+                         class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[100]">
+                        <div class="bg-gray-700 w-[90vw] p-6 rounded-lg shadow-lg overflow-auto">
+                            <button
+                                @click="previewModal.show = false"
+                                class="absolute top-4 right-4 text-white hover:text-gray-300 w-[60px] h-[60px] bg-gray-700 text-2xl rounded-full">
+                                <i class="ph ph-x"></i>
+                            </button>
+
+                            <template x-if="previewModal.type === 'image'">
+                                <img :src="previewModal.url" class="max-w-full max-h-[80vh] mx-auto">
+                            </template>
+
+                            <template x-if="previewModal.type === 'pdf'">
+                                <embed :src="previewModal.url" type="application/pdf" width="100%" height="600px">
+                            </template>
+
+                            <template x-if="previewModal.type === 'word'">
+                                <div class="w-full h-[80vh]">
+                                    <iframe
+                                        :src="`https://docs.google.com/gview?url=${encodeURIComponent(previewModal.url)}&embedded=true`"
+                                        class="w-full h-full"
+                                        frameborder="0">
+                                    </iframe>
+                                    <div class="mt-2 text-center">
+                                        <a :href="previewModal.url" download
+                                           class="text-blue-500 hover:underline">
+                                            <i class="ph ph-download"></i> Скачать оригинал
+                                        </a>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template x-if="previewModal.type === 'other'">
+                                <div class="text-center p-4">
+                                    <i class="ph ph-file text-4xl text-gray-400"></i>
+                                    <p class="mt-2">Предпросмотр недоступен</p>
+                                    <a :href="previewModal.url" download
+                                       class="text-blue-500 hover:underline mt-4 inline-block">
+                                        <i class="ph ph-download"></i> Скачать файл
+                                    </a>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
                 </ul>
+            </div>
+            <div class="absolute right-0 bottom-0 w-full bg-gray-200">
+                <div class="flex items-center justify-between px-4 py-3 text-sm text-gray-400">
+                    <div>Действия</div>
+                    <div class="flex items-center">
+                        <div class="border-gray-400 border-r px-2 mr-2">
+                            Выбрано: <span x-text="selectedFilesCount"></span>
+                        </div>
+                        <div class="border-gray-400 border-r px-2 mr-2">
+                            Размер выбранных: <span x-text="formatFileSize(selectedFilesSize)"></span>
+                        </div>
+                        <div class="border-gray-400 border-r px-2 mr-2">
+                            Всего файлов: <span x-text="totalFilesCount"></span>
+                        </div>
+                        <div class="border-gray-400 border-r px-2 mr-2">
+                            Общий размер: <span x-text="formatFileSize(totalFilesSize)"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    {{--    <form action="/files/upload" class="dropzone" id="uploadZone">--}}
-    {{--        <input type="hidden" name="path" x-model="currentPath">--}}
-    {{--        @csrf--}}
-    {{--    </form>--}}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/compressorjs@1.2.1/dist/compressor.min.js"></script>
 <script>
     function fileManager() {
         return {
@@ -169,6 +283,19 @@
             newFolder: '',
             breadcrumbs: [],
             dropzoneInstance: null,
+            selectedFiles: [],
+
+            fileContextMenu: {
+                show: false,
+                x: 0,
+                y: 0,
+                file: null
+            },
+            previewModal: {
+                show: false,
+                url: '',
+                type: ''
+            },
 
             contextMenu: {
                 show: false,
@@ -192,6 +319,36 @@
                     .catch(error => console.error('Error fetching files:', error));
             },
 
+            toggleAllFiles(checked) {
+                if (checked) {
+                    this.selectedFiles = this.files.map(file => file.path);
+                } else {
+                    this.selectedFiles = [];
+                }
+            },
+
+            get allFilesSelected() {
+                return this.selectedFiles.length === this.files.length && this.files.length > 0;
+            },
+
+            get selectedFilesCount() {
+                return this.selectedFiles.length;
+            },
+
+            get selectedFilesSize() {
+                return this.files
+                    .filter(file => this.selectedFiles.includes(file.path))
+                    .reduce((sum, file) => sum + file.size, 0);
+            },
+
+            get totalFilesCount() {
+                return this.files.length;
+            },
+
+            get totalFilesSize() {
+                return this.files.reduce((sum, file) => sum + file.size, 0);
+            },
+
             updateBreadcrumbs() {
                 // Разбиваем путь и удаляем пустые элементы
                 const pathParts = this.currentPath.split('/').filter(part => part !== '');
@@ -206,6 +363,7 @@
             },
 
             goToBreadcrumb(index) {
+                this.selectedFiles = [];
                 if (index === 0) {
                     // Клик по корневой директории (root)
                     this.currentPath = '';
@@ -245,6 +403,7 @@
             },
 
             openDirectory(dir) {
+                this.selectedFiles = [];
                 // Получаем только имя директории из полного пути
                 const dirName = dir.split('/').pop();
 
@@ -261,6 +420,7 @@
             },
 
             goUp() {
+                this.selectedFiles = [];
                 if (this.currentPath === '') return;
                 let parts = this.currentPath.split('/');
                 parts.pop();
@@ -286,7 +446,24 @@
                 });
             },
 
+            previewFile(file) {
+                this.fileContextMenu.show = false;
+                const url = `/${file.path}`;
+                const extension = file.name.split('.').pop().toLowerCase();
+                const isWord = ['doc', 'docx'].includes(extension);
+
+                this.previewModal = {
+                    show: true,
+                    url: url,
+                    type: isWord ? 'word' :
+                        this.isImage(file) ? 'image' :
+                            extension === 'pdf' ? 'pdf' : 'other'
+                };
+            },
+
             deleteFile(file) {
+                if (!confirm(`Удалить файл ${file.name}?`)) return;
+
                 fetch('/files/delete', {
                     method: 'POST',
                     headers: {
@@ -294,7 +471,31 @@
                         'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
                     },
                     body: JSON.stringify({path: file.path})
-                }).then(() => this.fetchFiles());
+                })
+                    .then(() => this.fetchFiles())
+                    .catch(error => console.error('Ошибка удаления:', error));
+            },
+
+            deleteSelectedFiles() {
+                if (!this.selectedFiles.length || !confirm('Удалить выбранные файлы?')) return;
+
+                const promises = this.selectedFiles.map(path =>
+                    fetch('/files/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        },
+                        body: JSON.stringify({path})
+                    })
+                );
+
+                Promise.all(promises)
+                    .then(() => {
+                        this.fetchFiles();
+                        this.selectedFiles = [];
+                    })
+                    .catch(error => console.error('Ошибка удаления:', error));
             },
 
             deleteFolder() {
@@ -326,8 +527,27 @@
 
                 this.dropzoneInstance = new Dropzone("#uploadZone", {
                     paramName: "file", // Имя параметра для файла
-                    maxFilesize: 10, // Максимальный размер файла
-                    renameFile: function (file) { // Отключаем авто-переименование
+                    maxFilesize: 10,
+                    transformFile: function(file, done) {
+                        if (file.type.startsWith('image/')) {
+                            new Compressor(file, {
+                                quality: 0.6,
+                                maxWidth: 2560,
+                                maxHeight: 2560,
+                                convertSize: 500000,
+                                success(result) {
+                                    done(result);
+                                },
+                                error(err) {
+                                    console.error('Compression error:', err);
+                                    done(file);
+                                }
+                            });
+                        } else {
+                            done(file);
+                        }
+                    },
+                    renameFile: function (file) {
                         return file.name;
                     },
                     headers: {
@@ -335,14 +555,12 @@
                     },
                     init: function () {
                         this.on("success", function (file, response) {
-                            self.fetchFiles(); // Добавляем обработчик успешной загрузки
+                            self.fetchFiles();
                         });
 
                         this.on("totaluploadprogress", function (progress) {
                             self.totalProgress = Math.round(progress * 100);
                         });
-
-                        // Остальные обработчики...
                     }
                 });
             },
