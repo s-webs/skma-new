@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Файловый менеджер S-Files</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
@@ -27,7 +28,7 @@
     </div>
 
     <div class="flex h-full">
-        <div class="bg-gray-100 w-1/5 h-full">
+        <div class="bg-gray-100 w-1/5 h-full overflow-y-auto">
             <div class="">
                 <button @click="goUp()"
                         class="p-4 bg-gray-400 text-gray-700 w-full text-xl text-start font-semibold flex items-center justify-between">
