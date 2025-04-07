@@ -112,7 +112,7 @@
                          class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[5]">
                         <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
                             <h2 class="text-lg font-bold mb-4">Загрузите файлы</h2>
-                            <form action="/files/upload" class="dropzone h-[300px] overflow-auto" id="uploadZone">
+                            <form action="/s-files/upload" class="dropzone h-[300px] overflow-auto" id="uploadZone">
                                 <input type="hidden" name="path" x-model="currentPath">
                                 @csrf
                             </form>
@@ -306,7 +306,7 @@
             },
 
             fetchFiles() {
-                fetch(`/files?path=${this.currentPath}`)
+                fetch(`/s-files?path=${this.currentPath}`)
                     .then(res => res.json())
                     .then(data => {
                         this.directories = data.directories;
@@ -434,7 +434,7 @@
                     ? `${this.currentPath}/${this.newFolder}`
                     : this.newFolder;
 
-                fetch('/files/create-folder', {
+                fetch('/s-files/create-folder', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -465,7 +465,7 @@
             deleteFile(file) {
                 if (!confirm(`Удалить файл ${file.name}?`)) return;
 
-                fetch('/files/delete', {
+                fetch('/s-files/delete', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -481,7 +481,7 @@
                 if (!this.selectedFiles.length || !confirm('Удалить выбранные файлы?')) return;
 
                 const promises = this.selectedFiles.map(path =>
-                    fetch('/files/delete', {
+                    fetch('/s-files/delete', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -501,7 +501,7 @@
 
             deleteFolder() {
                 if (!confirm('Вы уверены, что хотите удалить папку?')) return;
-                fetch('/files/delete-folder', {
+                fetch('/s-files/delete-folder', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
