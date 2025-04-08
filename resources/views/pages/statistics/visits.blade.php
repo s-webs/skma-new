@@ -11,13 +11,6 @@
         </div>
 
         <div class="mt-[40px] mb-[60px] pb-[50px] xl:pb-[100px] bg-white pt-[30px] px-[40px] rounded-[15px] shadow-md">
-            <div class="file-manager-container">
-                <iframe
-                    src="{{ route('fmanager.index', ['root' => '/uploads']) }}"
-                    style="width: 100%; height: 800px; border: 1px solid #ccc;"
-                ></iframe>
-                <input type="hidden" name="file_path" id="selected-file">
-            </div>
             <div>
                 <x-page-title>{{ __('public.visits') }}</x-page-title>
             </div>

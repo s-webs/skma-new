@@ -224,7 +224,7 @@ const newsSlider = new Swiper(".news-slider", {
     },
 });
 
-Alpine.start();
+Alpine.start();``
 
 import lightGallery from 'lightgallery';
 

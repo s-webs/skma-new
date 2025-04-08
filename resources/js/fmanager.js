@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import 'dropzone';
+import { Dropzone } from "dropzone";
 import 'compressorjs';
 
 window.Alpine = Alpine;
@@ -263,6 +263,5 @@ function fileManager() {
         },
     };
 }
-
 window.fileManager = fileManager;
 Alpine.start();
