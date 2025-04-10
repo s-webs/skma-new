@@ -18,36 +18,49 @@
                 <div class="flex justify-between">
                     <div class="flex-1 mr-[0px] lg:mr-[20px] 2xl:mr-[40px]">
                         <div x-data="{ activeTab: 'info' }">
-                            <div class="bg-[var(--color-halftone)] py-[6px] rounded-[10px] flex flex-wrap items-center">
+                            <div class="bg-[var(--color-halftone)] px-4 md:px-0 py-[6px] rounded-[10px] flex flex-col md:flex-row flex-wrap items-center">
                                 <div @click="activeTab = 'info'"
                                      :class="activeTab === 'info' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
-                                     class="flex-1 py-[12px] rounded-[10px] font-semibold text-center mx-[6px] cursor-pointer">
+                                     class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
                                     Основная информация
                                 </div>
+                                @if(!empty($item->staff))
+                                    <div @click="activeTab = 'staff'"
+                                         :class="activeTab === 'staff' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
+                                         class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
+                                        {{ __('public.staff') }}
+                                    </div>
+                                @endif
                                 @if(!empty(json_decode($item->getProperty('documents'))))
                                     <div @click="activeTab = 'documents'"
                                          :class="activeTab === 'documents' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
-                                         class="flex-1 py-[12px] rounded-[10px] font-semibold text-center mx-[6px] cursor-pointer">
+                                         class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
                                         Документы
                                     </div>
                                 @endif
-                                @if($item->umkd)
+                                @if($item->umkd_files)
                                     <div @click="activeTab = 'umkd'"
                                          :class="activeTab === 'umkd' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
-                                         class="flex-1 py-[12px] rounded-[10px] font-semibold text-center mx-[6px] cursor-pointer">
+                                         class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
                                         УМКД
                                     </div>
                                 @endif
-                                <div @click="activeTab = 'portfolio'"
-                                     :class="activeTab === 'portfolio' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
-                                     class="flex-1 py-[12px] rounded-[10px] font-semibold text-center mx-[6px] cursor-pointer">
-                                    Портфолио
-                                </div>
+                                @if($item->portfolio_files)
+                                    <div @click="activeTab = 'portfolio'"
+                                         :class="activeTab === 'portfolio' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
+                                         class="flex-1 w-full py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
+                                        Портфолио
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="mt-[20px]">
                                 <div x-show="activeTab === 'info'" x-cloak>
                                     @include('pages.faculties.components.information')
+                                </div>
+
+                                <div x-show="activeTab === 'staff'" x-cloak>
+                                    @include('pages.faculties.components.staff')
                                 </div>
 
                                 <div x-show="activeTab === 'documents'" x-cloak>
@@ -57,10 +70,11 @@
                                 <div x-show="activeTab === 'umkd'" x-cloak>
                                     @include('pages.faculties.components.umkd')
                                 </div>
-
-                                <div x-show="activeTab === 'portfolio'" x-cloak>
-                                    @include('pages.faculties.components.portfolio')
-                                </div>
+                                @if($item->portfolio_files)
+                                    <div x-show="activeTab === 'portfolio'" x-cloak>
+                                        @include('pages.faculties.components.portfolio')
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -72,3 +86,27 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        table, tr, td {
+            border: 1px solid #000;
+        }
+
+        td {
+            padding: 5px 10px;
+        }
+
+        .content p img {
+            margin: 0 auto;
+        }
+
+        .content {
+            font-family: 'Open Sans', serif !important;
+        }
+
+        .content, .content p, .content span {
+            font-size: 1rem !important;
+        }
+    </style>
+@endpush

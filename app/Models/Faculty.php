@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Faculty extends BaseModel
 {
     protected $casts = [
-        'staff_ru' => 'json',
-        'staff_kz' => 'json',
-        'staff_en' => 'json',
+        'staff_ru' => 'array',
+        'staff_kz' => 'array',
+        'staff_en' => 'array',
         'contacts_ru' => 'json',
         'contacts_kz' => 'json',
         'contacts_en' => 'json',
@@ -41,6 +41,8 @@ class Faculty extends BaseModel
 
     public function children(): \Illuminate\Database\Eloquent\Relations\HasMany|Faculty
     {
-        return $this->hasMany(Department::class, 'parent_id', 'id');
+        $lang = app()->getLocale();
+        return $this->hasMany(Department::class, 'parent_id', 'id')
+            ->orderBy("name_{$lang}", 'asc');
     }
 }

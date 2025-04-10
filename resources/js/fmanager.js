@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import { Dropzone } from "dropzone";
+import {Dropzone} from "dropzone";
 import 'compressorjs';
 
 window.Alpine = Alpine;
@@ -74,14 +74,23 @@ function fileManager() {
             return this.files.reduce((sum, file) => sum + file.size, 0);
         },
 
-        // Обновление хлебных крошек на основе текущего пути
+        passFiles() {
+            if (window.opener && !window.opener.closed) {
+                // Вызываем функцию в родительском окне и передаём выбранные файлы
+                window.opener.handleSelectedFiles(this.selectedFiles);
+                // Закрываем окно файлового менеджера после передачи данных
+                window.close();
+            } else {
+                alert("Окно родителя закрыто. Невозможно передать файлы.");
+            }
+        },
+
         updateBreadcrumbs() {
             const pathParts = this.currentPath.split('/').filter(part => part !== '');
             this.breadcrumbs = ['root', ...pathParts];
             this.breadcrumbs = this.breadcrumbs.filter((item, index, self) => self.indexOf(item) === index);
         },
 
-        // Переход по хлебным крошкам
         goToBreadcrumb(index) {
             this.selectedFiles = [];
             this.currentPath = index === 0 ? '' : this.breadcrumbs.slice(1, index + 1).join('/');
@@ -89,12 +98,10 @@ function fileManager() {
             this.updateBreadcrumbs();
         },
 
-        // Проверка, является ли файл изображением
         isImage(file) {
             return /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name);
         },
 
-        // Возвращает CSS-класс для иконки файла по расширению
         getFileIcon(file) {
             const ext = file.name.split('.').pop().toLowerCase();
             const icons = {
@@ -108,7 +115,6 @@ function fileManager() {
             return icons[ext] || icons.default;
         },
 
-        // Форматирование размера файла для отображения
         formatFileSize(size) {
             if (size < 1024) return size + ' B';
             else if (size < 1048576) return (size / 1024).toFixed(2) + ' KB';
@@ -116,15 +122,39 @@ function fileManager() {
             else return (size / 1073741824).toFixed(2) + ' GB';
         },
 
-        // Открытие директории
+        getDirectoryLink() {
+            // Базовый URL берём из window.location.origin
+            let baseUrl = window.location.origin;
+            // Формируем ссылку согласно маршруту вашего файлового менеджера.
+            // Если текущий путь пустой, значит мы на корневой директории.
+            let link = `${baseUrl}/s-files`;
+            if (this.currentPath && this.currentPath.trim() !== '') {
+                link += `?path=${encodeURIComponent(this.currentPath)}`;
+            }
+            return link;
+        },
+
+        copyDirectoryLink() {
+            const baseUrl = window.location.origin;
+            let link = this.contextMenu.dir;
+            navigator.clipboard.writeText(link)
+                .then(() => {
+                    alert('Ссылка скопирована: ' + link);
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования ссылки:', err);
+                });
+        },
+
         openDirectory(dir) {
             this.selectedFiles = [];
             const dirName = dir.split('/').pop();
-            this.currentPath = this.currentPath === '' ? dirName : (!this.currentPath.includes(dirName) ? `${this.currentPath}/${dirName}` : this.currentPath);
+            this.currentPath = this.currentPath === ''
+                ? dirName
+                : (!this.currentPath.includes(dirName) ? `${this.currentPath}/${dirName}` : this.currentPath);
             this.fetchFiles();
         },
 
-        // Переход к родительской директории
         goUp() {
             this.selectedFiles = [];
             if (this.currentPath === '') return;
@@ -134,7 +164,6 @@ function fileManager() {
             this.fetchFiles();
         },
 
-        // Создание новой папки
         createFolder() {
             const newPath = this.currentPath ? `${this.currentPath}/${this.newFolder}` : this.newFolder;
             fetch('/s-files/create-folder', {
@@ -150,7 +179,6 @@ function fileManager() {
             });
         },
 
-        // Предпросмотр файла
         previewFile(file) {
             this.fileContextMenu.show = false;
             const url = `/${file.path}`;
@@ -163,7 +191,6 @@ function fileManager() {
             };
         },
 
-        // Удаление файла
         deleteFile(file) {
             if (!confirm(`Удалить файл ${file.name}?`)) return;
             fetch('/s-files/delete', {
@@ -178,7 +205,6 @@ function fileManager() {
                 .catch(error => console.error('Ошибка удаления:', error));
         },
 
-        // Удаление выбранных файлов
         deleteSelectedFiles() {
             if (!this.selectedFiles.length || !confirm('Удалить выбранные файлы?')) return;
             const promises = this.selectedFiles.map(path =>
@@ -199,7 +225,6 @@ function fileManager() {
                 .catch(error => console.error('Ошибка удаления:', error));
         },
 
-        // Удаление папки
         deleteFolder() {
             if (!confirm('Вы уверены, что хотите удалить папку?')) return;
             fetch('/s-files/delete-folder', {
@@ -217,7 +242,6 @@ function fileManager() {
                 });
         },
 
-        // Инициализация файлового менеджера и конфигурация Dropzone
         init() {
             this.fetchFiles();
             const self = this;
@@ -263,5 +287,6 @@ function fileManager() {
         },
     };
 }
+
 window.fileManager = fileManager;
 Alpine.start();

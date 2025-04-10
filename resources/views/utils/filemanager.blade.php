@@ -11,13 +11,9 @@
 </head>
 <body class="overflow-hidden h-screen w-full">
 <div x-data="fileManager()" class="h-full" @click.away="contextMenu.show = false">
-    <!-- Шапка -->
-    <div class="bg-gray-700">
-        <h1 class="text-2xl p-4 text-white font-semibold">SKMA Files</h1>
-    </div>
-    <div class="flex h-full">
+    <div class="flex h-screen">
         <!-- Боковая панель (директории) -->
-        <div class="bg-gray-100 w-1/5 h-full overflow-y-auto">
+        <div class="bg-gray-100 w-1/3 xl:w-1/5 h-full overflow-y-auto">
             <div>
                 <button @click="goUp()"
                         class="p-4 bg-gray-400 text-gray-700 w-full text-xl text-start font-semibold flex items-center justify-between">
@@ -25,9 +21,9 @@
                     <i class="ph ph-arrow-elbow-up-left"></i>
                 </button>
             </div>
-            <div class="flex items-center">
-                <input type="text" placeholder="Создать директорию" x-model="newFolder" class="border-none flex-1"/>
-                <button @click="createFolder()" class="bg-gray-700 py-2 px-4 font-semibold text-white">Создать</button>
+            <div class="flex items-center justify-between flex-wrap">
+                <input type="text" placeholder="Создать директорию" x-model="newFolder" class="border-none"/>
+                <button @click="createFolder()" class="bg-gray-800 py-2 px-4 font-semibold text-white">Создать</button>
             </div>
             <div x-data="{ contextMenu: { show: false, x: 0, y: 0, dir: '' } }"
                  @click.away="contextMenu.show = false"
@@ -35,7 +31,7 @@
                 <!-- Список директорий с правым кликом -->
                 <ul>
                     <template x-for="dir in directories" :key="dir">
-                        <li>
+                        <li class="">
                             <button
                                 @contextmenu.prevent="
                                         contextMenu.dir = dir;
@@ -44,8 +40,8 @@
                                         contextMenu.y = $event.clientY;
                                     "
                                 @click="openDirectory(dir)"
-                                class="flex items-center border-b w-full py-3 bg-gray-300 px-3 text-lg hover:bg-gray-400 transition-colors">
-                                <i class="ph ph-folder mr-1"></i>
+                                class="flex text-start justify-start items-center border-b w-full py-3 bg-gray-300 px-3 text-lg hover:bg-gray-400 transition-colors">
+                                <i class="ph ph-folder mr-2"></i>
                                 <span x-text="dir.split('/').pop()"></span>
                             </button>
                         </li>
@@ -55,6 +51,12 @@
                 <div x-show="contextMenu.show"
                      :style="`top: ${contextMenu.y + 5}px; left: ${contextMenu.x + 5}px`"
                      class="fixed bg-white shadow-lg rounded-md p-2 z-50 border border-gray-200 min-w-[150px]">
+                    <!-- Кнопка копирования ссылки -->
+                    <button @click="copyDirectoryLink(); contextMenu.show = false"
+                            class="flex items-center w-full px-4 py-2 hover:bg-gray-100 rounded-md">
+                        <i class="ph ph-copy mr-2"></i>
+                        Копировать ссылку
+                    </button>
                     <button @click="deleteFolder()"
                             class="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-md">
                         <i class="ph ph-trash mr-2"></i>
@@ -204,7 +206,11 @@
             <!-- Футер с информацией о файлах -->
             <div class="absolute right-0 bottom-0 w-full bg-gray-200">
                 <div class="flex items-center justify-between px-4 py-3 text-sm text-gray-400">
-                    <div>Действия</div>
+                    <div>
+                        <button @click="passFiles()" class="bg-green-600 px-4 py-2 text-white rounded-md">
+                            Передать выбранные файлы
+                        </button>
+                    </div>
                     <div class="flex items-center">
                         <div class="border-gray-400 border-r px-2 mr-2">
                             Выбрано: <span x-text="selectedFilesCount"></span>

@@ -9,30 +9,9 @@
     </div>
 @endif
 
-<div class="mt-[30px]">
+<div class="mt-[30px] content">
     {!! $item->getProperty('description') !!}
 </div>
-
-@if(!empty(json_decode($item->getProperty('staff'))))
-    <div class="mt-[60px]">
-        <div>
-            <x-inner-heading>{{ __('public.staff') }}</x-inner-heading>
-        </div>
-        <div class="flex flex-wrap justify-between mt-[30px]">
-            @foreach(json_decode($item->getProperty('staff')) as $member)
-                <div
-                    class="border border-[var(--color-main)] w-full md:w-[48%] mb-[20px] p-[20px] rounded-[15px]">
-                    <div class="">
-                        <img src="/{{ $member->photo }}" alt="{{ $member->name }}"
-                             class="w-[120px] h-[120px] rounded-full object-cover">
-                    </div>
-                    <div class="font-semibold mt-[24px]">{{ $member->name }}</div>
-                    <div>{{ $member->position }}</div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-@endif
 
 @if(!empty(json_decode($item->getProperty('contacts'))))
     <div class="mb-[10px] mt-[60px]">

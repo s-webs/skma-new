@@ -10,6 +10,7 @@ use App\Models\Department;
 
 use Illuminate\Database\Query\Builder;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Relationships\HasMany;
 use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Support\Enums\PageType;
@@ -39,9 +40,14 @@ class DepartmentResource extends ModelResource
 
     protected string $title = 'Кафедры';
 
-    protected string $sortColumn = 'name_ru';
+    protected string $sortColumn = 'parent_id';
 
     protected ?PageType $redirectAfterSave = PageType::INDEX;
+
+    protected function search(): array
+    {
+        return ['id', 'name_ru', 'name_kz', 'name_en'];
+    }
 
     /**
      * @return list<FieldContract>
@@ -50,8 +56,11 @@ class DepartmentResource extends ModelResource
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make('Факультет', 'parent', 'name_ru', resource: FacultyResource::class),
             Image::make('Превью', 'preview'),
-            Text::make('Название', 'name_ru'),
+            Text::make('Название', 'name_ru')
+                ->sortable(),
+            Slug::make('Slug', 'slug_ru')
         ];
     }
 
@@ -67,7 +76,8 @@ class DepartmentResource extends ModelResource
                     ->nullable(),
                 Tabs::make([
                     Tab::make('RU', [
-                        Text::make('Название', 'name_ru'),
+                        Text::make('Название', 'name_ru')
+                        ->unescape(),
                         TinyMce::make('Описание', 'description_ru'),
                         Json::make('Контакты', 'contacts_ru')
                             ->fields([
@@ -79,7 +89,8 @@ class DepartmentResource extends ModelResource
                         Slug::make('Slug', 'slug_ru')->from('name_ru')
                     ]),
                     Tab::make('KZ', [
-                        Text::make('Название', 'name_kz'),
+                        Text::make('Название', 'name_kz')
+                            ->unescape(),
                         TinyMce::make('Описание', 'description_kz'),
                         Json::make('Контакты', 'contacts_kz')
                             ->fields([
@@ -91,7 +102,8 @@ class DepartmentResource extends ModelResource
                         Slug::make('Slug', 'slug_kz')->from('name_kz')
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название', 'name_en'),
+                        Text::make('Название', 'name_en')
+                        ->unescape(),
                         TinyMce::make('Описание', 'description_en'),
                         Json::make('Контакты', 'contacts_en')
                             ->fields([
@@ -123,60 +135,15 @@ class DepartmentResource extends ModelResource
                             ->vertical()
                             ->removable(),
                     ]),
-                    Tab::make('УМКД', [
-                        Json::make('УМКД', 'umkd')
-                            ->fields([
-                                Position::make(),
-                                Text::make('Тип документов на русском', 'type_ru'),
-                                Text::make('Тип документов на казахском', 'type_kz'),
-                                Text::make('Тип документов на английском', 'type_en'),
-                                Fmanager::make('files'),
-//                                FileManager::make('УМКД', 'files')
-//                                    ->typeOfFileManager(FileManagerTypeEnum::File)
-//                                    ->removable()
-//                                    ->onApply(function ($item, $value, $field) {
-//                                        $request = request()->all();
-//
-//                                        // Проверяем, есть ли файлы
-//                                        if (!isset($request['files']) || empty($request['files'])) {
-//                                            return $item;
-//                                        }
-//
-//                                        $filesString = $request['files'];
-//
-//                                        // Разделяем строку на массив файлов
-//                                        $filesArray = preg_split('/,(?=https?:\/\/)/', $filesString);
-//
-//                                        // Обрабатываем файлы: удаляем домен, получаем имя файла и расширение
-//                                        $processedFiles = array_map(function ($file) {
-//                                            $path = parse_url($file, PHP_URL_PATH); // Получаем путь без домена
-//                                            $cleanPath = ltrim($path, '/'); // Убираем начальный слеш
-//                                            $filename = basename($path); // Получаем имя файла
-//
-//                                            // Получаем информацию о файле: имя и расширение
-//                                            $fileInfo = pathinfo($filename);
-//                                            $filenameWithoutExtension = $fileInfo['filename']; // Имя файла без расширения
-//                                            $extension = isset($fileInfo['extension']) ? $fileInfo['extension'] : ''; // Расширение файла
-//
-//                                            return [
-//                                                'path' => $cleanPath, // Путь без домена
-//                                                'filename' => $filenameWithoutExtension, // Имя файла без расширения
-//                                                'ext' => $extension, // Расширение файла
-//                                            ];
-//                                        }, $filesArray);
-//
-//                                        // Добавляем обработанные файлы в объект
-//                                        $umkdFiles = ['files' => $processedFiles];
-//                                        $item += $umkdFiles;
-//
-//                                        return $item;
-//                                    })
-                            ])
-                            ->vertical()
-                            ->removable(),
-                    ]),
+                    Tab::make('Документы', [
+                        Text::make('УМКД', 'umkd')->unescape(),
+                        Text::make('Портфолио', 'portfolio')->unescape()
+                    ])
                 ]),
                 Divider::make(),
+
+
+
                 Image::make('Превью', 'preview')
                     ->dir('uploads/departments/')
                     ->customName(function ($file, $field) {

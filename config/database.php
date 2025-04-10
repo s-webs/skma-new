@@ -65,11 +65,11 @@ return [
         'old_database' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '10.10.101.216'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'skma_edu_kz'),
-            'username' => env('DB_USERNAME', 'admin_moodledot'),
-            'password' => env('DB_PASSWORD', 'Giaw32$59'),
+            'host' => '10.10.101.216',
+            'port' => '3306',
+            'database' => 'skma_edu_kz',
+            'username' => 'admin_moodledot',
+            'password' => 'Giaw32$59',
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
@@ -167,7 +167,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

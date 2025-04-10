@@ -40,7 +40,8 @@ class Department extends BaseModel
         'documents_ru' => 'json',
         'documents_kz' => 'json',
         'documents_en' => 'json',
-        'umkd' => 'collection',
+        'umkd' => 'string',
+        'portfolio' => 'string',
     ];
 
     public function transformDocuments($documents): array
@@ -67,5 +68,10 @@ class Department extends BaseModel
     public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Faculty::class, 'parent_id', 'id');
+    }
+
+    public function umkd(): Department|\Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Umkd::class);
     }
 }

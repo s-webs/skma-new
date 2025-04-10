@@ -58,16 +58,6 @@ class FacultyResource extends ModelResource
                     Tab::make('RU', [
                         Text::make('Название', 'name_ru'),
                         TinyMce::make('Описание', 'description_ru'),
-                        Json::make('Состав', 'staff_ru')
-                            ->fields([
-                                Position::make(),
-                                Image::make('Фотография', 'photo')
-                                    ->dir('uploads/faculties/staff')
-                                    ->removable(),
-                                Text::make('Имя на русском', 'name'),
-                                Text::make('Должность на русском', 'position')
-                            ])
-                            ->removable(),
                         Json::make('Документы', 'documents_ru')
                             ->fields([
                                 Position::make(),
@@ -90,16 +80,6 @@ class FacultyResource extends ModelResource
                     Tab::make('KZ', [
                         Text::make('Название', 'name_kz'),
                         TinyMce::make('Описание', 'description_kz'),
-                        Json::make('Состав', 'staff_kz')
-                            ->fields([
-                                Position::make(),
-                                Image::make('Фотография', 'photo')
-                                    ->dir('uploads/faculties/staff')
-                                    ->removable(),
-                                Text::make('Имя на казахском', 'name'),
-                                Text::make('Должность на казахском', 'position')
-                            ])
-                            ->removable(),
                         Json::make('Документы', 'documents_kz')
                             ->fields([
                                 Position::make(),
@@ -122,16 +102,6 @@ class FacultyResource extends ModelResource
                     Tab::make('EN', [
                         Text::make('Название', 'name_en'),
                         TinyMce::make('Описание', 'description_en'),
-                        Json::make('Состав', 'staff_en')
-                            ->fields([
-                                Position::make(),
-                                Image::make('Фотография', 'photo')
-                                    ->dir('uploads/faculties/staff')
-                                    ->removable(),
-                                Text::make('Имя на английском', 'name'),
-                                Text::make('Должность на английском', 'position')
-                            ])
-                            ->removable(),
                         Json::make('Документы', 'documents_en')
                             ->fields([
                                 Position::make(),
@@ -151,6 +121,23 @@ class FacultyResource extends ModelResource
                             ->removable(),
                         Slug::make('Slug', 'slug_en')->from('name_en')
                     ]),
+                    Tab::make('Сотрудники', [
+                        Json::make('Состав', 'staff_ru')
+                            ->fields([
+                                Position::make(),
+                                Image::make('Фотография', 'photo')
+                                    ->dir('uploads/faculties/staff')
+                                    ->removable(),
+                                Text::make('Имя на русском', 'name_ru'),
+                                Text::make('Должность на русском', 'position_ru'),
+                                Text::make('Имя на казахском', 'name_kz'),
+                                Text::make('Должность на казахском', 'position_kz'),
+                                Text::make('Имя на английском', 'name_en'),
+                                Text::make('Должность на английском', 'position'),
+                            ])
+                            ->vertical()
+                            ->removable(),
+                    ]),
                 ]),
                 Image::make('Превью (необязательно)', 'preview')
                     ->dir('uploads/faculties/')
@@ -160,7 +147,7 @@ class FacultyResource extends ModelResource
                     })
                     ->removable(),
                 HasMany::make('Кафедры', 'children', 'name_ru', resource: DepartmentResource::class)
-                ->creatable(),
+                    ->creatable(),
             ]),
         ];
     }

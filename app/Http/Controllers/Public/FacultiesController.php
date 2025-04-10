@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Faculty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FacultiesController extends Controller
 {
@@ -28,21 +29,32 @@ class FacultiesController extends Controller
         $item->documents_kz = $item->transformDocuments($item->documents_kz);
         $item->documents_en = $item->transformDocuments($item->documents_en);
 
+        $lang = app()->getLocale();
+
+        if ($item->umkd) {
+            $umkd_files = scanDirectory($item->umkd, 'uploads', skipTopLevels: 1, maxDepth: 3);
+
+            $item->umkd_files = $umkd_files;
+        }
+
+        if ($item->portfolio) {
+            $portfolio_files = scanDirectory($item->portfolio, 'uploads', skipTopLevels: 1, maxDepth: 3);
+
+            $item->portfolio_files = $portfolio_files;
+        }
+
+        if ($item->staff) {
+            $item->staff = array_map(function ($member) use ($lang) {
+                return [
+                    'photo' => $member['photo'],
+                    'name' => $member["name_{$lang}"] ?? '',
+                    'position' => $member["position_{$lang}"] ?? '',
+                ];
+            }, $item->staff);
+        }
+
         $parent = $item->parent;
         $children = $item->children;
-
-        $item->umkd = $item->umkd->map(function ($umkd) {
-            $languageKey = 'type_' . app()->getLocale();
-
-            $umkd = [
-                'type' => $umkd[$languageKey],
-                'files' => $umkd['files'],
-            ];
-
-            return $umkd;
-        });
-
-        dd($item->umkd);
 
         return view('pages.faculties.show', compact('item', 'parent', 'children'));
     }
