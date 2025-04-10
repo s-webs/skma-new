@@ -106,6 +106,48 @@
 
 
         }
+
+        .table-wrapper table,
+        .table-wrapper thead,
+        .table-wrapper tbody,
+        .table-wrapper th,
+        .table-wrapper td,
+        .table-wrapper tr {
+            display: block;
+        }
+
+        .table-wrapper thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        /* Если нужно убрать лишние границы, можно снять их при stacked: */
+        .table-wrapper td,
+        .table-wrapper th {
+            border: none !important;
+        }
+
+        /* Смещаем содержимое ячеек */
+        .table-wrapper td {
+            position: relative;
+            padding-left: 50%;
+            box-sizing: border-box;
+            text-align: left; /* или right, в зависимости от макета */
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .table-wrapper td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 10px;
+            width: 40%; /* Уменьшите ширину, если текст «съезжает» на iPhone */
+            font-weight: bold;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
     </style>
 @endpush
 
