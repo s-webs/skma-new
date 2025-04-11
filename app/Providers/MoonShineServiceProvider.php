@@ -35,6 +35,7 @@ use App\MoonShine\Resources\ThemeResource;
 use App\MoonShine\Resources\ForStudentResource;
 use App\MoonShine\Resources\UmkdResource;
 use App\MoonShine\Resources\KomplaensResource;
+use App\MoonShine\Resources\GraduateResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -71,6 +72,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 ForStudentResource::class,
                 UmkdResource::class,
                 KomplaensResource::class,
+                GraduateResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

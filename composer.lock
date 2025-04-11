@@ -2874,21 +2874,22 @@
         },
         {
             "name": "moonshine/import-export",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moonshine-software/import-export.git",
-                "reference": "d23bbf97c22dad93d4b94cf9a34a38b86f88afea"
+                "reference": "9f8d900ea68e6b3bd4a73b836575e0ee715dce9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moonshine-software/import-export/zipball/d23bbf97c22dad93d4b94cf9a34a38b86f88afea",
-                "reference": "d23bbf97c22dad93d4b94cf9a34a38b86f88afea",
+                "url": "https://api.github.com/repos/moonshine-software/import-export/zipball/9f8d900ea68e6b3bd4a73b836575e0ee715dce9d",
+                "reference": "9f8d900ea68e6b3bd4a73b836575e0ee715dce9d",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
+                "openspout/openspout": "<4.29",
                 "php": "^8.2|^8.3",
                 "rap2hpoutre/fast-excel": "^5.4"
             },
@@ -2929,7 +2930,7 @@
                 "issues": "https://github.com/moonshine-software/import-export/issues",
                 "source": "https://github.com/moonshine-software/import-export"
             },
-            "time": "2025-01-10T13:29:56+00:00"
+            "time": "2025-03-08T18:19:55+00:00"
         },
         {
             "name": "moonshine/moonshine",

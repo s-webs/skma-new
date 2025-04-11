@@ -53,6 +53,7 @@ use App\MoonShine\Resources\ThemeResource;
 use App\MoonShine\Resources\ForStudentResource;
 use App\MoonShine\Resources\UmkdResource;
 use App\MoonShine\Resources\KomplaensResource;
+use App\MoonShine\Resources\GraduateResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -99,6 +100,7 @@ final class MoonShineLayout extends CompactLayout
             MenuItem::make('ForStudents', ForStudentResource::class),
             MenuItem::make('Umkds', UmkdResource::class),
             MenuItem::make('Komplaens', KomplaensResource::class),
+            MenuItem::make('Graduates', GraduateResource::class),
         ];
     }
 
