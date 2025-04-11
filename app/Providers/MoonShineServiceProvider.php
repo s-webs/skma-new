@@ -34,6 +34,7 @@ use App\MoonShine\Pages\DivisionsIndexPage;
 use App\MoonShine\Resources\ThemeResource;
 use App\MoonShine\Resources\ForStudentResource;
 use App\MoonShine\Resources\UmkdResource;
+use App\MoonShine\Resources\KomplaensResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -69,6 +70,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 ThemeResource::class,
                 ForStudentResource::class,
                 UmkdResource::class,
+                KomplaensResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
