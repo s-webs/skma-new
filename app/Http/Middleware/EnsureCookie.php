@@ -21,7 +21,7 @@ class EnsureCookie
 
         if (!$request->hasCookie($cookieName)) {
             $cookieValue = Str::uuid();
-            Cookie::queue($cookieName, $cookieValue, 60 * 24);
+            Cookie::queue($cookieName, $cookieValue, (60 * 24) * 7);
         }
 
         return $next($request);

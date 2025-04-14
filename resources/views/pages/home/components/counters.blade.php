@@ -24,23 +24,23 @@
                 <div class="flex flex-wrap md:flex-nowrap justify-between md:justify-center items-center">
                     <div
                         class="w-[170px] md:w-[200px] h-[100px] md:h-[104px] bg-white bg-opacity-30 rounded-full flex flex-col justify-center items-center md:mr-[10px]">
-                        <div class="text-white text-2xl font-semibold">9</div>
-                        <div class="text-lg text-white">онлайн</div>
+                        <div class="text-white text-2xl font-semibold">{{ $onlineVisitors->count() }}</div>
+                        <div class="text-lg text-white">{{ __('visitors.online') }}</div>
                     </div>
                     <div
                         class="w-[170px] md:w-[200px] h-[100px] md:h-[104px] bg-white bg-opacity-30 rounded-full flex flex-col justify-center items-center md:mr-[10px]">
-                        <div class="text-white text-2xl font-semibold">703</div>
-                        <div class="text-lg text-white">24 часа</div>
+                        <div class="text-white text-2xl font-semibold">{{ $visitsToday->count() }}</div>
+                        <div class="text-lg text-white">{{ __('visitors.today') }}</div>
                     </div>
                     <div
                         class="w-[170px] md:w-[200px] h-[100px] md:h-[104px] bg-white bg-opacity-30 rounded-full flex flex-col justify-center items-center md:mr-[10px] mt-[20px] md:mt-[0px]">
-                        <div class="text-white text-2xl font-semibold">57 013</div>
-                        <div class="text-lg text-white">месяц</div>
+                        <div class="text-white text-2xl font-semibold">{{ $visitsMonth->count() }}</div>
+                        <div class="text-lg text-white">{{ __('visitors.month') }}</div>
                     </div>
                     <div
                         class="w-[170px] md:w-[200px] h-[100px] md:h-[104px] bg-white bg-opacity-30 rounded-full flex flex-col justify-center items-center mt-[20px] md:mt-[0px]">
-                        <div class="text-white text-2xl font-semibold">3 045 156</div>
-                        <div class="text-lg text-white">всего</div>
+                        <div class="text-white text-2xl font-semibold">{{ $allVisits->count() }}</div>
+                        <div class="text-lg text-white">{{ __('visitors.total') }}</div>
                     </div>
                 </div>
             </div>

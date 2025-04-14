@@ -7,6 +7,7 @@ use App\Models\Visitor;
 use Closure;
 use GeoIp2\Database\Reader;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -17,13 +18,13 @@ class TrackVisitor
     public function handle(Request $request, Closure $next): Response
     {
         $cookieName = 'site_visitor_id';
-        $ip = \Illuminate\Support\Facades\Request::ip();
+        $ip = $request->ip();
 
         if (!$request->hasCookie($cookieName)) {
             $cookieValue = Str::uuid();
-            Cookie::queue($cookieName, $cookieValue, 60 * 24);
+            Cookie::queue($cookieName, $cookieValue, (60 * 24) * 7);
         } else {
-            $cookieValue = Cookie::get($request->cookie($cookieName));
+            $cookieValue = $request->cookie($cookieName);
         }
 
         $visitor = Visitor::query()->firstOrCreate([
@@ -31,6 +32,8 @@ class TrackVisitor
         ], [
             'ip_address' => $ip,
         ]);
+
+        $visitor->update(['last_activity' => Carbon::now()]);
 
         if (!$visitor->country_code) {
             try {

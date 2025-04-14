@@ -13,6 +13,7 @@ use App\Models\News;
 use App\Models\OrgNode;
 use App\Models\Partner;
 use App\Models\Service;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -75,11 +76,16 @@ class HomeController extends Controller
 
         $gallery = Gallery::all()->take('5');
 
+        $visitsToday = Visitor::byPeriod('today')->get();
+        $visitsMonth = Visitor::byPeriod('month')->get();
+        $allVisits = Visitor::byPeriod('all')->get();
+        $onlineVisitors = Visitor::where('last_activity', '>=', Carbon::now()->subMinutes(5))->get();
+
         $services = Service::all()->take('5');
 
         $awards = Award::query()->where('is_published', '=', 1)->take('4')->get();
         $partners = Partner::all();
 
-        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners')); // Или другой шаблон по умолчанию
+        return view('pages.home.index', compact('counters', 'services', 'news', 'latestArticle', 'announcements', 'feedbacks', 'adverts', 'gallery', 'services', 'awards', 'partners', 'visitsToday', 'visitsMonth', 'allVisits', 'onlineVisitors'));
     }
 }
