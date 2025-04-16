@@ -79,10 +79,13 @@ final class MoonShineLayout extends CompactLayout
             ], 'building-library'),
             MenuGroup::make('Структура', [
                 MenuItem::make('Подразделения', DivisionResource::class),
+                MenuItem::make('Комплаенс служба', KomplaensResource::class),
             ], 'bars-3-bottom-left'),
             MenuGroup::make('Учебный процесс', [
                 MenuItem::make('Факультеты', FacultyResource::class),
                 MenuItem::make('Кафедры', DepartmentResource::class),
+                MenuItem::make('Для студентов', ForStudentResource::class),
+                MenuItem::make('Выпускникам', GraduateResource::class),
             ], 'academic-cap'),
             MenuGroup::make('Пресса', [
                 MenuItem::make('Анонсы', AnnounceResource::class),
@@ -96,11 +99,8 @@ final class MoonShineLayout extends CompactLayout
             ], 'users'),
             MenuGroup::make('Настройки', [
                 MenuItem::make('Темы', ThemeResource::class),
+                MenuItem::make('Файловый менеджер', route('fmanager.index'))
             ], 'wrench-screwdriver'),
-            MenuItem::make('ForStudents', ForStudentResource::class),
-            MenuItem::make('Umkds', UmkdResource::class),
-            MenuItem::make('Komplaens', KomplaensResource::class),
-            MenuItem::make('Graduates', GraduateResource::class),
         ];
     }
 

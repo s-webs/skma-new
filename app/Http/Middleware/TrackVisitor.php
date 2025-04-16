@@ -22,7 +22,7 @@ class TrackVisitor
 
         if (!$request->hasCookie($cookieName)) {
             $cookieValue = Str::uuid();
-            Cookie::queue($cookieName, $cookieValue, (60 * 24) * 7);
+            Cookie::queue($cookieName, $cookieValue, 60 * 24);
         } else {
             $cookieValue = $request->cookie($cookieName);
         }

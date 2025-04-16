@@ -35,6 +35,18 @@ class StudentsController extends Controller
                 ];
             });
 
+        if ($information->academic_calendars) {
+            $academic_calendars = scanDirectory($information->academic_calendars, 'uploads', skipTopLevels: 1, maxDepth: 5);
+
+            $information->academic_calendars = $academic_calendars;
+        }
+
+        if ($information->elective_catalog) {
+            $elective_catalog = scanDirectory($information->elective_catalog, 'uploads', skipTopLevels: 1, maxDepth: 5);
+
+            $information->elective_catalog = $elective_catalog;
+        }
+
         return view('pages.student.index', compact('services', 'information', 'scheduleLessons', 'scheduleExam'));
     }
 }

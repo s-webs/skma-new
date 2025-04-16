@@ -12,5 +12,6 @@ class ForStudent extends baseModel
         'cards_en' => 'array',
         'schedule_lesson' => 'collection',
         'schedule_exam' => 'collection',
+        'video_materials' => 'array'
     ];
 }

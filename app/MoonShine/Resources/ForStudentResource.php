@@ -22,6 +22,7 @@ use MoonShine\UI\Fields\Position;
 use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
+use MoonShine\UI\Fields\Url;
 use Sweet1s\MoonshineFileManager\FileManager;
 use Sweet1s\MoonshineFileManager\FileManagerTypeEnum;
 
@@ -122,7 +123,18 @@ class ForStudentResource extends ModelResource
                             ->removable(),
                         Text::make('Slug', 'slug_en'),
                     ]),
-                    Tab::make('РАСПИСАНИЯ', [
+                    Tab::make('Документы', [
+                        Text::make('Ссылка на элективные дисциплины', 'elective_catalog'),
+                        Text::make('Ссылка на академические календари', 'academic_calendars'),
+                        Collapse::make('Видео мaтериалы', [
+                            Json::make('video_materials')
+                                ->fields([
+                                    Position::make(),
+                                    Url::make('Внешняя ссылка URL', 'url_external'),
+                                    Text::make('Ссылка на внутренние файлы', 'url_internal')
+                                ])
+                                ->removable()
+                        ]),
                         Collapse::make('Расписание занятий', [
                             Json::make('Расписание занятий', 'schedule_lesson')
                                 ->fields([
@@ -131,7 +143,9 @@ class ForStudentResource extends ModelResource
                                     Text::make('Название на казахском', 'shedule_title_kz'),
                                     Text::make('Название на английском', 'shedule_title_en'),
                                     Text::make('Ссылка', 'link'),
-                                ])->vertical(),
+                                ])
+                                ->vertical()
+                                ->removable(),
                         ]),
                         Collapse::make('Расписание экзаменов', [
                             Json::make('Расписание экзаменов', 'schedule_exam')
@@ -141,7 +155,9 @@ class ForStudentResource extends ModelResource
                                     Text::make('Название на казахском', 'shedule_title_kz'),
                                     Text::make('Название на английском', 'shedule_title_en'),
                                     Text::make('Ссылка', 'link'),
-                                ])->vertical(),
+                                ])
+                                ->vertical()
+                                ->removable(),
                         ]),
                     ])
                 ]),

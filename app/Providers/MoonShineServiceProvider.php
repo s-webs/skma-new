@@ -33,7 +33,6 @@ use App\MoonShine\Resources\FacultyResource;
 use App\MoonShine\Pages\DivisionsIndexPage;
 use App\MoonShine\Resources\ThemeResource;
 use App\MoonShine\Resources\ForStudentResource;
-use App\MoonShine\Resources\UmkdResource;
 use App\MoonShine\Resources\KomplaensResource;
 use App\MoonShine\Resources\GraduateResource;
 
@@ -70,7 +69,6 @@ class MoonShineServiceProvider extends ServiceProvider
                 FacultyResource::class,
                 ThemeResource::class,
                 ForStudentResource::class,
-                UmkdResource::class,
                 KomplaensResource::class,
                 GraduateResource::class,
             ])
