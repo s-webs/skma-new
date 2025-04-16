@@ -5,7 +5,7 @@
         <div class="mt-[40px]">
             <x-breadcrumbs :items="[
             ['title' => __('public.pageHome'), 'url' => route('home')],
-            ['title' => 'Выпускникам']
+            ['title' => __('graduates.for_graduates')]
         ]"/>
         </div>
 
