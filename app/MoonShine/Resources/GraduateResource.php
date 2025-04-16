@@ -12,6 +12,8 @@ use MoonShine\ImportExport\Traits\ImportExportConcern;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Components\Layout\Divider;
+use MoonShine\UI\Components\Tabs;
+use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Fields\ID;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\ComponentContract;
@@ -39,6 +41,7 @@ class GraduateResource extends ModelResource implements HasImportExportContract
         return [
             ID::make()->sortable(),
             Text::make('Имя', 'name')->sortable(),
+            Text::make('Имя на латинском', 'name_latin')->sortable(),
             Number::make('Год', 'year')->sortable(),
             Textarea::make('Описание', 'description_ru')->sortable(),
         ];
@@ -52,15 +55,42 @@ class GraduateResource extends ModelResource implements HasImportExportContract
         return [
             Box::make([
                 ID::make(),
-                Image::make('Фотография (необязательно)', 'photo'),
-                Divider::make(),
-                Text::make('Имя', 'name')->required(),
-                Text::make('Имя на латинском', 'name_latin'),
-                Number::make('Год', 'year')->required(),
-                Textarea::make('Описание на русском', 'description_ru'),
-                Textarea::make('Описание на казахском', 'description_kz'),
-                Textarea::make('Описание на английском', 'description_en'),
+                Tabs::make([
+                    Tab::make('Основная информация', [
+                        Text::make('Имя', 'name')->required(),
+                        Text::make('Имя на латинском', 'name_latin')->required(),
+                        Number::make('Год', 'year')->required(),
+                        Text::make('Факультет на русском', 'faculty_ru')->required(),
+                        Text::make('Факультет на казахском', 'faculty_kz')->required(),
+                        Text::make('Факультет на английском', 'faculty_en')->required(),
+                        Text::make('Формат обучения', 'format')->required(),
+                        Text::make('Тип диплома', 'diplom_type')->required(),
+                    ]),
+                    Tab::make('Необязательные поля', [
+                        Image::make('Фотография (необязательно)', 'photo'),
+                        Textarea::make('Описание на русском', 'description_ru'),
+                        Textarea::make('Описание на казахском', 'description_kz'),
+                        Textarea::make('Описание на английском', 'description_en'),
+                        Textarea::make('Отзыв (необязательно)', 'review'),
+                        Text::make('Язык отзыва', 'language'),
+                    ])
+                ]),
             ])
+        ];
+    }
+
+    protected function importFields(): iterable
+    {
+        return [
+            ID::make(),
+            Text::make('Имя', 'name')->required(),
+            Text::make('Имя на латинском', 'name_latin'),
+            Number::make('Год', 'year')->required(),
+            Text::make('Формат обучения', 'format'),
+            Text::make('Тип диплома', 'diplom_type'),
+            Text::make('Факультет на русском', 'faculty_ru'),
+            Text::make('Факультет на казахском', 'faculty_kz'),
+            Text::make('Факультет на английском', 'faculty_en'),
         ];
     }
 
@@ -71,9 +101,11 @@ class GraduateResource extends ModelResource implements HasImportExportContract
             Text::make('Имя', 'name')->required(),
             Text::make('Имя на латинском', 'name_latin'),
             Number::make('Год', 'year')->required(),
-            Textarea::make('Описание на русском', 'description_ru'),
-            Textarea::make('Описание на казахском', 'description_kz'),
-            Textarea::make('Описание на английском', 'description_en'),
+            Text::make('Формат обучения', 'format'),
+            Text::make('Тип диплома', 'diplom_type'),
+            Text::make('Факультет на русском', 'faculty_ru'),
+            Text::make('Факультет на казахском', 'faculty_kz'),
+            Text::make('Факультет на английском', 'faculty_en'),
         ];
     }
 

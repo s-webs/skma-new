@@ -16,12 +16,19 @@ return new class extends Migration {
             $table->string('name_latin');
             $table->integer('year');
             $table->string('photo')->nullable();
+
             $table->text('description_ru')->nullable();
             $table->text('description_kz')->nullable();
             $table->text('description_en')->nullable();
+
+            $table->string('faculty_ru')->nullable();
+            $table->string('faculty_kz')->nullable();
+            $table->string('faculty_en')->nullable();
+
             $table->text('review')->nullable();
             $table->string('language')->nullable();
-            $table->string('faculty')->nullable();
+            $table->text('format')->nullable();
+            $table->text('diplom_type')->nullable();
             $table->timestamps();
         });
     }

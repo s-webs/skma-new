@@ -17,10 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-        ]);
-        $middleware->append([
-            \Illuminate\Cookie\Middleware\EncryptCookies::class,
-            \App\Http\Middleware\TrackVisitor::class
+            'encrypt_cookies' => \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            'track_visitor' => \App\Http\Middleware\TrackVisitor::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

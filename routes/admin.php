@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 
-Route::get('/statistics/visits', [\App\Http\Controllers\Admin\StatisticsController::class, 'visits'])->name('statistics.visits');
+Route::get('/statistics/visits', [\App\Http\Controllers\Admin\StatisticsController::class, 'visits'])
+    ->middleware('encrypt_cookies', 'track_visitor')
+    ->name('statistics.visits');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'encrypt_cookies', 'encrypt_cookies'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

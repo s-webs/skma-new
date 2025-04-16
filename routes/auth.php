@@ -20,7 +20,7 @@ if (in_array($locale, ['ru', 'kz', 'en'])) {
     $locale = '';
 }
 
-Route::group(['prefix' => $locale], function () {
+Route::group(['prefix' => $locale, 'middleware' => ['encrypt_cookies', 'track_visitor']], function () {
     Route::middleware('guest')->group(function () {
         Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('register', [RegisteredUserController::class, 'store']);
@@ -35,7 +35,7 @@ Route::group(['prefix' => $locale], function () {
         Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
     });
 
-    Route::middleware('auth')->group(function () {
+    Route::middleware('auth', 'track_visitor', 'encrypt_cookies')->group(function () {
         Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
         Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
             ->middleware(['signed', 'throttle:6,1'])

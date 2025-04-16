@@ -11,9 +11,10 @@ if (in_array($locale, ['ru', 'kz', 'en'])) {
 
 Route::get('/dashboard', function () {
     return redirect(route('home'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'encrypt_cookies', 'track_visitor'])->name('dashboard');
 
 Route::group([
+    'middleware' => ['encrypt_cookies', 'track_visitor'],
     'prefix' => $locale,
 ], function () {
     Route::get('/', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
@@ -34,6 +35,8 @@ Route::group([
     Route::get('/search', [\App\Http\Controllers\Public\SearchController::class, 'index'])->name('search.index');
     Route::get('/compliance', [\App\Http\Controllers\Public\KomplaensController::class, 'show'])->name('komplaens.show');
 
+    Route::get('/graduates', [\App\Http\Controllers\Public\GraduatesController::class, 'index'])->name('graduates.index');
+    Route::get('/graduates/search', [\App\Http\Controllers\Public\GraduatesController::class, 'search'])->name('graduates.search');
 
 
     Route::get('/for-the-applicant', [\App\Http\Controllers\Public\ApplicantController::class, 'index'])->name('applicant.index');
