@@ -86,16 +86,6 @@ class DivisionResource extends TreeResource
                         Tab::make('RU', [
                             Text::make('Название', 'name_ru'),
                             TinyMce::make('Описание', 'description_ru'),
-                            Json::make('Состав', 'staff_ru')
-                                ->fields([
-                                    Position::make(),
-                                    Image::make('Фотография', 'photo')
-                                        ->dir('uploads/divisions/staff')
-                                        ->removable(),
-                                    Text::make('Имя на русском', 'name'),
-                                    Text::make('Должность на русском', 'position')
-                                ])
-                                ->removable(),
                             Json::make('Документы', 'documents_ru')
                                 ->fields([
                                     Position::make(),
@@ -118,16 +108,6 @@ class DivisionResource extends TreeResource
                         Tab::make('KZ', [
                             Text::make('Название', 'name_kz'),
                             TinyMce::make('Описание', 'description_kz'),
-                            Json::make('Состав', 'staff_kz')
-                                ->fields([
-                                    Position::make(),
-                                    Image::make('Фотография', 'photo')
-                                        ->dir('uploads/divisions/staff')
-                                        ->removable(),
-                                    Text::make('Имя на казахском', 'name'),
-                                    Text::make('Должность на казахском', 'position')
-                                ])
-                                ->removable(),
                             Json::make('Документы', 'documents_kz')
                                 ->fields([
                                     Position::make(),
@@ -150,16 +130,6 @@ class DivisionResource extends TreeResource
                         Tab::make('EN', [
                             Text::make('Название', 'name_en'),
                             TinyMce::make('Описание', 'description_en'),
-                            Json::make('Состав', 'staff_en')
-                                ->fields([
-                                    Position::make(),
-                                    Image::make('Фотография', 'photo')
-                                        ->dir('uploads/divisions/staff')
-                                        ->removable(),
-                                    Text::make('Имя на английском', 'name'),
-                                    Text::make('Должность на английском', 'position')
-                                ])
-                                ->removable(),
                             Json::make('Документы', 'documents_en')
                                 ->fields([
                                     Position::make(),
@@ -179,6 +149,27 @@ class DivisionResource extends TreeResource
                                 ->removable(),
                             Slug::make('Slug', 'slug_en')->from('name_en')
                         ]),
+                        Tab::make('Сотрудники', [
+                            Json::make('Состав', 'staff')
+                                ->fields([
+                                    Position::make(),
+                                    Image::make('Фотография', 'photo')
+                                        ->dir('uploads/departments/staff')
+                                        ->customName(function ($file, $field) {
+                                            $timestamp = now()->format('Y_m_d_His');
+                                            return 'staff_' . $timestamp . "." . $file->extension();
+                                        })
+                                        ->removable(),
+                                    Text::make('Имя на русском', 'name_ru'),
+                                    Text::make('Должность на русском', 'position_ru'),
+                                    Text::make('Имя на казахском', 'name_kz'),
+                                    Text::make('Должность на казахском', 'position_kz'),
+                                    Text::make('Имя на английском', 'name_en'),
+                                    Text::make('Должность на английском', 'position_en'),
+                                ])
+                                ->vertical()
+                                ->removable(),
+                        ])
                     ]),
                     Divider::make(),
                     Image::make('Превью (необязательно)', 'preview')

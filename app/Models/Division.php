@@ -15,9 +15,7 @@ class Division extends BaseModel
         'description_ru',
         'description_kz',
         'description_en',
-        'staff_ru',
-        'staff_kz',
-        'staff_en',
+        'staff',
         'documents_ru',
         'documents_kz',
         'documents_en',
@@ -32,9 +30,7 @@ class Division extends BaseModel
     ];
 
     protected $casts = [
-        'staff_ru' => 'json',
-        'staff_kz' => 'json',
-        'staff_en' => 'json',
+        'staff' => 'array',
         'contacts_ru' => 'json',
         'contacts_kz' => 'json',
         'contacts_en' => 'json',

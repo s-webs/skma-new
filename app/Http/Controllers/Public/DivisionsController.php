@@ -20,11 +20,22 @@ class DivisionsController extends Controller
     public function show($slug)
     {
         $localizedSlugColumn = 'slug_' . app()->getLocale();
+        $lang = app()->getLocale();
         $item = Division::query()->where($localizedSlugColumn, $slug)->firstOrFail();
 
         $item->documents_ru = $item->transformDocuments($item->documents_ru);
         $item->documents_kz = $item->transformDocuments($item->documents_kz);
         $item->documents_en = $item->transformDocuments($item->documents_en);
+
+        if ($item->staff) {
+            $item->staff = array_map(function ($member) use ($lang) {
+                return [
+                    'photo' => $member['photo'],
+                    'name' => $member["name_{$lang}"] ?? '',
+                    'position' => $member["position_{$lang}"] ?? '',
+                ];
+            }, $item->staff);
+        }
 
         $parent = $item->parent;
         $children = $item->children;

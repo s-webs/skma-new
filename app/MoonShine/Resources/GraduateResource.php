@@ -10,6 +10,7 @@ use App\Models\Graduate;
 use MoonShine\ImportExport\Contracts\HasImportExportContract;
 use MoonShine\ImportExport\Traits\ImportExportConcern;
 use MoonShine\Laravel\Resources\ModelResource;
+use MoonShine\Support\Enums\Color;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Components\Layout\Divider;
 use MoonShine\UI\Components\Tabs;
@@ -40,6 +41,8 @@ class GraduateResource extends ModelResource implements HasImportExportContract
     {
         return [
             ID::make()->sortable(),
+            Text::make('Факультет', 'faculty_ru')
+            ->badge(Color::GREEN),
             Text::make('Имя', 'name')->sortable(),
             Text::make('Имя на латинском', 'name_latin')->sortable(),
             Number::make('Год', 'year')->sortable(),
