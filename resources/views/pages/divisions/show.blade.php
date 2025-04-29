@@ -17,25 +17,35 @@
                 <div class="flex justify-between">
                     <div class="flex-1 mr-[0px] lg:mr-[20px] 2xl:mr-[40px]">
                         <div x-data="{ activeTab: 'info' }">
-                            <div class="bg-[var(--color-halftone)] px-4 md:px-0 py-[6px] rounded-[10px] flex flex-col md:flex-row flex-wrap items-center">
+                            <div
+                                class="bg-[var(--color-halftone)] px-4 md:px-0 py-[6px] rounded-[10px] flex flex-col md:flex-row flex-wrap items-center">
                                 <div @click="activeTab = 'info'"
                                      :class="activeTab === 'info' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
-                                     class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
+                                     class="flex-1 min-w-[250px] my-2 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
                                     Основная информация
                                 </div>
                                 @if(!empty($item->staff))
                                     <div @click="activeTab = 'staff'"
                                          :class="activeTab === 'staff' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
-                                         class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
+                                         class="flex-1 min-w-[250px] my-2 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
                                         {{ __('public.staff') }}
                                     </div>
                                 @endif
                                 @if(!empty(json_decode($item->getProperty('documents'))))
                                     <div @click="activeTab = 'documents'"
                                          :class="activeTab === 'documents' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
-                                         class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
+                                         class="flex-1 min-w-[250px] my-2 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
                                         Документы
                                     </div>
+                                @endif
+                                @if($item->pages)
+                                    @foreach($item->pages as $page)
+                                        <div @click="activeTab = '{{ $page->getProperty('slug') }}'"
+                                             :class="activeTab === '{{ $page->getProperty('slug') }}' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
+                                             class="flex-1 min-w-[250px] my-2 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
+                                            {{ $page->getProperty('name') }}
+                                        </div>
+                                    @endforeach
                                 @endif
                             </div>
 
@@ -51,6 +61,13 @@
                                 <div x-show="activeTab === 'documents'" x-cloak>
                                     @include('pages.faculties.components.documents')
                                 </div>
+                                @if($item->pages)
+                                    @foreach($item->pages as $page)
+                                        <div x-show="activeTab === '{{ $page->getProperty('slug') }}'" x-cloak>
+                                            {!! $page->getProperty('description') !!}
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -93,8 +110,18 @@
             padding: 5px 10px;
         }
 
-        .content p img {
+        .content p img, p img {
             margin: 0 auto;
+        }
+
+        p iframe {
+            margin: 0px auto;
+        }
+
+        @media (max-width: 900px) {
+            p iframe {
+                width: 100% !important;
+            }
         }
 
         /*.content {*/

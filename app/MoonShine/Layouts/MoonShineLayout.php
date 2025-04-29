@@ -54,6 +54,7 @@ use App\MoonShine\Resources\ForStudentResource;
 use App\MoonShine\Resources\UmkdResource;
 use App\MoonShine\Resources\KomplaensResource;
 use App\MoonShine\Resources\GraduateResource;
+use App\MoonShine\Resources\PageResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -101,6 +102,7 @@ final class MoonShineLayout extends CompactLayout
                 MenuItem::make('Темы', ThemeResource::class),
                 MenuItem::make('Файловый менеджер', route('fmanager.index'))
             ], 'wrench-screwdriver'),
+            MenuItem::make('Pages', PageResource::class),
         ];
     }
 

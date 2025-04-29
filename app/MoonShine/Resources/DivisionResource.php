@@ -9,6 +9,7 @@ use App\Models\Division;
 
 use Leeto\MoonShineTree\Resources\TreeResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Relationships\HasMany;
 use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\DetailPage;
 use MoonShine\Laravel\Pages\Crud\FormPage;
@@ -85,7 +86,8 @@ class DivisionResource extends TreeResource
                     Tabs::make([
                         Tab::make('RU', [
                             Text::make('Название', 'name_ru'),
-                            TinyMce::make('Описание', 'description_ru'),
+                            TinyMce::make('Описание', 'description_ru')
+                                ->addOption('file_manager', 'laravel-filemanager'),
                             Json::make('Документы', 'documents_ru')
                                 ->fields([
                                     Position::make(),
@@ -107,7 +109,8 @@ class DivisionResource extends TreeResource
                         ]),
                         Tab::make('KZ', [
                             Text::make('Название', 'name_kz'),
-                            TinyMce::make('Описание', 'description_kz'),
+                            TinyMce::make('Описание', 'description_kz')
+                                ->addOption('file_manager', 'laravel-filemanager'),
                             Json::make('Документы', 'documents_kz')
                                 ->fields([
                                     Position::make(),
@@ -129,7 +132,8 @@ class DivisionResource extends TreeResource
                         ]),
                         Tab::make('EN', [
                             Text::make('Название', 'name_en'),
-                            TinyMce::make('Описание', 'description_en'),
+                            TinyMce::make('Описание', 'description_en')
+                                ->addOption('file_manager', 'laravel-filemanager'),
                             Json::make('Документы', 'documents_en')
                                 ->fields([
                                     Position::make(),
@@ -155,10 +159,6 @@ class DivisionResource extends TreeResource
                                     Position::make(),
                                     Image::make('Фотография', 'photo')
                                         ->dir('uploads/departments/staff')
-                                        ->customName(function ($file, $field) {
-                                            $timestamp = now()->format('Y_m_d_His');
-                                            return 'staff_' . $timestamp . "." . $file->extension();
-                                        })
                                         ->removable(),
                                     Text::make('Имя на русском', 'name_ru'),
                                     Text::make('Должность на русском', 'position_ru'),
@@ -181,6 +181,7 @@ class DivisionResource extends TreeResource
                         ->removable(),
                     Number::make('Сортировка', 'sort_order')->default(0)
                 ]),
+                HasMany::make('Страницы', 'pages', 'name_ru', resource: PageResource::class)->creatable(),
             ])
         ];
     }

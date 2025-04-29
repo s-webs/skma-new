@@ -85,4 +85,9 @@ class Division extends BaseModel
     {
         return $this->belongsTo(Division::class, 'parent_id');
     }
+
+    public function pages(): Division|\Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Page::class);
+    }
 }
