@@ -7,9 +7,9 @@
                      x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                      x-transition:leave="transition ease-in-out duration-300"
                      x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-                    <div>
-                        <span class="py-[11px] px-[21px] bg-[var(--color-primary)] text-[var(--color-main)] font-bold rounded-[10px]">{{ __('home.announce') }}</span>
-                    </div>
+{{--                    <div>--}}
+{{--                        <span class="py-[11px] px-[21px] bg-[var(--color-primary)] text-[var(--color-main)] font-bold rounded-[10px]">{{ __('home.announce') }}</span>--}}
+{{--                    </div>--}}
                     <div class="text-[44px] font-bold mt-[24px] text-[var(--color-heading)]">
                         <h2 x-text="slides[slideIndex].title"></h2>
                     </div>

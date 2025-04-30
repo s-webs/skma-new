@@ -1,19 +1,19 @@
 <footer class="">
     <div class="bg-custom-heading py-[16px]">
-{{--        <div class="border-b border-b-[#282831]">--}}
-{{--            <div class="container mx-auto">--}}
-{{--                <div class="flex items-center justify-center">--}}
-{{--                    <div class="w-[85px] md:w-[123px]  py-[60px] mr-[30px] md:mr-[60px]">--}}
-{{--                        <img src="/assets/images/cliparts/antikor.png" alt="">--}}
-{{--                    </div>--}}
-{{--                    <div class="text-[16px] md:text-[36px] font-bold">--}}
-{{--                        <a href="##" class="text-white">--}}
-{{--                            Вместе против коррупции--}}
-{{--                        </a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        {{--        <div class="border-b border-b-[#282831]">--}}
+        {{--            <div class="container mx-auto">--}}
+        {{--                <div class="flex items-center justify-center">--}}
+        {{--                    <div class="w-[85px] md:w-[123px]  py-[60px] mr-[30px] md:mr-[60px]">--}}
+        {{--                        <img src="/assets/images/cliparts/antikor.png" alt="">--}}
+        {{--                    </div>--}}
+        {{--                    <div class="text-[16px] md:text-[36px] font-bold">--}}
+        {{--                        <a href="##" class="text-white">--}}
+        {{--                            Вместе против коррупции--}}
+        {{--                        </a>--}}
+        {{--                    </div>--}}
+        {{--                </div>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
         <div class="border-b border-b-[#282831]">
             <div class="container mx-auto">
                 <div class="flex flex-col xl:flex-row items-start xl:items-center justify-center">
@@ -58,7 +58,6 @@
                         <div>
                             <img src="/assets/images/logos/logo.svg" alt="Logo" class="w-[96px]">
                         </div>
-                        <div></div>
                     </div>
                     <div class="py-[60px] px-[60px] text-center xl:text-start">
                         <div class="text-white text-[14px] xl:text-[18px] font-semibold mb-[24px]">
@@ -70,6 +69,13 @@
                             <li class="mb-[24px]"><a href="##">Для выпускников</a></li>
                             <li><a href="##">Контакты</a></li>
                         </ul>
+                        <div class="">
+                            <div class="mt-12">
+                                <a href="https://info.flagcounter.com/mZtw"><img
+                                        src="https://s01.flagcounter.com/count2/mZtw/bg_282831/txt_FFFFFF/border_282831/columns_4/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
+                                        alt="Flag Counter" border="0"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
