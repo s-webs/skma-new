@@ -24,10 +24,16 @@ class ImportNewsWithChanges extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        // Получаем данные из старой таблицы
-        $oldNews = DB::connection('old_database')->table('news')->get();
+        $years = (int)$this->ask('За сколько лет импортировать новости?'); // спрашиваем пользователя
+
+        $cutoffDate = now()->subYears($years); // вычисляем дату отсечения
+
+        $oldNews = DB::connection('old_database')
+            ->table('news')
+            ->where('created_at', '>=', $cutoffDate)
+            ->get();
 
         foreach ($oldNews as $item) {
             DB::table('news')->insert([
@@ -43,11 +49,13 @@ class ImportNewsWithChanges extends Command
                 'views_kz' => $item->kk_views,
                 'views_en' => $item->en_views,
 
-                'preview' => $item->image,
+                'preview_ru' => $item->image,
+                'preview_kz' => $item->image,
+                'preview_en' => $item->image,
                 'published' => $item->published,
 
-                'author' => 'admin', // Пример заполнения нового столбца
-                'department' => 'skma', // Пример заполнения нового столбца
+                'author' => 'admin',
+                'department' => 'skma',
 
                 'slug_ru' => $item->ru_slug,
                 'slug_kz' => $item->kk_slug,
@@ -62,4 +70,5 @@ class ImportNewsWithChanges extends Command
 
         $this->info('Импорт завершён!');
     }
+
 }

@@ -11,6 +11,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/bvi.min.css">
+    <link rel="icon" href="/assets/img/icon.png">
     @vite('resources/css/app.css')
     <style>
         :root {

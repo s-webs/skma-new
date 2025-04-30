@@ -6,6 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends BaseModel
 {
+
+    protected $fillable = [
+        'title->ru',
+        'title->kz',
+        'title->en',
+        'text_ru',
+        'text_kz',
+        'text_en',
+        'views_ru',
+        'views_kz',
+        'views_en',
+        'preview_ru',
+        'preview_kz',
+        'preview_en',
+        'published',
+        'author',
+        'department',
+        'slug_ru',
+        'slug_kz',
+        'slug_en',
+        'created_at',
+        'updated_at',
+    ];
+
     protected $casts = [
         'images' => 'json',
     ];
