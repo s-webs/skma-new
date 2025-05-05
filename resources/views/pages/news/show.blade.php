@@ -48,7 +48,8 @@
                             <div class="swiper-wrapper w-full h-full">
                                 @foreach($item->images as $image)
                                     <div class="swiper-slide w-full h-full">
-                                        <img src="/{{ $image }}" alt="{{ $image }}" class="w-full h-full object-cover">
+                                        <img src="{{ asset($image) }}" alt="{{ $image }}"
+                                             class="w-full h-full object-cover">
                                     </div>
                                 @endforeach
                             </div>
@@ -58,7 +59,7 @@
                 @else
                     <div
                         class="w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden">
-                        <img src="{{ $item->getProperty('preview') }}" alt="{{ $item->getProperty('title') }}"
+                        <img src="{{ asset($item->getProperty('preview')) }}" alt="{{ $item->getProperty('title') }}"
                              class="object-cover w-full h-full">
                     </div>
                 @endif

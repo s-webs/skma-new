@@ -76,7 +76,8 @@ final class MoonShineLayout extends CompactLayout
         return [
             ...parent::menu(),
             MenuGroup::make('Об академии', [
-                MenuItem::make('Счетчики', CounterResource::class, 'variable'),
+                MenuItem::make('Счетчики', CounterResource::class, 'variable')
+                    ->canSee(static fn(): bool => request()->user('moonshine')?->id === 1 || request()->user('moonshine')?->id === 2),
 //                MenuItem::make('Структура правления', OrgNodeResource::class, 'share'),
                 MenuItem::make('Сервисы', ServiceResource::class),
                 MenuItem::make('Меню', MenuResource::class),

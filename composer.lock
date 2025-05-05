@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "86a6a56d449f32f0d1881a99ca0d3b24",
+    "content-hash": "7ec752a46a10dca779ad1540f1e517c1",
     "packages": [
         {
             "name": "brick/math",
@@ -4805,6 +4805,76 @@
                 "source": "https://github.com/sweet1s/moonshine-filemanager"
             },
             "time": "2024-12-29T16:17:30+00:00"
+        },
+        {
+            "name": "sweet1s/moonshine-roles-permissions",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SWEET1S/moonshine-roles-permissions.git",
+                "reference": "7a946da4116aed7996bed77673290649e30b9d50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SWEET1S/moonshine-roles-permissions/zipball/7a946da4116aed7996bed77673290649e30b9d50",
+                "reference": "7a946da4116aed7996bed77673290649e30b9d50",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "lee-to/laravel-package-command": "^0.9.1",
+                "php": "^8.2|^8.3|^8.4",
+                "spatie/laravel-permission": "^6.2"
+            },
+            "conflict": {
+                "moonshine/moonshine": "<3.0"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.8",
+                "mockery/mockery": "^1.4.4",
+                "moonshine/moonshine": "^3.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0|^8.0",
+                "phpstan/phpstan": "^1.4.7",
+                "phpunit/phpunit": "^9.5.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sweet1s\\MoonshineRBAC\\Providers\\MoonShineRBACServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sweet1s\\MoonshineRBAC\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrei Balan",
+                    "email": "abalan1510it@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Moonshine Role and Permission management",
+            "homepage": "https://moonshine-laravel.com/",
+            "keywords": [
+                "laravel",
+                "moonshine",
+                "permissions",
+                "roles"
+            ],
+            "support": {
+                "issues": "https://github.com/sweet1s/moonshine-roles-permissions/issues",
+                "source": "https://github.com/sweet1s/moonshine-roles-permissions"
+            },
+            "time": "2025-03-06T07:05:12+00:00"
         },
         {
             "name": "symfony/clock",

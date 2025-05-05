@@ -24,6 +24,7 @@
         "spatie/laravel-image-optimizer": "^1.8",
         "spatie/laravel-permission": "^6.10",
         "sweet1s/moonshine-filemanager": "^1.1",
+        "sweet1s/moonshine-roles-permissions": "^3.0",
         "unisharp/laravel-filemanager": "^2.10"
     },
     "require-dev": {
