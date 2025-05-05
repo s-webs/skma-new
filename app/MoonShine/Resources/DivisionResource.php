@@ -166,6 +166,8 @@ class DivisionResource extends TreeResource
                                     Text::make('Должность на казахском', 'position_kz'),
                                     Text::make('Имя на английском', 'name_en'),
                                     Text::make('Должность на английском', 'position_en'),
+                                    Text::make('Email', 'email'),
+                                    Text::make('Phone', 'phone'),
                                 ])
                                 ->vertical()
                                 ->removable(),

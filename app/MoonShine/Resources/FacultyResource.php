@@ -122,18 +122,24 @@ class FacultyResource extends ModelResource
                         Slug::make('Slug', 'slug_en')->from('name_en')
                     ]),
                     Tab::make('Сотрудники', [
-                        Json::make('Состав', 'staff_ru')
+                        Json::make('Состав', 'staff')
                             ->fields([
                                 Position::make(),
                                 Image::make('Фотография', 'photo')
-                                    ->dir('uploads/faculties/staff')
+                                    ->dir('uploads/departments/staff')
+                                    ->customName(function ($file, $field) {
+                                        $timestamp = now()->format('Y_m_d_His');
+                                        return 'staff_' . $timestamp . "_RU_." . $file->extension();
+                                    })
                                     ->removable(),
                                 Text::make('Имя на русском', 'name_ru'),
                                 Text::make('Должность на русском', 'position_ru'),
                                 Text::make('Имя на казахском', 'name_kz'),
                                 Text::make('Должность на казахском', 'position_kz'),
                                 Text::make('Имя на английском', 'name_en'),
-                                Text::make('Должность на английском', 'position'),
+                                Text::make('Должность на английском', 'position_en'),
+                                Text::make('Email', 'email'),
+                                Text::make('Phone', 'phone'),
                             ])
                             ->vertical()
                             ->removable(),

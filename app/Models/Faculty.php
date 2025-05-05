@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Faculty extends BaseModel
 {
     protected $casts = [
-        'staff_ru' => 'array',
-        'staff_kz' => 'array',
-        'staff_en' => 'array',
+        'staff' => 'array',
         'contacts_ru' => 'json',
         'contacts_kz' => 'json',
         'contacts_en' => 'json',

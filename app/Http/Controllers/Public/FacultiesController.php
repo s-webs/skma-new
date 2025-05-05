@@ -49,6 +49,8 @@ class FacultiesController extends Controller
                     'photo' => $member['photo'],
                     'name' => $member["name_{$lang}"] ?? '',
                     'position' => $member["position_{$lang}"] ?? '',
+                    'email' => $member["email"] ?? '',
+                    'phone' => $member["phone"] ?? '',
                 ];
             }, $item->staff);
         }

@@ -14,6 +14,12 @@
                 </div>
                 <div class="font-semibold mt-[24px]">{{ $member['name'] }}</div>
                 <div>{{ $member['position'] }}</div>
+                @if($member['email'])
+                    <div><span class="font-semibold mr-[5px]">Email:</span>{{ $member['email'] }}</div>
+                @endif
+                @if($member['phone'])
+                    <div><span class="font-semibold mr-[5px]">{{ __('public.phone') }}:</span>{{ $member['phone'] }}</div>
+                @endif
             </div>
         @endforeach
     </div>

@@ -21,4 +21,6 @@ return [
 
     'sign_in' => 'Login',
     'logout' => 'Logout',
+
+    'phone' => 'Phone',
 ];
