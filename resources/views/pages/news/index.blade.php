@@ -20,7 +20,7 @@
                         <div class="rounded-[20px] overflow-hidden">
                             <div class="w-full h-[269px]">
                                 <a href="{{ route('news.show', $item->getProperty('slug')) }}">
-                                    <img src="/{{ $item->getProperty('preview') }}"
+                                    <img src="{{ asset($item->getProperty('preview')) }}"
                                          alt="{{ $item->getProperty('title') }}"
                                          class="w-full h-full object-cover group-hover:scale-110 transition-all duration-300">
                                 </a>
