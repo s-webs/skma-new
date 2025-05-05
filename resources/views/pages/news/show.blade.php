@@ -57,11 +57,11 @@
                         </div>
                     </div>
                 @else
-                    <div
-                        class="w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden">
-                        <img src="{{ asset($item->getProperty('preview')) }}" alt="{{ $item->getProperty('title') }}"
-                             class="object-cover w-full h-full">
-                    </div>
+{{--                    <div--}}
+{{--                        class="w-full h-[300px] xl:h-[600px] rounded-[30px] overflow-hidden">--}}
+{{--                        <img src="{{ asset($item->getProperty('preview')) }}" alt="{{ $item->getProperty('title') }}"--}}
+{{--                             class="object-cover w-full h-full">--}}
+{{--                    </div>--}}
                 @endif
             </div>
             <div class="content mt-[30px] pt-[30px] border-t max-w-[910px] mx-auto">
