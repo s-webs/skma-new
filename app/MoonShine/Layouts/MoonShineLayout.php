@@ -73,52 +73,113 @@ final class MoonShineLayout extends CompactLayout
 
     protected function menu(): array
     {
-        return [
-            ...parent::menu(),
-            MenuGroup::make('Об академии', [
-                MenuItem::make('Счетчики', CounterResource::class, 'variable')
-                    ->canSee(static fn(): bool => request()->user('moonshine')?->id === 1 || request()->user('moonshine')?->id === 2),
+        $userRoleId = request()->user('moonshine')->moonshine_user_role_id;
+
+        $menu = [];
+
+        if ($userRoleId === 1) {
+            $menu = [
+                ...parent::menu(),
+                MenuGroup::make('Об академии', [
+                    MenuItem::make('Счетчики', CounterResource::class, 'variable'),
 //                MenuItem::make('Структура правления', OrgNodeResource::class, 'share'),
-                MenuItem::make('Сервисы', ServiceResource::class),
-                MenuItem::make('Меню', MenuResource::class),
-                MenuItem::make('Галерея', GalleryResource::class),
-                MenuItem::make('Награды и достижения', AwardResource::class),
-                MenuItem::make('Партнеры', PartnerResource::class),
-            ], 'building-library'),
-            MenuGroup::make('Структура', [
-                MenuItem::make('Подразделения', DivisionResource::class),
-                MenuItem::make('Вкладки подразделений', PageResource::class),
-                MenuItem::make('Комплаенс служба', KomplaensResource::class),
-            ], 'bars-3-bottom-left'),
-            MenuGroup::make('Учебный процесс', [
-                MenuItem::make('Факультеты', FacultyResource::class),
-                MenuItem::make('Кафедры', DepartmentResource::class),
-                MenuItem::make('Для студентов', ForStudentResource::class),
-                MenuItem::make('Выпускникам', GraduateResource::class),
-            ], 'academic-cap'),
-            MenuGroup::make('Пресса', [
+                    MenuItem::make('Сервисы', ServiceResource::class),
+                    MenuItem::make('Меню', MenuResource::class),
+                    MenuItem::make('Галерея', GalleryResource::class),
+                    MenuItem::make('Награды и достижения', AwardResource::class),
+                    MenuItem::make('Партнеры', PartnerResource::class),
+                ], 'building-library'),
+                MenuGroup::make('Структура', [
+                    MenuItem::make('Подразделения', DivisionResource::class),
+                    MenuItem::make('Вкладки подразделений', PageResource::class),
+                    MenuItem::make('Комплаенс служба', KomplaensResource::class),
+                ], 'bars-3-bottom-left'),
+                MenuGroup::make('Учебный процесс', [
+                    MenuItem::make('Факультеты', FacultyResource::class),
+                    MenuItem::make('Кафедры', DepartmentResource::class),
+                    MenuItem::make('Для студентов', ForStudentResource::class),
+                    MenuItem::make('Выпускникам', GraduateResource::class),
+                ], 'academic-cap'),
+                MenuGroup::make('Пресса', [
+                    MenuItem::make('Анонсы', AnnounceResource::class),
+                    MenuItem::make('Новости', NewsResource::class),
+                    MenuItem::make('Отзывы студентов', FeedbackResource::class),
+                    MenuItem::make('Объявления', AdvertResource::class),
+                ], 'newspaper'),
+                MenuGroup::make('Пользователи сайта', [
+                    MenuItem::make('Users', UserResource::class),
+                    MenuItem::make('Roles', RolesResource::class),
+                ], 'users'),
+                MenuGroup::make('Настройки', [
+                    MenuItem::make('Темы', ThemeResource::class),
+                    MenuItem::make('Файловый менеджер', route('fmanager.index'))
+                ], 'wrench-screwdriver'),
+                MenuGroup::make('Дисс совет', [
+                    MenuItem::make('Образовательные программы', EducationProgramResource::class),
+                    MenuItem::make('Документы диссертационного совета', DisSovetDocumentResource::class),
+                    MenuItem::make('Отчеты диссертационного совета', DisSovetReportResource::class),
+                    MenuItem::make('Информация для претендентов', DisSovetInformationResource::class),
+                    MenuItem::make('Состав диссертационного совета', DisSovetStaffResource::class),
+                    MenuItem::make('Объявления о защитах', DisSovetAnnouncementResource::class),
+                ]),
+            ];
+        } elseif ($userRoleId === 2) {
+            $menu = [
+                MenuGroup::make('Об академии', [
+                    MenuItem::make('Счетчики', CounterResource::class, 'variable'),
+                    MenuItem::make('Сервисы', ServiceResource::class),
+                    MenuItem::make('Меню', MenuResource::class),
+                    MenuItem::make('Галерея', GalleryResource::class),
+                    MenuItem::make('Награды и достижения', AwardResource::class),
+                    MenuItem::make('Партнеры', PartnerResource::class),
+                ], 'building-library'),
+                MenuGroup::make('Структура', [
+                    MenuItem::make('Подразделения', DivisionResource::class),
+                    MenuItem::make('Вкладки подразделений', PageResource::class),
+                    MenuItem::make('Комплаенс служба', KomplaensResource::class),
+                ], 'bars-3-bottom-left'),
+                MenuGroup::make('Учебный процесс', [
+                    MenuItem::make('Факультеты', FacultyResource::class),
+                    MenuItem::make('Кафедры', DepartmentResource::class),
+                    MenuItem::make('Для студентов', ForStudentResource::class),
+                    MenuItem::make('Выпускникам', GraduateResource::class),
+                ], 'academic-cap'),
+                MenuGroup::make('Пресса', [
+                    MenuItem::make('Анонсы', AnnounceResource::class),
+                    MenuItem::make('Новости', NewsResource::class),
+                    MenuItem::make('Отзывы студентов', FeedbackResource::class),
+                    MenuItem::make('Объявления', AdvertResource::class),
+                ], 'newspaper'),
+                MenuGroup::make('Пользователи сайта', [
+                    MenuItem::make('Users', UserResource::class),
+                    MenuItem::make('Roles', RolesResource::class),
+                ], 'users'),
+                MenuGroup::make('Настройки', [
+                    MenuItem::make('Темы', ThemeResource::class),
+                    MenuItem::make('Файловый менеджер', route('fmanager.index'))
+                ], 'wrench-screwdriver'),
+                MenuGroup::make('Дисс совет', [
+                    MenuItem::make('Образовательные программы', EducationProgramResource::class),
+                    MenuItem::make('Документы диссертационного совета', DisSovetDocumentResource::class),
+                    MenuItem::make('Отчеты диссертационного совета', DisSovetReportResource::class),
+                    MenuItem::make('Информация для претендентов', DisSovetInformationResource::class),
+                    MenuItem::make('Состав диссертационного совета', DisSovetStaffResource::class),
+                    MenuItem::make('Объявления о защитах', DisSovetAnnouncementResource::class),
+                ]),
+            ];
+        } elseif ($userRoleId === 3) {
+            $menu = [
                 MenuItem::make('Анонсы', AnnounceResource::class),
                 MenuItem::make('Новости', NewsResource::class),
-                MenuItem::make('Отзывы студентов', FeedbackResource::class),
-                MenuItem::make('Объявления', AdvertResource::class),
-            ], 'newspaper'),
-            MenuGroup::make('Пользователи сайта', [
-                MenuItem::make('Users', UserResource::class),
-                MenuItem::make('Roles', RolesResource::class),
-            ], 'users'),
-            MenuGroup::make('Настройки', [
-                MenuItem::make('Темы', ThemeResource::class),
-                MenuItem::make('Файловый менеджер', route('fmanager.index'))
-            ], 'wrench-screwdriver'),
-            MenuGroup::make('Дисс совет', [
-                MenuItem::make('Образовательные программы', EducationProgramResource::class),
-                MenuItem::make('Документы диссертационного совета', DisSovetDocumentResource::class),
-                MenuItem::make('Отчеты диссертационного совета', DisSovetReportResource::class),
-                MenuItem::make('Информация для претендентов', DisSovetInformationResource::class),
-                MenuItem::make('Состав диссертационного совета', DisSovetStaffResource::class),
-                MenuItem::make('Объявления о защитах', DisSovetAnnouncementResource::class),
-            ]),
-        ];
+                MenuItem::make('Подразделения', DivisionResource::class),
+                MenuItem::make('Факультеты', FacultyResource::class),
+                MenuItem::make('Кафедры', DepartmentResource::class),
+            ];
+        } else {
+            return $menu;
+        }
+
+        return $menu;
     }
 
     /**
