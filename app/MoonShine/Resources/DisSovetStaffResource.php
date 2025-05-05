@@ -50,7 +50,7 @@ class DisSovetStaffResource extends ModelResource
                 ID::make(),
                 Tabs::make([
                     Tab::make('RU', [
-                        Text::make('Название', 'title_ru'),
+                        Text::make('Название', 'title_ru')->unescape(),
                         TinyMce::make('Контент', 'description_ru'),
                         File::make('Файл', 'file_ru')
                             ->dir('uploads/dis-sovet/staff')
@@ -59,7 +59,7 @@ class DisSovetStaffResource extends ModelResource
                             ->multiple()
                     ]),
                     Tab::make('KZ', [
-                        Text::make('Название', 'title_kz'),
+                        Text::make('Название', 'title_kz')->unescape(),
                         TinyMce::make('Контент', 'description_kz'),
                         File::make('Файл', 'file_kz')
                             ->dir('uploads/dis-sovet/staff')
@@ -68,7 +68,7 @@ class DisSovetStaffResource extends ModelResource
                             ->multiple()
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название', 'title_en'),
+                        Text::make('Название', 'title_en')->unescape(),
                         TinyMce::make('Контент', 'description_en'),
                         File::make('Файл', 'file_en')
                             ->dir('uploads/dis-sovet/staff')

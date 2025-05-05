@@ -52,15 +52,15 @@ class DisSovetAnnouncementResource extends ModelResource
                 Divider::make(),
                 Tabs::make([
                     Tab::make('RU', [
-                        Text::make('Название', 'name_ru'),
+                        Text::make('Название', 'name_ru')->unescape(),
                         TinyMce::make('Контент', 'description_ru'),
                     ]),
                     Tab::make('KZ', [
-                        Text::make('Название', 'name_kz'),
+                        Text::make('Название', 'name_kz')->unescape(),
                         TinyMce::make('Контент', 'description_kz'),
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название', 'name_en'),
+                        Text::make('Название', 'name_en')->unescape(),
                         TinyMce::make('Контент', 'description_en'),
                     ]),
                 ]),

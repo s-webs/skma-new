@@ -49,17 +49,17 @@ class DisSovetReportResource extends ModelResource
                 ID::make(),
                 Tabs::make([
                     Tab::make('RU', [
-                        Text::make('Название документа', 'title_ru'),
+                        Text::make('Название документа', 'title_ru')->unescape(),
                         File::make('Файл', 'file_ru')
                             ->dir('uploads/dis-sovet/reports')
                     ]),
                     Tab::make('KZ', [
-                        Text::make('Название документа', 'title_kz'),
+                        Text::make('Название документа', 'title_kz')->unescape(),
                         File::make('Файл', 'file_kz')
                             ->dir('uploads/dis-sovet/reports')
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название документа', 'title_en'),
+                        Text::make('Название документа', 'title_en')->unescape(),
                         File::make('Файл', 'file_en')
                             ->dir('uploads/dis-sovet/reports')
                     ]),
