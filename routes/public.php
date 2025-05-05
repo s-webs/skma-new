@@ -41,4 +41,6 @@ Route::group([
 
     Route::get('/for-the-applicant', [\App\Http\Controllers\Public\ApplicantController::class, 'index'])->name('applicant.index');
     Route::get('/for-the-student', [\App\Http\Controllers\Public\StudentsController::class, 'index'])->name('applicant.index');
+
+    Route::get('/dis-sovet', [\App\Http\Controllers\Public\DissovetController::class, 'index'])->name('dissovet.index');
 });

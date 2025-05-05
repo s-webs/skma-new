@@ -55,6 +55,8 @@ use App\MoonShine\Resources\UmkdResource;
 use App\MoonShine\Resources\KomplaensResource;
 use App\MoonShine\Resources\GraduateResource;
 use App\MoonShine\Resources\PageResource;
+use App\MoonShine\Resources\EducationProgramResource;
+use App\MoonShine\Resources\DisSovetDocumentResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -80,6 +82,7 @@ final class MoonShineLayout extends CompactLayout
             ], 'building-library'),
             MenuGroup::make('Структура', [
                 MenuItem::make('Подразделения', DivisionResource::class),
+                MenuItem::make('Вкладки подразделений', PageResource::class),
                 MenuItem::make('Комплаенс служба', KomplaensResource::class),
             ], 'bars-3-bottom-left'),
             MenuGroup::make('Учебный процесс', [
@@ -102,7 +105,10 @@ final class MoonShineLayout extends CompactLayout
                 MenuItem::make('Темы', ThemeResource::class),
                 MenuItem::make('Файловый менеджер', route('fmanager.index'))
             ], 'wrench-screwdriver'),
-            MenuItem::make('Pages', PageResource::class),
+            MenuGroup::make('Дисс совет', [
+                MenuItem::make('Образовательные программы', EducationProgramResource::class),
+                MenuItem::make('Документы диссертационного совета', DisSovetDocumentResource::class),
+            ]),
         ];
     }
 

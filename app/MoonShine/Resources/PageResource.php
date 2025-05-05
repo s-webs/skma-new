@@ -51,17 +51,20 @@ class PageResource extends ModelResource
                 Tabs::make([
                     Tab::make('RU', [
                         Text::make('Название на русском', 'name_ru'),
-                        TinyMce::make('Описание на русском', 'description_ru'),
+                        TinyMce::make('Описание на русском', 'description_ru')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('SLUG RU', 'slug_ru')->from('name_ru'),
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название на казахском', 'name_kz'),
-                        TinyMce::make('Описание на казахском', 'description_kz'),
+                        TinyMce::make('Описание на казахском', 'description_kz')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('SLUG KZ', 'slug_kz')->from('name_kz'),
                     ]),
                     Tab::make('EN', [
                         Text::make('Название на английском', 'name_en'),
-                        TinyMce::make('Описание на английском', 'description_en'),
+                        TinyMce::make('Описание на английском', 'description_en')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('SLUG EN', 'slug_en')->from('name_en'),
                     ]),
                 ]),

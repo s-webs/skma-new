@@ -78,7 +78,8 @@ class DepartmentResource extends ModelResource
                     Tab::make('RU', [
                         Text::make('Название', 'name_ru')
                         ->unescape(),
-                        TinyMce::make('Описание', 'description_ru'),
+                        TinyMce::make('Описание', 'description_ru')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Json::make('Контакты', 'contacts_ru')
                             ->fields([
                                 Position::make(),
@@ -104,7 +105,8 @@ class DepartmentResource extends ModelResource
                     Tab::make('EN', [
                         Text::make('Название', 'name_en')
                         ->unescape(),
-                        TinyMce::make('Описание', 'description_en'),
+                        TinyMce::make('Описание', 'description_en')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Json::make('Контакты', 'contacts_en')
                             ->fields([
                                 Position::make(),

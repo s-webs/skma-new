@@ -69,7 +69,8 @@ class NewsResource extends ModelResource
                 Tabs::make([
                     Tab::make('RU', [
                         Text::make('Название на русском', 'title_ru'),
-                        TinyMce::make('Содержание', 'text_ru'),
+                        TinyMce::make('Содержание', 'text_ru')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_ru')->from('title_ru'),
                         Image::make('Превью', 'preview_ru')
                             ->dir('uploads/news/')
@@ -81,7 +82,8 @@ class NewsResource extends ModelResource
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название на казахском', 'title_kz'),
-                        TinyMce::make('Содержание', 'text_kz'),
+                        TinyMce::make('Содержание', 'text_kz')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_kz')->from('title_kz'),
                         Image::make('Превью', 'preview_kz')
                             ->dir('uploads/news/')
@@ -93,7 +95,8 @@ class NewsResource extends ModelResource
                     ]),
                     Tab::make('EN', [
                         Text::make('Название на ангдийском', 'title_en'),
-                        TinyMce::make('Содержание', 'text_en'),
+                        TinyMce::make('Содержание', 'text_en')
+                            ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_en')->from('title_en'),
                         Image::make('Превью', 'preview_en')
                             ->dir('uploads/news/')
