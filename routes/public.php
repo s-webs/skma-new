@@ -43,4 +43,10 @@ Route::group([
     Route::get('/for-the-student', [\App\Http\Controllers\Public\StudentsController::class, 'index'])->name('applicant.index');
 
     Route::get('/dis-sovet', [\App\Http\Controllers\Public\DissovetController::class, 'index'])->name('dissovet.index');
+    Route::get('/dis-sovet/documents', [\App\Http\Controllers\Public\DissovetController::class, 'documents'])->name('dissovet.documents');
+    Route::get('/dis-sovet/reports', [\App\Http\Controllers\Public\DissovetController::class, 'reports'])->name('dissovet.reports');
+    Route::get('/dis-sovet/information', [\App\Http\Controllers\Public\DissovetController::class, 'information'])->name('dissovet.information');
+    Route::get('/dis-sovet/staff', [\App\Http\Controllers\Public\DissovetController::class, 'staff'])->name('dissovet.staff');
+    Route::get('/dis-sovet/programs', [\App\Http\Controllers\Public\DissovetController::class, 'programs'])->name('dissovet.programs');
+    Route::get('/dis-sovet/programs/{program_id}/announcement', [\App\Http\Controllers\Public\DissovetController::class, 'announcement'])->name('dissovet.announcement');
 });

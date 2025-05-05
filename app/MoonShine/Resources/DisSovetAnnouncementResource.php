@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\MoonShine\Resources;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\DisSovetDocument;
+use App\Models\DisSovetAnnouncement;
 
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use MoonShine\Laravel\Resources\ModelResource;
+use MoonShine\TinyMce\Fields\TinyMce;
 use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Components\Layout\Divider;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Fields\File;
@@ -18,13 +21,13 @@ use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Fields\Text;
 
 /**
- * @extends ModelResource<DisSovetDocument>
+ * @extends ModelResource<DisSovetAnnouncement>
  */
-class DisSovetDocumentResource extends ModelResource
+class DisSovetAnnouncementResource extends ModelResource
 {
-    protected string $model = DisSovetDocument::class;
+    protected string $model = DisSovetAnnouncement::class;
 
-    protected string $title = 'DisSovetDocuments';
+    protected string $title = 'DisSovetAnnouncements';
 
     /**
      * @return list<FieldContract>
@@ -33,9 +36,7 @@ class DisSovetDocumentResource extends ModelResource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Название документа RU', 'title_ru'),
-            Text::make('Название документа KZ', 'title_kz'),
-            Text::make('Название документа EN', 'title_en'),
+            Text::make('Имя', 'name_ru'),
         ];
     }
 
@@ -47,23 +48,28 @@ class DisSovetDocumentResource extends ModelResource
         return [
             Box::make([
                 ID::make(),
+                BelongsTo::make('Образовательная программа', 'educationProgram', 'name_ru', resource: EducationProgramResource::class),
+                Divider::make(),
                 Tabs::make([
                     Tab::make('RU', [
-                        Text::make('Название документа', 'title_ru'),
-                        File::make('Файл', 'file_ru')
-                            ->dir('uploads/dis-sovet/documents')
+                        Text::make('Название', 'name_ru'),
+                        TinyMce::make('Контент', 'description_ru'),
                     ]),
                     Tab::make('KZ', [
-                        Text::make('Название документа', 'title_kz'),
-                        File::make('Файл', 'file_kz')
-                            ->dir('uploads/dis-sovet/documents')
+                        Text::make('Название', 'name_kz'),
+                        TinyMce::make('Контент', 'description_kz'),
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название документа', 'title_en'),
-                        File::make('Файл', 'file_en')
-                            ->dir('uploads/dis-sovet/documents')
+                        Text::make('Название', 'name_en'),
+                        TinyMce::make('Контент', 'description_en'),
                     ]),
-                ])
+                ]),
+                Divider::make(),
+                File::make('Файл', 'files')
+                    ->dir('uploads/dis-sovet/announcements')
+                    ->keepOriginalFileName()
+                    ->sortable()
+                    ->multiple()
             ])
         ];
     }
@@ -79,7 +85,7 @@ class DisSovetDocumentResource extends ModelResource
     }
 
     /**
-     * @param DisSovetDocument $item
+     * @param DisSovetAnnouncement $item
      *
      * @return array<string, string[]|string>
      * @see https://laravel.com/docs/validation#available-validation-rules

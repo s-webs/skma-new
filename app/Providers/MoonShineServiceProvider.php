@@ -38,6 +38,10 @@ use App\MoonShine\Resources\GraduateResource;
 use App\MoonShine\Resources\PageResource;
 use App\MoonShine\Resources\EducationProgramResource;
 use App\MoonShine\Resources\DisSovetDocumentResource;
+use App\MoonShine\Resources\DisSovetReportResource;
+use App\MoonShine\Resources\DisSovetInformationResource;
+use App\MoonShine\Resources\DisSovetStaffResource;
+use App\MoonShine\Resources\DisSovetAnnouncementResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -77,6 +81,10 @@ class MoonShineServiceProvider extends ServiceProvider
                 PageResource::class,
                 EducationProgramResource::class,
                 DisSovetDocumentResource::class,
+                DisSovetReportResource::class,
+                DisSovetInformationResource::class,
+                DisSovetStaffResource::class,
+                DisSovetAnnouncementResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

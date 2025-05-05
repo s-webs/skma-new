@@ -57,6 +57,10 @@ use App\MoonShine\Resources\GraduateResource;
 use App\MoonShine\Resources\PageResource;
 use App\MoonShine\Resources\EducationProgramResource;
 use App\MoonShine\Resources\DisSovetDocumentResource;
+use App\MoonShine\Resources\DisSovetReportResource;
+use App\MoonShine\Resources\DisSovetInformationResource;
+use App\MoonShine\Resources\DisSovetStaffResource;
+use App\MoonShine\Resources\DisSovetAnnouncementResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -108,6 +112,10 @@ final class MoonShineLayout extends CompactLayout
             MenuGroup::make('Дисс совет', [
                 MenuItem::make('Образовательные программы', EducationProgramResource::class),
                 MenuItem::make('Документы диссертационного совета', DisSovetDocumentResource::class),
+                MenuItem::make('Отчеты диссертационного совета', DisSovetReportResource::class),
+                MenuItem::make('Информация для претендентов', DisSovetInformationResource::class),
+                MenuItem::make('Состав диссертационного совета', DisSovetStaffResource::class),
+                MenuItem::make('Объявления о защитах', DisSovetAnnouncementResource::class),
             ]),
         ];
     }
