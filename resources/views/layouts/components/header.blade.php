@@ -19,9 +19,9 @@
                             <li class="relative mx-[22px] group">
                                 <span class="hover:text-custom-main transition-colors duration-300">{{ $menu->getProperty('name') }} <i
                                         class="fas fa-angle-down"></i></span>
-                                <ul class="absolute z-[50] top-[100%] left-0 bg-white py-[16px] shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300 min-w-[200px]">
+                                <ul class="absolute z-[50] top-[100%] left-0 bg-white py-[16px] shadow-md rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300 min-w-[300px] max-w-[400px]">
                                     @foreach ($menu->children as $child)
-                                        <li class="my-[16px] whitespace-nowrap">
+                                        <li class="my-[16px]">
                                             <a href="{{ $child->getProperty('link') }}"
                                                class="px-[16px] py-[6px] block hover:bg-custom-halftone hover:text-custom-main transition-colors duration-300">{{ $child->getProperty('name') }}</a>
                                         </li>

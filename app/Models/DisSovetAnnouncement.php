@@ -8,7 +8,7 @@ use App\Models\BaseModel;
 class DisSovetAnnouncement extends BaseModel
 {
     protected $casts = [
-        'files' => 'collection'
+        'files' => 'array'
     ];
 
     public function educationProgram(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -16,7 +16,7 @@ class DisSovetAnnouncement extends BaseModel
         return $this->belongsTo(EducationProgram::class);
     }
 
-    public function getFilesAttribute()
+    public function getFilesAttribute(): \Illuminate\Support\Collection
     {
         $rawFiles = json_decode($this->attributes['files'] ?? '[]');
 
@@ -27,7 +27,4 @@ class DisSovetAnnouncement extends BaseModel
             ];
         });
     }
-
-
-
 }
