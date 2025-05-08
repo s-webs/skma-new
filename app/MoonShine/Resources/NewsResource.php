@@ -8,6 +8,8 @@ use App\Models\Department;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\News;
 
+use MoonShine\ImportExport\Contracts\HasImportExportContract;
+use MoonShine\ImportExport\Traits\ImportExportConcern;
 use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Support\Enums\PageType;
@@ -16,6 +18,8 @@ use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Components\Layout\Divider;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Components\Tabs\Tab;
+use MoonShine\UI\Fields\Date;
+use MoonShine\UI\Fields\DateRange;
 use MoonShine\UI\Fields\ID;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\ComponentContract;
@@ -27,8 +31,10 @@ use MoonShine\UI\Fields\Text;
 /**
  * @extends ModelResource<News>
  */
-class NewsResource extends ModelResource
+class NewsResource extends ModelResource implements HasImportExportContract
 {
+    use ImportExportConcern;
+
     protected string $model = News::class;
 
     protected string $title = 'Новости';
@@ -44,8 +50,8 @@ class NewsResource extends ModelResource
             ID::make()->sortable(),
             Image::make('Превью', 'preview_ru'),
             Text::make('Заголовок', 'title_ru'),
-            Switcher::make('Опубликовано', 'is_published')
-
+//            Switcher::make('Опубликовано', 'is_published')
+            Date::make('Дата', 'created_at')
         ];
     }
 
@@ -137,5 +143,22 @@ class NewsResource extends ModelResource
     protected function rules(mixed $item): array
     {
         return [];
+    }
+
+    protected function exportFields(): iterable
+    {
+        return [
+            ID::make(),
+            Text::make('Заголовок', 'title_kz'),
+            Date::make('Дата', 'created_at'),
+        ];
+    }
+
+    protected function filters(): iterable
+    {
+        return [
+            DateRange::make('Дата', 'created_at')
+                ->format('d.m.Y')
+        ];
     }
 }
