@@ -63,8 +63,40 @@ class DissovetController extends Controller
     public function announcement($program_id)
     {
         $program = EducationProgram::query()->findOrFail($program_id);
-        $announcements = $program->announcements()->get();
 
-        return view('pages.dis_sovet.announcements', compact('program'));
+        // Получаем все объявления с преобразованными данными файлов
+        $announcements = $program->announcements()->get()->map(function ($announcement) {
+            // Проверяем, есть ли поле files и преобразуем его
+            $rawFiles = $announcement->files ?? '[]'; // Получаем файл (может быть строкой или массивом)
+
+            // Декодируем как JSON, если это строка
+            if (is_string($rawFiles)) {
+                $rawFiles = json_decode($rawFiles, true);
+            }
+
+            // Если это не массив, приводим к пустому массиву
+            if (!is_array($rawFiles)) {
+                $rawFiles = [];
+            }
+
+            // Преобразуем каждый файл в структуру ['path' => ..., 'name' => ...]
+            $announcement->files = collect($rawFiles)->map(function ($file) {
+                if (is_array($file) && isset($file['path'], $file['name'])) {
+                    return $file;
+                }
+
+                return [
+                    'path' => $file,
+                    'name' => pathinfo($file, PATHINFO_FILENAME),
+                ];
+            });
+
+            return $announcement;
+        });
+
+        // Передаем данные во view
+        return view('pages.dis_sovet.announcements', compact('program', 'announcements'));
     }
+
+
 }

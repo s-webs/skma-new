@@ -15,16 +15,4 @@ class DisSovetAnnouncement extends BaseModel
     {
         return $this->belongsTo(EducationProgram::class);
     }
-
-    public function getFilesAttribute(): \Illuminate\Support\Collection
-    {
-        $rawFiles = json_decode($this->attributes['files'] ?? '[]');
-
-        return collect($rawFiles)->map(function ($path) {
-            return [
-                'path' => $path,
-                'name' => pathinfo($path, PATHINFO_FILENAME),
-            ];
-        });
-    }
 }

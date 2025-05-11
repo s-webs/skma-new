@@ -65,11 +65,13 @@ class DisSovetAnnouncementResource extends ModelResource
                     ]),
                 ]),
                 Divider::make(),
-                File::make('Файл', 'files')
+                File::make('Файлы', 'files')
+                    ->disk('public')
                     ->dir('uploads/dis-sovet/announcements')
                     ->keepOriginalFileName()
                     ->sortable()
                     ->multiple()
+                    ->removable(),
             ])
         ];
     }

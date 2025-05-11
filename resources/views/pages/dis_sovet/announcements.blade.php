@@ -17,7 +17,7 @@
                 </x-page-title>
             </div>
             <div class="mt-[70px]">
-                @foreach($program->announcements as $item)
+                @foreach($announcements as $item)
                     <div x-data="{ open: false }" class="mb-6">
                         <!-- Заголовок с кнопкой -->
                         <button
