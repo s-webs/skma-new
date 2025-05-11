@@ -9,6 +9,7 @@ use App\Models\DisSovetAnnouncement;
 
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use MoonShine\Laravel\Resources\ModelResource;
+use MoonShine\Support\Enums\Color;
 use MoonShine\TinyMce\Fields\TinyMce;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Components\Layout\Divider;
@@ -36,6 +37,8 @@ class DisSovetAnnouncementResource extends ModelResource
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make('Образовательная программа', 'educationProgram', 'name_ru', resource: EducationProgramResource::class)
+                ->badge(Color::GREEN),
             Text::make('Имя', 'name_ru'),
         ];
     }
