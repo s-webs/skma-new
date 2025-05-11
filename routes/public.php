@@ -1,12 +1,11 @@
 <?php
-
 $locale = Request::segment(1);
 
+// Проверка на корректность локали
 if (in_array($locale, ['ru', 'kz', 'en'])) {
     app()->setLocale($locale);
 } else {
-    app()->setLocale('ru');
-    $locale = '';
+    app()->setLocale('kz');
 }
 
 Route::get('/dashboard', function () {
@@ -49,4 +48,8 @@ Route::group([
     Route::get('/dis-sovet/staff', [\App\Http\Controllers\Public\DissovetController::class, 'staff'])->name('dissovet.staff');
     Route::get('/dis-sovet/programs', [\App\Http\Controllers\Public\DissovetController::class, 'programs'])->name('dissovet.programs');
     Route::get('/dis-sovet/programs/{program_id}/announcement', [\App\Http\Controllers\Public\DissovetController::class, 'announcement'])->name('dissovet.announcement');
+});
+
+Route::get('/', function () {
+    return redirect('/kz');
 });
