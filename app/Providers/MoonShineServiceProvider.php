@@ -42,6 +42,7 @@ use App\MoonShine\Resources\DisSovetReportResource;
 use App\MoonShine\Resources\DisSovetInformationResource;
 use App\MoonShine\Resources\DisSovetStaffResource;
 use App\MoonShine\Resources\DisSovetAnnouncementResource;
+use App\MoonShine\Resources\CmsPageResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -85,6 +86,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 DisSovetInformationResource::class,
                 DisSovetStaffResource::class,
                 DisSovetAnnouncementResource::class,
+                CmsPageResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

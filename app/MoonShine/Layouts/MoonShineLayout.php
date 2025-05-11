@@ -61,6 +61,7 @@ use App\MoonShine\Resources\DisSovetReportResource;
 use App\MoonShine\Resources\DisSovetInformationResource;
 use App\MoonShine\Resources\DisSovetStaffResource;
 use App\MoonShine\Resources\DisSovetAnnouncementResource;
+use App\MoonShine\Resources\CmsPageResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -75,7 +76,8 @@ final class MoonShineLayout extends CompactLayout
     {
         $userRoleId = request()->user('moonshine')->moonshine_user_role_id;
 
-        $menu = [];
+        $menu = [MenuItem::make('CmsPages', CmsPageResource::class),
+        ];
 
         if ($userRoleId === 1) {
             $menu = [
@@ -93,6 +95,7 @@ final class MoonShineLayout extends CompactLayout
                     MenuItem::make('Подразделения', DivisionResource::class),
                     MenuItem::make('Вкладки подразделений', PageResource::class),
                     MenuItem::make('Комплаенс служба', KomplaensResource::class),
+                    MenuItem::make('Страницы', CmsPageResource::class),
                 ], 'bars-3-bottom-left'),
                 MenuGroup::make('Учебный процесс', [
                     MenuItem::make('Факультеты', FacultyResource::class),
@@ -137,6 +140,7 @@ final class MoonShineLayout extends CompactLayout
                     MenuItem::make('Подразделения', DivisionResource::class),
                     MenuItem::make('Вкладки подразделений', PageResource::class),
                     MenuItem::make('Комплаенс служба', KomplaensResource::class),
+                    MenuItem::make('Страницы', CmsPageResource::class),
                 ], 'bars-3-bottom-left'),
                 MenuGroup::make('Учебный процесс', [
                     MenuItem::make('Факультеты', FacultyResource::class),

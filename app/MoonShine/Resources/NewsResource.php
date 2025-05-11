@@ -100,7 +100,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                             ->removable(),
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название на ангдийском', 'title_en'),
+                        Text::make('Название на английском', 'title_en'),
                         TinyMce::make('Содержание', 'text_en')
                             ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_en')->from('title_en'),
