@@ -1,11 +1,12 @@
 <?php
+
 $locale = Request::segment(1);
 
-// Проверка на корректность локали
 if (in_array($locale, ['ru', 'kz', 'en'])) {
     app()->setLocale($locale);
 } else {
-    app()->setLocale('kz');
+    app()->setLocale('');
+    $locale = '';
 }
 
 Route::get('/dashboard', function () {
