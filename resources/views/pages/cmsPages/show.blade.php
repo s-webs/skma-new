@@ -32,7 +32,7 @@
                             <div
                                 class="shrink-0 bg-[var(--color-main)] w-[18px] h-[18px] rounded-full mr-[8px] group-hover:bg-white transition-all duration-300"></div>
                             <span
-                                class="font-semibold group-hover:text-white transition-all duration-300">{{ $file['name'] }}</span>
+                                class="font-semibold group-hover:text-white transition-all duration-300 break-all">{{ $file['name'] }}</span>
                         </a>
                     </div>
                 @endforeach
