@@ -20,6 +20,6 @@ class Menu extends BaseModel
 
     public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Menu::class, 'parent_id');
+        return $this->hasMany(Menu::class, 'parent_id')->orderBy('sort_order');
     }
 }
