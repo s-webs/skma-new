@@ -146,6 +146,23 @@ function fileManager() {
                 });
         },
 
+        copyFileLink() {
+            const file = this.fileContextMenu.file;
+            if (!file) return;
+
+            // Убираем window.location.origin
+            const fileUrl = `/${file.path.replace(/^\//, '')}`;  // Удаляем начальный слеш если есть
+
+            navigator.clipboard.writeText(fileUrl)
+                .then(() => {
+                    alert('Ссылка на файл скопирована: ' + fileUrl);
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования ссылки:', err);
+                    alert('Не удалось скопировать ссылку');
+                });
+        },
+
         openDirectory(dir) {
             this.selectedFiles = [];
             const dirName = dir.split('/').pop();

@@ -159,6 +159,11 @@
                             <i class="ph ph-eye mr-2"></i>
                             Просмотр
                         </button>
+                        <button @click="copyFileLink(); fileContextMenu.show = false"
+                                class="flex items-center w-full px-4 py-2 hover:bg-gray-100 rounded-md">
+                            <i class="ph ph-copy mr-2"></i>
+                            Копировать ссылку
+                        </button>
                         <button @click="deleteFile(fileContextMenu.file); fileContextMenu.show = false"
                                 class="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50 rounded-md">
                             <i class="ph ph-trash mr-2"></i>
