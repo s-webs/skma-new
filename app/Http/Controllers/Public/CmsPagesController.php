@@ -29,6 +29,15 @@ class CmsPagesController extends Controller
             $item->short_ru = Str::limit($item->name_ru, 30, '...');
             $item->short_kz = Str::limit($item->name_kz, 30, '...');
             $item->short_en = Str::limit($item->name_en, 30, '...');
+
+            // Обработка файлов
+            $files = json_decode($item->getProperty('files')) ?? [];
+            $item->files = collect($files)->map(function ($file) {
+                return [
+                    'path' => dirname($file) . '/' . basename($file),
+                    'name' => basename($file)
+                ];
+            })->toArray();
         }
 
         return view('pages.cmsPages.show', compact('item'));

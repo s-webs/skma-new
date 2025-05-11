@@ -24,11 +24,19 @@
             <div class="content mt-[30px] pt-[30px] border-t max-w-[910px] mx-auto">
                 {!! $item->getProperty('text') !!}
             </div>
-            {{--            <div class="mt-[30px]">--}}
-            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
-            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
-            {{--                <a href="##" class="py-[12px] px-[30px] rounded-full text-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-white mr-[10px] duration-300 transition-all">Теги</a>--}}
-            {{--            </div>--}}
+            <div class="mt-[50px] px-[16px] pb-[16px] max-w-[910px] mx-auto">
+                @foreach($item->files as $file)
+                    <div class="mb-[10px]">
+                        <a href="/{{ $file['path'] }}" target="_blank"
+                           class="p-[20px] bg-[var(--color-halftone)] rounded-[30px] flex items-center group hover:bg-[var(--color-main)] transition-all duration-300">
+                            <div
+                                class="shrink-0 bg-[var(--color-main)] w-[18px] h-[18px] rounded-full mr-[8px] group-hover:bg-white transition-all duration-300"></div>
+                            <span
+                                class="font-semibold group-hover:text-white transition-all duration-300">{{ $file['name'] }}</span>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 @endsection

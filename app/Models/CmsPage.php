@@ -21,6 +21,15 @@ class CmsPage extends BaseModel
         'views_kz',
         'views_en',
         'parent_id',
+        'files_ru',
+        'files_kz',
+        'files_en',
+    ];
+
+    protected $casts = [
+        'files_ru' => 'array',
+        'files_kz' => 'array',
+        'files_en' => 'array',
     ];
 
 }

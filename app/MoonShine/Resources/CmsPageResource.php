@@ -14,10 +14,13 @@ use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Components\Layout\Divider;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Components\Tabs\Tab;
+use MoonShine\UI\Fields\File;
 use MoonShine\UI\Fields\ID;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Fields\Image;
+use MoonShine\UI\Fields\Json;
+use MoonShine\UI\Fields\Position;
 use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Fields\Text;
 
@@ -55,18 +58,39 @@ class CmsPageResource extends ModelResource
                         TinyMce::make('Содержание', 'text_ru')
                             ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_ru')->from('name_ru'),
+                        File::make('Документы', 'files_ru')
+                            ->dir('uploads/pages/documents')
+                            ->keepOriginalFileName()
+                            ->sortable()
+                            ->removable()
+                            ->multiple()
+                            ->removable(),
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название на казахском', 'name_kz'),
                         TinyMce::make('Содержание', 'text_kz')
                             ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_kz')->from('name_kz'),
+                        File::make('Документы', 'files_kz')
+                            ->dir('uploads/pages/documents')
+                            ->keepOriginalFileName()
+                            ->sortable()
+                            ->removable()
+                            ->multiple()
+                            ->removable(),
                     ]),
                     Tab::make('EN', [
                         Text::make('Название на английском', 'name_en'),
                         TinyMce::make('Содержание', 'text_en')
                             ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_en')->from('name_en'),
+                        File::make('Документы', 'files_en')
+                            ->dir('uploads/pages/documents')
+                            ->keepOriginalFileName()
+                            ->sortable()
+                            ->removable()
+                            ->multiple()
+                            ->removable(),
                     ]),
                 ]),
 
