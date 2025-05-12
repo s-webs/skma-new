@@ -34,7 +34,7 @@ class MenuResource extends TreeResource
     protected string $title = 'Меню';
 
     protected string $column = 'name_ru';
- 
+
     protected string $sortColumn = 'sort_order';
 
     protected function assets(): array
@@ -78,16 +78,16 @@ class MenuResource extends TreeResource
                 ID::make(),
                 Tabs::make([
                     Tab::make('RU', [
-                        Text::make('Название на русском', 'name_ru'),
-                        Text::make('Ссылка на русском (В родительских пунктах ссылка работать не будет)', 'link_ru'),
+                        Text::make('Название на русском', 'name_ru')->unescape(),
+                        Text::make('Ссылка на русском (В родительских пунктах ссылка работать не будет)', 'link_ru')->unescape(),
                     ]),
                     Tab::make('KZ', [
-                        Text::make('Название на казахском', 'name_kz'),
-                        Text::make('Ссылка на казахском (В родительских пунктах ссылка работать не будет)', 'link_kz'),
+                        Text::make('Название на казахском', 'name_kz')->unescape(),
+                        Text::make('Ссылка на казахском (В родительских пунктах ссылка работать не будет)', 'link_kz')->unescape(),
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название на английском', 'name_en'),
-                        Text::make('Ссылка на английском (В родительских пунктах ссылка работать не будет)', 'link_en'),
+                        Text::make('Название на английском', 'name_en')->unescape(),
+                        Text::make('Ссылка на английском (В родительских пунктах ссылка работать не будет)', 'link_en')->unescape(),
                     ]),
                 ]),
                 Text::make('Иконка', 'icon')->unescape(),
