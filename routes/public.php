@@ -1,5 +1,8 @@
 <?php
 
+use LaravelLang\LocaleList\Locale;
+use LaravelLang\Translator\Facades\Translate;
+
 $locale = Request::segment(1);
 
 if (in_array($locale, ['ru', 'kz', 'en'])) {
