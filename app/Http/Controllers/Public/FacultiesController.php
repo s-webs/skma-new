@@ -58,7 +58,7 @@ class FacultiesController extends Controller
 
         $parent = $item->parent;
         $children = $item->children;
-        dd($item->umkd_files);
+//        dd($item->umkd_files);
 
         return view('pages.faculties.show', compact('item', 'parent', 'children'));
     }
