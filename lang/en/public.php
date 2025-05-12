@@ -23,4 +23,9 @@ return [
     'logout' => 'Logout',
 
     'phone' => 'Phone',
+
+    'basic_information' => 'Basic Information',
+    'umkd' => 'UMKD',
+    'portfolio' => 'Portfolio',
+
 ];

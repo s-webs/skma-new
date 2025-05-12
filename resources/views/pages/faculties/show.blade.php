@@ -18,11 +18,12 @@
                 <div class="flex justify-between">
                     <div class="flex-1 mr-[0px] lg:mr-[20px] 2xl:mr-[40px]">
                         <div x-data="{ activeTab: 'info' }">
-                            <div class="bg-[var(--color-halftone)] px-4 md:px-0 py-[6px] rounded-[10px] flex flex-col md:flex-row flex-wrap items-center">
+                            <div
+                                class="bg-[var(--color-halftone)] px-4 md:px-0 py-[6px] rounded-[10px] flex flex-col md:flex-row flex-wrap items-center">
                                 <div @click="activeTab = 'info'"
                                      :class="activeTab === 'info' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
                                      class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
-                                    Основная информация
+                                    {{ __('public.basic_information') }}
                                 </div>
                                 @if(!empty($item->staff))
                                     <div @click="activeTab = 'staff'"
@@ -35,21 +36,21 @@
                                     <div @click="activeTab = 'documents'"
                                          :class="activeTab === 'documents' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
                                          class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
-                                        Документы
+                                        {{ __('public.documents') }}
                                     </div>
                                 @endif
                                 @if($item->umkd_files)
                                     <div @click="activeTab = 'umkd'"
                                          :class="activeTab === 'umkd' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
                                          class="flex-1 w-full mb-2 md:mb-0 py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
-                                        УМКД
+                                        {{ __('public.umkd') }}
                                     </div>
                                 @endif
                                 @if($item->portfolio_files)
                                     <div @click="activeTab = 'portfolio'"
                                          :class="activeTab === 'portfolio' ? 'bg-[var(--color-main)] text-white' : 'bg-gray-200 text-black'"
                                          class="flex-1 w-full py-[12px] rounded-[10px] font-semibold text-center md:mx-[6px] cursor-pointer">
-                                        Портфолио
+                                        {{ __('public.portfolio') }}
                                     </div>
                                 @endif
                             </div>

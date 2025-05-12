@@ -23,4 +23,8 @@ return [
     'logout' => 'Шығу',
 
     'phone' => 'Телефон',
+
+    'basic_information' => 'Негізгі ақпарат',
+    'umkd' => 'ҮМКД',
+    'portfolio' => 'Портфолио',
 ];

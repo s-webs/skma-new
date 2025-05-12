@@ -24,4 +24,8 @@ return [
     'logout' => 'Выйти',
 
     'phone' => 'Телефон',
+
+    'basic_information' => 'Основная информация',
+    'umkd' => 'УМКД',
+    'portfolio' => 'Портфолио',
 ];
