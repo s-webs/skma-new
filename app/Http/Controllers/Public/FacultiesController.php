@@ -137,19 +137,15 @@ class FacultiesController extends Controller
         ];
 
         array_walk($directories, function (&$directory) use ($currentLocale, $dictionary) {
-            // Разделяем название и год/дополнительную информацию
             preg_match('/(.*?)(\s*\d{4}-\d{4})?$/u', $directory['directory_name'], $matches);
 
             $baseName = mb_strtolower(trim($matches[1]));
             $yearPart = $matches[2] ?? '';
 
-            // Ищем перевод базового названия
             $translatedBase = $dictionary[$baseName][$currentLocale] ?? $matches[1];
 
-            // Собираем итоговое название
             $directory['directory_name'] = $translatedBase . $yearPart;
-
-            // Обрабатываем поддиректории рекурсивно
+            
             if (!empty($directory['subdirectories'])) {
                 $directory['subdirectories'] = $this->translateDirectoryNames(
                     $directory['subdirectories']

@@ -16,7 +16,7 @@ $locale = Request::segment(1);
 if (in_array($locale, ['ru', 'kz', 'en'])) {
     app()->setLocale($locale);
 } else {
-    app()->setLocale('ru');
+    app()->setLocale('kz');
     $locale = '';
 }
 

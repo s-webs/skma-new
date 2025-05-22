@@ -8,18 +8,18 @@ $locale = Request::segment(1);
 if (in_array($locale, ['ru', 'kz', 'en'])) {
     app()->setLocale($locale);
 } else {
-    app()->setLocale('');
-    $locale = '';
+    app()->setLocale('kz'); // Синхронизируем с auth.php
+    $locale = 'kz'; // Устанавливаем префикс по умолчанию
 }
 
-Route::get('/dashboard', function () {
-    return redirect(route('home'));
-})->middleware(['auth', 'verified', 'encrypt_cookies', 'track_visitor'])->name('dashboard');
 
 Route::group([
     'middleware' => ['encrypt_cookies', 'track_visitor'],
     'prefix' => $locale,
 ], function () {
+    Route::get('/dashboard', function () {
+        return redirect(route('home'));
+    })->middleware(['auth', 'verified', 'encrypt_cookies', 'track_visitor'])->name('dashboard');
     Route::get('/', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
     Route::get('/news', [\App\Http\Controllers\Public\NewsController::class, 'index'])->name('news.index');
     Route::get('/news/{slug}', [\App\Http\Controllers\Public\NewsController::class, 'show'])->name('news.show');
