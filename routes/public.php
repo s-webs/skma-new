@@ -8,18 +8,19 @@ $locale = Request::segment(1);
 if (in_array($locale, ['ru', 'kz', 'en'])) {
     app()->setLocale($locale);
 } else {
-    app()->setLocale('kz'); // Синхронизируем с auth.php
-    $locale = 'kz'; // Устанавливаем префикс по умолчанию
+    app()->setLocale('kz');
+    $locale = 'kz';
 }
-
 
 Route::group([
     'middleware' => ['encrypt_cookies', 'track_visitor'],
     'prefix' => $locale,
 ], function () {
+    // Редирект с дашборда на главную
     Route::get('/dashboard', function () {
         return redirect(route('home'));
     })->middleware(['auth', 'verified', 'encrypt_cookies', 'track_visitor'])->name('dashboard');
+
     Route::get('/', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
     Route::get('/news', [\App\Http\Controllers\Public\NewsController::class, 'index'])->name('news.index');
     Route::get('/news/{slug}', [\App\Http\Controllers\Public\NewsController::class, 'show'])->name('news.show');
@@ -56,6 +57,4 @@ Route::group([
     Route::get('/pages/{slug}', [\App\Http\Controllers\Public\CmsPagesController::class, 'show'])->name('cmspage.show');
 });
 
-Route::get('/', function () {
-    return redirect('/kz');
-});
+Route::redirect('/', '/kz');

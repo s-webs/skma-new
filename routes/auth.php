@@ -17,7 +17,7 @@ if (in_array($locale, ['ru', 'kz', 'en'])) {
     app()->setLocale($locale);
 } else {
     app()->setLocale('kz');
-    $locale = '';
+    $locale = 'kz';
 }
 
 Route::group(['prefix' => $locale, 'middleware' => ['encrypt_cookies', 'track_visitor']], function () {
