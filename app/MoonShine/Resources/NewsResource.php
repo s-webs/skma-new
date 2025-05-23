@@ -41,6 +41,11 @@ class NewsResource extends ModelResource implements HasImportExportContract
 
     protected ?PageType $redirectAfterSave = PageType::INDEX;
 
+    protected function search(): array
+    {
+        return ['id', 'title_ru', 'title_kz', 'title_en'];
+    }
+
     /**
      * @return list<FieldContract>
      */
