@@ -40,7 +40,6 @@ Route::group([
     Route::get('/compliance', [\App\Http\Controllers\Public\KomplaensController::class, 'show'])->name('komplaens.show');
 
     Route::get('/graduates', [\App\Http\Controllers\Public\GraduatesController::class, 'index'])->name('graduates.index');
-    Route::get('/graduates/search', [\App\Http\Controllers\Public\GraduatesController::class, 'search'])->name('graduates.search');
 
 
     Route::get('/for-the-applicant', [\App\Http\Controllers\Public\ApplicantController::class, 'index'])->name('applicant.index');
@@ -56,5 +55,5 @@ Route::group([
 
     Route::get('/pages/{slug}', [\App\Http\Controllers\Public\CmsPagesController::class, 'show'])->name('cmspage.show');
 });
-
+Route::get('/graduates/search', [\App\Http\Controllers\Public\GraduatesController::class, 'search'])->name('graduates.search');
 Route::redirect('/', '/kz');
