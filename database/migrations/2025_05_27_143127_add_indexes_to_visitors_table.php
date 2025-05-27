@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('helpful_links', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('visitors', function (Blueprint $table) {
+            $table->index('last_activity');
+            $table->index('created_at');
         });
     }
 
@@ -22,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('helpful_links');
+        Schema::table('visitors', function (Blueprint $table) {
+            $table->dropIndex(['last_activity']);
+            $table->dropIndex(['created_at']);
+        });
     }
 };
