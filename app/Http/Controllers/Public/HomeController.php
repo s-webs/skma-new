@@ -76,10 +76,13 @@ class HomeController extends Controller
 
         $gallery = Gallery::all()->take('5');
 
-        $visitsToday = Visitor::byPeriod('today')->get();
-        $visitsMonth = Visitor::byPeriod('month')->get();
-        $allVisits = Visitor::byPeriod('all')->get();
-        $onlineVisitors = Visitor::where('last_activity', '>=', Carbon::now()->subMinutes(5))->get();
+        $visitsToday = Visitor::byPeriod('today')->count();
+        $visitsMonth = Visitor::byPeriod('month')->count();
+        $allVisits = Visitor::count();
+        $onlineVisitors = Visitor::where('last_activity', '>=', now()->subMinutes(5))
+            ->orderByDesc('last_activity')
+            ->limit(30)
+            ->count();
 
         $services = Service::all()->take('5');
 
