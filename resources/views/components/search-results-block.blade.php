@@ -4,7 +4,7 @@
         @if(count($results) > 0)
             @foreach($results as $item)
                 <div class="mb-[20px]">
-                    <a href="{{ route($route, $item->getProperty('slug')) }}"
+                    <a href="{{ route($route, [app()->getLocale(), $item->getProperty('slug')]) }}"
                        class="hover:text-[var(--color-main)] transition-all duration-300">
                         {{ $item->getProperty($field) }}
                     </a>
