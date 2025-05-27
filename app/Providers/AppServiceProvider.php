@@ -21,13 +21,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view()->composer('*', function ($view) {
-            $menus = Menu::query()->whereNull('parent_id')->with('children')->orderBy('sort_order', 'asc')->get();
-            $view->with('menus', $menus);
+        $menus = Menu::query()->whereNull('parent_id')->with('children')->orderBy('sort_order', 'asc')->get();
+        $activeTheme = Theme::getActive();
 
-            // Получаем активную тему
-            $activeTheme = Theme::getActive();
-            $view->with('activeTheme', $activeTheme);
+
+        view()->composer('*', function ($view) {
         });
+
+        view()->share('activeTheme', $activeTheme);
+        view()->share('menus', $menus);
     }
 }

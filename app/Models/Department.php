@@ -44,6 +44,8 @@ class Department extends BaseModel
         'portfolio' => 'string',
     ];
 
+    protected $with = ['parent'];
+
     public function transformDocuments($documents): array
     {
         if (!$documents) {
