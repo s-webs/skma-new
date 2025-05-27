@@ -23,6 +23,8 @@ class ViewLog extends Model
         $ip = Request::ip();
         $cookieId = Request::cookie('site_visitor_id');
 
+//        dd($viewable);
+
         $viewLog = self::firstOrCreate([
             'cookie_id' => $cookieId,
             'viewable_id' => $viewable->id,

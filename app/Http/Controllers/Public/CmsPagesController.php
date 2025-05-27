@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class CmsPagesController extends Controller
 {
-    public function show($slug)
+    public function show($locale, $slug)
     {
         if (app()->getLocale() === 'kz') {
             Carbon::setLocale('kk');

@@ -19,7 +19,7 @@ class FacultiesController extends Controller
         return view('pages.faculties.index', compact('faculties'));
     }
 
-    public function show($slug)
+    public function show($locale, $slug)
     {
         $localizedSlugColumn = 'slug_' . app()->getLocale();
 
@@ -145,7 +145,7 @@ class FacultiesController extends Controller
             $translatedBase = $dictionary[$baseName][$currentLocale] ?? $matches[1];
 
             $directory['directory_name'] = $translatedBase . $yearPart;
-            
+
             if (!empty($directory['subdirectories'])) {
                 $directory['subdirectories'] = $this->translateDirectoryNames(
                     $directory['subdirectories']

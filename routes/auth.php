@@ -11,16 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-$locale = Request::segment(1);
-
-if (in_array($locale, ['ru', 'kz', 'en'])) {
-    app()->setLocale($locale);
-} else {
-    app()->setLocale('kz');
-    $locale = 'kz';
-}
-
-Route::group(['prefix' => $locale, 'middleware' => ['encrypt_cookies', 'track_visitor']], function () {
+Route::group(['prefix' => '{locale}', 'middleware' => ['encrypt_cookies', 'track_visitor']], function () {
     Route::middleware('guest')->group(function () {
         Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('register', [RegisteredUserController::class, 'store']);

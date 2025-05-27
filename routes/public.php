@@ -3,23 +3,13 @@
 use LaravelLang\LocaleList\Locale;
 use LaravelLang\Translator\Facades\Translate;
 
-$locale = Request::segment(1);
-
-if (in_array($locale, ['ru', 'kz', 'en'])) {
-    app()->setLocale($locale);
-} else {
-    app()->setLocale('kz');
-    $locale = 'kz';
-}
-
 Route::group([
-    'middleware' => ['encrypt_cookies', 'track_visitor'],
-    'prefix' => $locale,
+    'middleware' => ['encrypt_cookies', 'track_visitor', 'setLocale'],
+    'prefix' => '{locale}',
 ], function () {
-    // Редирект с дашборда на главную
     Route::get('/dashboard', function () {
         return redirect(route('home'));
-    })->middleware(['auth', 'verified', 'encrypt_cookies', 'track_visitor'])->name('dashboard');
+    })->name('dashboard');
 
     Route::get('/', [\App\Http\Controllers\Public\HomeController::class, 'index'])->name('home');
     Route::get('/news', [\App\Http\Controllers\Public\NewsController::class, 'index'])->name('news.index');
