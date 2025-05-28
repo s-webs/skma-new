@@ -11,7 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => '{locale}', 'middleware' => ['encrypt_cookies', 'track_visitor']], function () {
+Route::group(['prefix' => '{locale}', 'middleware' => ['encrypt_cookies', 'track_visitor', 'setLocale']], function () {
     Route::middleware('guest')->group(function () {
         Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('register', [RegisteredUserController::class, 'store']);
