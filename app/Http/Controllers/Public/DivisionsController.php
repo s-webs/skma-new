@@ -17,7 +17,7 @@ class DivisionsController extends Controller
         return view('pages.divisions.index', compact('divisions'));
     }
 
-    public function show($locale, $slug)
+    public function show($slug)
     {
         $localizedSlugColumn = 'slug_' . app()->getLocale();
         $lang = app()->getLocale();

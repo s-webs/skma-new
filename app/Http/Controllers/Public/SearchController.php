@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class SearchController extends Controller
 {
-    public function index($locale, Request $request)
+    public function index(Request $request)
     {
         $query = $request->input('query');
 

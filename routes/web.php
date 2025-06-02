@@ -8,8 +8,17 @@ require __DIR__ . '/moonshine.php';
 
 require __DIR__ . '/filemanager.php';
 
-require __DIR__ . '/public.php';
-
-require __DIR__ . '/admin.php';
-
-require __DIR__ . '/auth.php';
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [
+        'localeSessionRedirect',
+        'localizationRedirect',
+        'localeViewPath',
+        'web',
+        'track_visitor',
+    ],
+], function () {
+    require __DIR__ . '/public.php';
+    require __DIR__ . '/auth.php';
+    require __DIR__ . '/admin.php';
+});

@@ -8,8 +8,9 @@ Route::get('/statistics/visits', [\App\Http\Controllers\Admin\StatisticsControll
 
 
 Route::group([
-    'prefix' => '{locale}',
-    'middleware' => ['auth', 'encrypt_cookies', 'encrypt_cookies', 'setLocale']
+    'middleware' => [
+        'auth'
+    ]
 ], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

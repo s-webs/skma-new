@@ -19,7 +19,7 @@ class FacultiesController extends Controller
         return view('pages.faculties.index', compact('faculties'));
     }
 
-    public function show($locale, $slug)
+    public function show($slug)
     {
         $localizedSlugColumn = 'slug_' . app()->getLocale();
 
@@ -90,19 +90,26 @@ class FacultiesController extends Controller
             $originalName = $directory['directory_name'];
 
             // Сохраняем префикс (например, "1. ", "2. ")
-            if (preg_match('/^(\s*\d+[\.\)]*\s*)(.+)$/u', $originalName, $matches)) {
-                $prefix = $matches[1]; // например, "1. "
-                $base = trim($matches[2]); // например, "Силлабусы"
+            if (preg_match('/^(\s*\d+[\.\)]*\s*)?(.*?)(\s*\d{4}-\d{4})?$/u', $originalName, $matches)) {
+                $prefix = $matches[1] ?? ''; // "1. "
+                $base = trim($matches[2] ?? ''); // "СИЛЛАБУСЫ"
+                $year = $matches[3] ?? ''; // "2024-2025"
             } else {
                 $prefix = '';
-                $base = trim($originalName);
+                $base = $originalName;
+                $year = '';
             }
 
+            // Приводим к нижнему регистру для поиска в словаре
             $baseLower = mb_strtolower($base);
+
+            // Переводим, если найдено
             $translatedBase = $dictionary[$baseLower][$currentLocale] ?? $base;
 
-            $directory['directory_name'] = $prefix . $translatedBase;
+            // Собираем обратно
+            $directory['directory_name'] = trim("{$prefix}{$translatedBase} {$year}");
 
+            // Рекурсия
             if (!empty($directory['subdirectories'])) {
                 $directory['subdirectories'] = $this->translateDirectoryNames($directory['subdirectories']);
             }
@@ -110,5 +117,6 @@ class FacultiesController extends Controller
 
         return $directories;
     }
+
 
 }

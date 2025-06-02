@@ -26,7 +26,7 @@ class AdsController extends Controller
         return view('pages.ads.index', compact('ads'));
     }
 
-    public function show($locale, $slug)
+    public function show($slug)
     {
         if (app()->getLocale() === 'kz') {
             Carbon::setLocale('kk');

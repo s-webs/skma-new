@@ -31,7 +31,7 @@ class NewsController extends Controller
         return view('pages.news.index', compact('news'));
     }
 
-    public function show($locale, $slug)
+    public function show($slug)
     {
         if (app()->getLocale() === 'kz') {
             Carbon::setLocale('kk');

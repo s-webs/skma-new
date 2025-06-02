@@ -28,7 +28,7 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($locale, $news_id, Request $request)
+    public function store($news_id, Request $request)
     {
         $user = Auth::user();
         $comment = new Comment();
@@ -67,7 +67,7 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($locale, string $comment_id)
+    public function destroy(string $comment_id)
     {
         $comment = Comment::query()->findOrFail($comment_id);
         $comment->delete();

@@ -60,7 +60,7 @@ class DissovetController extends Controller
         return view('pages.dis_sovet.programs', compact('programs'));
     }
 
-    public function announcement($locale, $program_id)
+    public function announcement($program_id)
     {
         $program = EducationProgram::query()->findOrFail($program_id);
 

@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.9",
         "league/iso3166": "^4.3",
         "lee-to/moonshine-tree-resource": "^2.0",
+        "mcamara/laravel-localization": "^2.3",
         "moonshine/import-export": "^1.0",
         "moonshine/moonshine": "3.0",
         "moonshine/tinymce": "^1.0",

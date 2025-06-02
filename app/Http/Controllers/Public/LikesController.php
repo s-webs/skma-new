@@ -17,7 +17,7 @@ class LikesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($locale, $news_id)
+    public function store($news_id)
     {
         if (!$news_id) {
             return abort(404);
