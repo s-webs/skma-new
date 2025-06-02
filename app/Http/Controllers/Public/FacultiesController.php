@@ -58,7 +58,6 @@ class FacultiesController extends Controller
 
         $parent = $item->parent;
         $children = $item->children;
-//        dd($item->umkd_files);
 
         return view('pages.faculties.show', compact('item', 'parent', 'children'));
     }
@@ -69,90 +68,47 @@ class FacultiesController extends Controller
         if ($currentLocale === 'ru') return $directories;
 
         $dictionary = [
-            'бакалавриат' => [
-                'en' => 'Bachelor program',
-                'kz' => 'Бакалавриат'
-            ],
-            'интернатура' => [
-                'en' => 'Internship program',
-                'kz' => 'Интернатура'
-            ],
-            'резидентура' => [
-                'en' => 'Residency program',
-                'kz' => 'Резидентура'
-            ],
-            'магистратура' => [
-                'en' => 'Magistracy',
-                'kz' => 'Магистратура'
-            ],
-            'докторантура' => [
-                'en' => 'Doctorate',
-                'kz' => 'Докторантура'
-            ],
-            'силлабус' => [
-                'en' => 'Syllabuses',
-                'kz' => 'Силлабустар'
-            ],
-            'силлабусы' => [
-                'en' => 'Syllabuses',
-                'kz' => 'Силлабустар'
-            ],
-            'кис' => [
-                'en' => 'CMD',
-                'kz' => 'БӨҚ'
-            ],
-            'лекции' => [
-                'en' => 'Lectures',
-                'kz' => 'Дәрістер'
-            ],
-            'лк' => [
-                'en' => 'Lectures',
-                'kz' => 'Дәрістер'
-            ],
-            'лекция' => [
-                'en' => 'Lectures',
-                'kz' => 'Дәрістер'
-            ],
-            'сро' => [
-                'en' => 'SIW',
-                'kz' => 'БАӨЖ'
-            ],
-            'срс' => [
-                'en' => 'SIW',
-                'kz' => 'СӨЖ'
-            ],
-            'пз' => [
-                'en' => 'PE',
-                'kz' => 'ТС'
-            ],
-            'методички' => [
-                'en' => 'Guidelines',
-                'kz' => 'Әдістемелік нұсқаулар'
-            ],
-            'рп' => [
-                'en' => 'Work programs',
-                'kz' => 'Жұмыс бағдарламалары'
-            ],
-            // Добавляйте другие базовые названия
+            'бакалавриат' => ['en' => 'Bachelor program', 'kz' => 'Бакалавриат'],
+            'интернатура' => ['en' => 'Internship program', 'kz' => 'Интернатура'],
+            'резидентура' => ['en' => 'Residency program', 'kz' => 'Резидентура'],
+            'магистратура' => ['en' => 'Magistracy', 'kz' => 'Магистратура'],
+            'докторантура' => ['en' => 'Doctorate', 'kz' => 'Докторантура'],
+            'силлабус' => ['en' => 'Syllabuses', 'kz' => 'Силлабустар'],
+            'силлабусы' => ['en' => 'Syllabuses', 'kz' => 'Силлабустар'],
+            'кис' => ['en' => 'CMD', 'kz' => 'БӨҚ'],
+            'лекции' => ['en' => 'Lectures', 'kz' => 'Дәрістер'],
+            'лк' => ['en' => 'Lectures', 'kz' => 'Дәрістер'],
+            'лекция' => ['en' => 'Lectures', 'kz' => 'Дәрістер'],
+            'сро' => ['en' => 'SIW', 'kz' => 'БАӨЖ'],
+            'срс' => ['en' => 'SIW', 'kz' => 'СӨЖ'],
+            'пз' => ['en' => 'PE', 'kz' => 'ТС'],
+            'методички' => ['en' => 'Guidelines', 'kz' => 'Әдістемелік нұсқаулар'],
+            'рп' => ['en' => 'Work programs', 'kz' => 'Жұмыс бағдарламалары'],
         ];
 
         array_walk($directories, function (&$directory) use ($currentLocale, $dictionary) {
-            preg_match('/(.*?)(\s*\d{4}-\d{4})?$/u', $directory['directory_name'], $matches);
+            $originalName = $directory['directory_name'];
 
-            $baseName = mb_strtolower(trim($matches[1]));
-            $yearPart = $matches[2] ?? '';
+            // Сохраняем префикс (например, "1. ", "2. ")
+            if (preg_match('/^(\s*\d+[\.\)]*\s*)(.+)$/u', $originalName, $matches)) {
+                $prefix = $matches[1]; // например, "1. "
+                $base = trim($matches[2]); // например, "Силлабусы"
+            } else {
+                $prefix = '';
+                $base = trim($originalName);
+            }
 
-            $translatedBase = $dictionary[$baseName][$currentLocale] ?? $matches[1];
+            $baseLower = mb_strtolower($base);
+            $translatedBase = $dictionary[$baseLower][$currentLocale] ?? $base;
 
-            $directory['directory_name'] = $translatedBase . $yearPart;
+            $directory['directory_name'] = $prefix . $translatedBase;
 
             if (!empty($directory['subdirectories'])) {
-                $directory['subdirectories'] = $this->translateDirectoryNames(
-                    $directory['subdirectories']
-                );
+                $directory['subdirectories'] = $this->translateDirectoryNames($directory['subdirectories']);
             }
         });
 
         return $directories;
     }
+
 }

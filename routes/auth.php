@@ -26,7 +26,7 @@ Route::group(['prefix' => '{locale}', 'middleware' => ['encrypt_cookies', 'track
         Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
     });
 
-    Route::middleware('auth', 'track_visitor', 'encrypt_cookies')->group(function () {
+    Route::middleware('auth')->group(function () {
         Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
         Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
             ->middleware(['signed', 'throttle:6,1'])
