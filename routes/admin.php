@@ -6,7 +6,11 @@ Route::get('/statistics/visits', [\App\Http\Controllers\Admin\StatisticsControll
     ->middleware('encrypt_cookies', 'track_visitor')
     ->name('statistics.visits');
 
-Route::middleware(['auth', 'encrypt_cookies', 'encrypt_cookies'])->group(function () {
+
+Route::group([
+    'prefix' => '{locale}',
+    'middleware' => ['auth', 'encrypt_cookies', 'encrypt_cookies']
+], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
