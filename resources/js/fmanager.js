@@ -1,11 +1,14 @@
 import Alpine from 'alpinejs';
-import {Dropzone} from "dropzone";
+import { Dropzone } from 'dropzone';
 import 'compressorjs';
 
 window.Alpine = Alpine;
 
 function fileManager() {
     return {
+        //
+        // 1. Состояние (state)
+        //
         currentPath: '',
         directories: [],
         files: [],
@@ -13,6 +16,19 @@ function fileManager() {
         breadcrumbs: [],
         dropzoneInstance: null,
         selectedFiles: [],
+
+        // Новый параметр: режим отображения файлов ("grid" или "list")
+        viewMode: 'grid',
+
+        // Новый параметр: строка поиска
+        searchQuery: '',
+
+        contextMenu: {
+            show: false,
+            x: 0,
+            y: 0,
+            dir: ''
+        },
         fileContextMenu: {
             show: false,
             x: 0,
@@ -24,14 +40,40 @@ function fileManager() {
             url: '',
             type: ''
         },
-        contextMenu: {
-            show: false,
-            x: 0,
-            y: 0,
-            dir: ''
+
+        //
+        // 2. Вычисляемые свойства (computed)
+        //
+        get allFilesSelected() {
+            return this.selectedFiles.length === this.filteredFiles.length && this.filteredFiles.length > 0;
+        },
+        get selectedFilesCount() {
+            return this.selectedFiles.length;
+        },
+        get selectedFilesSize() {
+            return this.filteredFiles
+                .filter(file => this.selectedFiles.includes(file.path))
+                .reduce((sum, file) => sum + file.size, 0);
+        },
+        get totalFilesCount() {
+            return this.filteredFiles.length;
+        },
+        get totalFilesSize() {
+            return this.filteredFiles.reduce((sum, file) => sum + file.size, 0);
         },
 
-        // Получение файлов и директорий с сервера
+        // Новое вычисляемое свойство: список файлов после фильтрации по поиску
+        get filteredFiles() {
+            if (!this.searchQuery.trim()) {
+                return this.files;
+            }
+            const q = this.searchQuery.trim().toLowerCase();
+            return this.files.filter(file => file.name.toLowerCase().includes(q));
+        },
+
+        //
+        // 3. Методы навигации и получение данных
+        //
         fetchFiles() {
             fetch(`/s-files?path=${this.currentPath}`)
                 .then(res => res.json())
@@ -47,57 +89,89 @@ function fileManager() {
                 .catch(error => console.error('Error fetching files:', error));
         },
 
-        // Выбор/отмена выбора всех файлов
-        toggleAllFiles(checked) {
-            this.selectedFiles = checked ? this.files.map(file => file.path) : [];
-        },
-
-        get allFilesSelected() {
-            return this.selectedFiles.length === this.files.length && this.files.length > 0;
-        },
-
-        get selectedFilesCount() {
-            return this.selectedFiles.length;
-        },
-
-        get selectedFilesSize() {
-            return this.files
-                .filter(file => this.selectedFiles.includes(file.path))
-                .reduce((sum, file) => sum + file.size, 0);
-        },
-
-        get totalFilesCount() {
-            return this.files.length;
-        },
-
-        get totalFilesSize() {
-            return this.files.reduce((sum, file) => sum + file.size, 0);
-        },
-
-        passFiles() {
-            if (window.opener && !window.opener.closed) {
-                // Вызываем функцию в родительском окне и передаём выбранные файлы
-                window.opener.handleSelectedFiles(this.selectedFiles);
-                // Закрываем окно файлового менеджера после передачи данных
-                window.close();
-            } else {
-                alert("Окно родителя закрыто. Невозможно передать файлы.");
-            }
-        },
-
         updateBreadcrumbs() {
             const pathParts = this.currentPath.split('/').filter(part => part !== '');
-            this.breadcrumbs = ['root', ...pathParts];
-            this.breadcrumbs = this.breadcrumbs.filter((item, index, self) => self.indexOf(item) === index);
+            this.breadcrumbs = ['root', ...pathParts].filter((item, index, self) => self.indexOf(item) === index);
         },
 
         goToBreadcrumb(index) {
             this.selectedFiles = [];
-            this.currentPath = index === 0 ? '' : this.breadcrumbs.slice(1, index + 1).join('/');
+            this.currentPath = index === 0
+                ? ''
+                : this.breadcrumbs.slice(1, index + 1).join('/');
             this.fetchFiles();
-            this.updateBreadcrumbs();
         },
 
+        openDirectory(dir) {
+            this.selectedFiles = [];
+            const dirName = dir.split('/').pop();
+            this.currentPath = this.currentPath === ''
+                ? dirName
+                : (!this.currentPath.includes(dirName) ? `${this.currentPath}/${dirName}` : this.currentPath);
+            this.fetchFiles();
+        },
+
+        goUp() {
+            this.selectedFiles = [];
+            if (this.currentPath === '') return;
+            const parts = this.currentPath.split('/');
+            parts.pop();
+            this.currentPath = parts.join('/');
+            this.fetchFiles();
+        },
+
+        //
+        // 4. Методы для работы с папками
+        //
+        createFolder() {
+            if (!this.newFolder.trim()) return;
+            const newPath = this.currentPath ? `${this.currentPath}/${this.newFolder}` : this.newFolder;
+            fetch('/s-files/create-folder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ path: newPath })
+            })
+                .then(() => {
+                    this.newFolder = '';
+                    this.fetchFiles();
+                })
+                .catch(err => console.error('Ошибка создания папки:', err));
+        },
+
+        deleteFolder() {
+            if (!confirm('Вы уверены, что хотите удалить папку?')) return;
+            fetch('/s-files/delete-folder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ path: this.contextMenu.dir })
+            })
+                .then(() => {
+                    this.fetchFiles();
+                    this.updateBreadcrumbs();
+                    this.contextMenu.show = false;
+                })
+                .catch(err => console.error('Ошибка удаления папки:', err));
+        },
+
+        copyDirectoryLink() {
+            const link = this.contextMenu.dir;
+            navigator.clipboard.writeText(link)
+                .then(() => alert('Ссылка скопирована: ' + link))
+                .catch(err => {
+                    console.error('Ошибка копирования ссылки:', err);
+                    alert('Не удалось скопировать ссылку');
+                });
+        },
+
+        //
+        // 5. Методы для работы с файлами
+        //
         isImage(file) {
             return /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name);
         },
@@ -122,80 +196,6 @@ function fileManager() {
             else return (size / 1073741824).toFixed(2) + ' GB';
         },
 
-        getDirectoryLink() {
-            // Базовый URL берём из window.location.origin
-            let baseUrl = window.location.origin;
-            // Формируем ссылку согласно маршруту вашего файлового менеджера.
-            // Если текущий путь пустой, значит мы на корневой директории.
-            let link = `${baseUrl}/s-files`;
-            if (this.currentPath && this.currentPath.trim() !== '') {
-                link += `?path=${encodeURIComponent(this.currentPath)}`;
-            }
-            return link;
-        },
-
-        copyDirectoryLink() {
-            const baseUrl = window.location.origin;
-            let link = this.contextMenu.dir;
-            navigator.clipboard.writeText(link)
-                .then(() => {
-                    alert('Ссылка скопирована: ' + link);
-                })
-                .catch(err => {
-                    console.error('Ошибка копирования ссылки:', err);
-                });
-        },
-
-        copyFileLink() {
-            const file = this.fileContextMenu.file;
-            if (!file) return;
-
-            // Убираем window.location.origin
-            const fileUrl = `/${file.path.replace(/^\//, '')}`;  // Удаляем начальный слеш если есть
-
-            navigator.clipboard.writeText(fileUrl)
-                .then(() => {
-                    alert('Ссылка на файл скопирована: ' + fileUrl);
-                })
-                .catch(err => {
-                    console.error('Ошибка копирования ссылки:', err);
-                    alert('Не удалось скопировать ссылку');
-                });
-        },
-
-        openDirectory(dir) {
-            this.selectedFiles = [];
-            const dirName = dir.split('/').pop();
-            this.currentPath = this.currentPath === ''
-                ? dirName
-                : (!this.currentPath.includes(dirName) ? `${this.currentPath}/${dirName}` : this.currentPath);
-            this.fetchFiles();
-        },
-
-        goUp() {
-            this.selectedFiles = [];
-            if (this.currentPath === '') return;
-            const parts = this.currentPath.split('/');
-            parts.pop();
-            this.currentPath = parts.join('/');
-            this.fetchFiles();
-        },
-
-        createFolder() {
-            const newPath = this.currentPath ? `${this.currentPath}/${this.newFolder}` : this.newFolder;
-            fetch('/s-files/create-folder', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({path: newPath})
-            }).then(() => {
-                this.newFolder = '';
-                this.fetchFiles();
-            });
-        },
-
         previewFile(file) {
             this.fileContextMenu.show = false;
             const url = `/${file.path}`;
@@ -216,10 +216,10 @@ function fileManager() {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.stringify({path: file.path})
+                body: JSON.stringify({ path: file.path })
             })
                 .then(() => this.fetchFiles())
-                .catch(error => console.error('Ошибка удаления:', error));
+                .catch(error => console.error('Ошибка удаления файла:', error));
         },
 
         deleteSelectedFiles() {
@@ -231,7 +231,7 @@ function fileManager() {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify({path})
+                    body: JSON.stringify({ path })
                 })
             );
             Promise.all(promises)
@@ -239,31 +239,58 @@ function fileManager() {
                     this.fetchFiles();
                     this.selectedFiles = [];
                 })
-                .catch(error => console.error('Ошибка удаления:', error));
+                .catch(error => console.error('Ошибка удаления нескольких файлов:', error));
         },
 
-        deleteFolder() {
-            if (!confirm('Вы уверены, что хотите удалить папку?')) return;
-            fetch('/s-files/delete-folder', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({path: this.contextMenu.dir})
-            })
-                .then(() => {
-                    this.fetchFiles();
-                    this.updateBreadcrumbs();
-                    this.contextMenu.show = false;
+        copyFileLink() {
+            const file = this.fileContextMenu.file;
+            if (!file) return;
+            const fileUrl = `/${file.path.replace(/^\//, '')}`;
+            navigator.clipboard.writeText(fileUrl)
+                .then(() => alert('Ссылка на файл скопирована: ' + fileUrl))
+                .catch(err => {
+                    console.error('Ошибка копирования ссылки:', err);
+                    alert('Не удалось скопировать ссылку');
                 });
         },
 
+        passFiles() {
+            if (window.opener && !window.opener.closed) {
+                window.opener.handleSelectedFiles(this.selectedFiles);
+                window.close();
+            } else {
+                alert("Окно родителя закрыто. Невозможно передать файлы.");
+            }
+        },
+
+        //
+        // 6. Методы выбора (select) файлов
+        //
+        toggleAllFiles(checked) {
+            this.selectedFiles = checked ? this.filteredFiles.map(file => file.path) : [];
+        },
+
+        //
+        // 7. Новый метод: переключение режима отображения
+        //
+        toggleView(mode) {
+            if (['grid', 'list'].includes(mode)) {
+                this.viewMode = mode;
+            }
+        },
+
+        //
+        // 8. Инициализация (Dropzone и начальная загрузка)
+        //
         init() {
             this.fetchFiles();
+
+            // Настройка Dropzone
             const self = this;
             Dropzone.autoDiscover = false;
-            if (this.dropzoneInstance) this.dropzoneInstance.destroy();
+            if (this.dropzoneInstance) {
+                this.dropzoneInstance.destroy();
+            }
             this.dropzoneInstance = new Dropzone("#uploadZone", {
                 paramName: "file",
                 maxFilesize: 10,
