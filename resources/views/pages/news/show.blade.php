@@ -64,7 +64,7 @@
                     {{--                    </div>--}}
                 @endif
             </div>
-            <div class="content mt-[30px] pt-[30px] border-t max-w-[910px] mx-auto">
+            <div class="content mt-[30px] pt-[30px] border-t max-w-[910px] prose mx-auto">
                 {!! $item->getProperty('text') !!}
             </div>
             {{--            <div class="mt-[30px]">--}}

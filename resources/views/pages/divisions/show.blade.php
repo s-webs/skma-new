@@ -63,7 +63,7 @@
                                 </div>
                                 @if($item->pages)
                                     @foreach($item->pages as $page)
-                                        <div x-show="activeTab === '{{ $page->getProperty('slug') }}'" x-cloak>
+                                        <div class="" x-show="activeTab === '{{ $page->getProperty('slug') }}'" x-cloak>
                                             {!! $page->getProperty('description') !!}
                                         </div>
                                     @endforeach

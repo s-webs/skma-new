@@ -10,7 +10,7 @@
 @endif
 
 <div class="mt-[30px] w-full content">
-    <div class="table-wrapper">
+    <div class="w-full max-w-full prose table-wrapper">
         {!! $item->getProperty('description') !!}
     </div>
 </div>
@@ -98,21 +98,21 @@
 
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", function(){
+        document.addEventListener("DOMContentLoaded", function () {
             // Найдем все таблицы внутри контейнера (например, с классом .table-wrapper)
-            document.querySelectorAll('.table-wrapper table').forEach(function(table) {
+            document.querySelectorAll('.table-wrapper table').forEach(function (table) {
                 // Предполагаем, что первая строка (первый <tr>) содержит заголовки
                 var headerCells = table.querySelector("tbody tr").querySelectorAll("td");
                 var headers = [];
-                headerCells.forEach(function(cell) {
+                headerCells.forEach(function (cell) {
                     headers.push(cell.textContent.trim());
                 });
 
                 // Проходим по всем строкам, кроме первой (заголовка)
                 var rows = table.querySelectorAll("tbody tr:not(:first-child)");
-                rows.forEach(function(row) {
+                rows.forEach(function (row) {
                     var cells = row.querySelectorAll("td");
-                    cells.forEach(function(cell, index) {
+                    cells.forEach(function (cell, index) {
                         // Если data-label пустой, запишем в него заголовок из той же позиции
                         if (!cell.getAttribute("data-label") || cell.getAttribute("data-label").trim() === "") {
                             cell.setAttribute("data-label", headers[index] || "");
