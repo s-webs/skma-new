@@ -79,7 +79,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                 Divider::make(),
                 Tabs::make([
                     Tab::make('RU', [
-                        Text::make('Название на русском', 'title_ru'),
+                        Text::make('Название на русском', 'title_ru')->unescape(),
                         TinyMce::make('Содержание', 'text_ru')
                             ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_ru')->unique()->from('title_ru'),
@@ -92,7 +92,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                             ->removable(),
                     ]),
                     Tab::make('KZ', [
-                        Text::make('Название на казахском', 'title_kz'),
+                        Text::make('Название на казахском', 'title_kz')->unescape(),
                         TinyMce::make('Содержание', 'text_kz')
                             ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_kz')->unique()->from('title_kz'),
@@ -105,7 +105,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                             ->removable(),
                     ]),
                     Tab::make('EN', [
-                        Text::make('Название на английском', 'title_en'),
+                        Text::make('Название на английском', 'title_en')->unescape(),
                         TinyMce::make('Содержание', 'text_en')
                             ->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_en')->unique()->from('title_en'),
