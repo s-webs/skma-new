@@ -82,7 +82,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                         Text::make('Название на русском', 'title_ru'),
                         TinyMce::make('Содержание', 'text_ru')
                             ->addOption('file_manager', 'laravel-filemanager'),
-                        Slug::make('Slug', 'slug_ru')->from('title_ru'),
+                        Slug::make('Slug', 'slug_ru')->unique()->from('title_ru'),
                         Image::make('Превью', 'preview_ru')
                             ->dir('uploads/news/')
                             ->customName(function ($file, $field) {
@@ -95,7 +95,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                         Text::make('Название на казахском', 'title_kz'),
                         TinyMce::make('Содержание', 'text_kz')
                             ->addOption('file_manager', 'laravel-filemanager'),
-                        Slug::make('Slug', 'slug_kz')->from('title_kz'),
+                        Slug::make('Slug', 'slug_kz')->unique()->from('title_kz'),
                         Image::make('Превью', 'preview_kz')
                             ->dir('uploads/news/')
                             ->customName(function ($file, $field) {
@@ -108,7 +108,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                         Text::make('Название на английском', 'title_en'),
                         TinyMce::make('Содержание', 'text_en')
                             ->addOption('file_manager', 'laravel-filemanager'),
-                        Slug::make('Slug', 'slug_en')->from('title_en'),
+                        Slug::make('Slug', 'slug_en')->unique()->from('title_en'),
                         Image::make('Превью', 'preview_en')
                             ->dir('uploads/news/')
                             ->customName(function ($file, $field) {
