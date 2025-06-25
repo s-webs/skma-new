@@ -23,7 +23,7 @@
                             <i class="fas fa-map-marker-alt text-[14px] md:text-[24px]"></i>
                         </div>
                         <div class="text-white">
-                            <div class="text-[12px] md:text-[14px]">Адрес</div>
+{{--                            <div class="text-[12px] md:text-[14px]">Адрес</div>--}}
                             <div class="text-[14px] md:text-[18px] font-semibold">Шымкент, Аль-Фараби 1</div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                             <i class="fas fa-phone-alt text-[14px] md:text-[24px]"></i>
                         </div>
                         <div class="text-white">
-                            <div class="text-[12px] md:text-[14px]">Номер</div>
+{{--                            <div class="text-[12px] md:text-[14px]">Номер</div>--}}
                             <div class="text-[14px] md:text-[18px] font-semibold">8 7252 39-57-57</div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                             <i class="fas fa-envelope-open text-[14px] md:text-[24px]"></i>
                         </div>
                         <div class="text-white">
-                            <div class="text-[12px] md:text-[14px]">Почта</div>
+{{--                            <div class="text-[12px] md:text-[14px]">Почта</div>--}}
                             <div class="text-[14px] md:text-[18px] font-semibold">info@skma.kz</div>
                         </div>
                     </div>
@@ -60,15 +60,15 @@
                         </div>
                     </div>
                     <div class="py-[60px] px-[60px] text-center xl:text-start">
-                        <div class="text-white text-[14px] xl:text-[18px] font-semibold mb-[24px]">
-                            <h4>О нас</h4>
-                        </div>
-                        <ul class="text-white text-[14px] xl:text-[18px]">
-                            <li class="mb-[24px]"><a href="##">СМИ О нас</a></li>
-                            <li class="mb-[24px]"><a href="##">Для работодателей</a></li>
-                            <li class="mb-[24px]"><a href="##">Для выпускников</a></li>
-                            <li><a href="##">Контакты</a></li>
-                        </ul>
+{{--                        <div class="text-white text-[14px] xl:text-[18px] font-semibold mb-[24px]">--}}
+{{--                            <h4>О нас</h4>--}}
+{{--                        </div>--}}
+{{--                        <ul class="text-white text-[14px] xl:text-[18px]">--}}
+{{--                            <li class="mb-[24px]"><a href="##">СМИ О нас</a></li>--}}
+{{--                            <li class="mb-[24px]"><a href="##">Для работодателей</a></li>--}}
+{{--                            <li class="mb-[24px]"><a href="##">Для выпускников</a></li>--}}
+{{--                            <li><a href="##">Контакты</a></li>--}}
+{{--                        </ul>--}}
                         <div class="">
                             <div class="mt-12">
                                 <a href="https://info.flagcounter.com/mZtw"><img
