@@ -10,4 +10,8 @@ return [
     'admission_rules_for_training' => 'Оқуға қабылдау ережелері',
     'bakalavriat' => 'Бакалавриат',
     'list_of_offered_training_programs' => 'Ұсынылатын оқыту бағдарламаларының тізбесі',
+
+    'virtual_walk'               => 'Виртуалды серуен',
+    'academic_calendars'         => 'Академиялық күнтізбелер',
+    'catalog_elective_subjects'  => 'Электив пәндер каталогы',
 ];

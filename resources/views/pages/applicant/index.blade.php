@@ -24,7 +24,7 @@
                                      title="{{ __('applicant.admission_rules_for_training') }}"
                                      subtitle="{{ __('applicant.bakalavriat') }}"/>
                         <x-link-card url="https://3d-tour.ukma.kz/"
-                                     title="Виртуальная прогулка"
+                                     title="{{ __('applicant.virtual_walk') }}"
                                      subtitle="По ЮКМА"/>
                     </div>
                 </div>

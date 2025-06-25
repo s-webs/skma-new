@@ -34,7 +34,7 @@
             <div x-data="{ open: false }" class="overflow-hidden bg-white rounded-[15px] box-border">
                 <h3 @click="open = !open"
                     class="cursor-pointer flex justify-between items-center bg-[var(--color-main)] py-[16px] px-[24px] rounded-[15px] text-white shadow-md font-semibold">
-                    <span class="mr-[20px]">Академические календари</span>
+                    <span class="mr-[20px]">{{ __('applicant.academic_calendars') }}</span>
                     <i :class="open ? 'fal fa-angle-up' : 'fal fa-angle-down'"></i>
                 </h3>
 
@@ -49,7 +49,7 @@
             <div x-data="{ open: false }" class="overflow-hidden bg-white rounded-[15px] box-border">
                 <h3 @click="open = !open"
                     class="cursor-pointer flex justify-between items-center bg-[var(--color-main)] py-[16px] px-[24px] rounded-[15px] text-white shadow-md font-semibold">
-                    <span class="mr-[20px]">Каталог элективных дисциплин</span>
+                    <span class="mr-[20px]">{{ __('applicant.catalog_elective_subjects') }}</span>
                     <i :class="open ? 'fal fa-angle-up' : 'fal fa-angle-down'"></i>
                 </h3>
 
