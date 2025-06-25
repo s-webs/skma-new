@@ -11,7 +11,9 @@ return [
     'bakalavriat' => 'Бакалавриат',
     'list_of_offered_training_programs' => 'Ұсынылатын оқыту бағдарламаларының тізбесі',
 
-    'virtual_walk'               => 'Виртуалды серуен',
-    'academic_calendars'         => 'Академиялық күнтізбелер',
-    'catalog_elective_subjects'  => 'Электив пәндер каталогы',
+    'virtual_walk' => 'Виртуалды серуен',
+    'academic_calendars' => 'Академиялық күнтізбелер',
+    'catalog_elective_subjects' => 'Электив пәндер каталогы',
+
+    'psihometric_test' => 'Психометриялық тестілеу',
 ];

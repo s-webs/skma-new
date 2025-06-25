@@ -13,6 +13,8 @@ return [
 
     'virtual_walk' => 'Виртуальная прогулка',
     'academic_calendars' => 'Академические календари',
-    'catalog_elective_subjects' => 'Каталог элективных дисциплин'
+    'catalog_elective_subjects' => 'Каталог элективных дисциплин',
+
+    'psihometric_test' => 'Психометрическое тестирование'
 
 ];

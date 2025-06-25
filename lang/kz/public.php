@@ -25,6 +25,6 @@ return [
     'phone' => 'Телефон',
 
     'basic_information' => 'Негізгі ақпарат',
-    'umkd' => 'УМКД',
+    'umkd' => 'ПОӘК',
     'portfolio' => 'Портфолио',
 ];

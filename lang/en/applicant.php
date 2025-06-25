@@ -11,7 +11,9 @@ return [
     'bakalavriat' => 'Bachelor’s degree',
     'list_of_offered_training_programs' => 'List of offered training programs',
 
-    'virtual_walk'             => 'Virtual Walk',
-    'academic_calendars'       => 'Academic Calendars',
+    'virtual_walk' => 'Virtual Walk',
+    'academic_calendars' => 'Academic Calendars',
     'catalog_elective_subjects' => 'Elective Subjects Catalog',
+
+    'psihometric_test' => 'Psychometric testing'
 ];

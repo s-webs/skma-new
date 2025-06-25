@@ -17,6 +17,9 @@
                         {{ __('applicant.carefully_study_this_page') }}
                     </div>
                     <div class="flex flex-wrap xl:flex-nowrap items-center w-full mt-[40px]">
+                        <x-link-card url="https://system.skma.edu.kz/"
+                                     title="{{ __('applicant.psihometric_test') }}"
+                                     subtitle=""/>
                         <x-link-card url="/assets/files/price-bakalavr-2025.pdf"
                                      title="{{ __('applicant.education_and_accommodation') }}"
                                      subtitle="{{ __('applicant.price_list') }}"/>
@@ -33,11 +36,19 @@
     </div>
     <div class="container mx-auto px-2 mt-[60px]">
         <div class="flex items-center flex-wrap justify-center">
-            <div class="mb-[12px] xl:mb-0 w-full xl:w-[715px] h-[300px] xl:h-[402px] rounded-[10px] overflow-hidden border-[5px] border-[var(--color-main)] xl:mr-[24px]">
-                <iframe class="w-full h-full" src="https://www.youtube.com/embed/39s2CLuflcA?si=uN1C2FNckabG2BGb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div
+                class="mb-[12px] xl:mb-0 w-full xl:w-[715px] h-[300px] xl:h-[402px] rounded-[10px] overflow-hidden border-[5px] border-[var(--color-main)] xl:mr-[24px]">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/39s2CLuflcA?si=uN1C2FNckabG2BGb"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
-            <div class="w-full xl:w-[715px] h-[300px] xl:h-[402px] rounded-[10px] overflow-hidden border-[5px] border-[var(--color-main)]">
-                <iframe class="w-full h-full" src="https://www.youtube.com/embed/9H5lAIUkwFA?si=MrOzsAMz9M1fXdEo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div
+                class="w-full xl:w-[715px] h-[300px] xl:h-[402px] rounded-[10px] overflow-hidden border-[5px] border-[var(--color-main)]">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/9H5lAIUkwFA?si=MrOzsAMz9M1fXdEo"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </div>
     </div>

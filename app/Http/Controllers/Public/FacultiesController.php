@@ -89,27 +89,27 @@ class FacultiesController extends Controller
         array_walk($directories, function (&$directory) use ($currentLocale, $dictionary) {
             $originalName = $directory['directory_name'];
 
-            // Сохраняем префикс (например, "1. ", "2. ")
-            if (preg_match('/^(\s*\d+[\.\)]*\s*)?(.*?)(\s*\d{4}-\d{4})?$/u', $originalName, $matches)) {
-                $prefix = $matches[1] ?? ''; // "1. "
-                $base = trim($matches[2] ?? ''); // "СИЛЛАБУСЫ"
-                $year = $matches[3] ?? ''; // "2024-2025"
+            // Новая регулярка: 1) префикс номера, 2) базовое слово, 3) год, 4) суффикс (например, "(Фармакогнозия)")
+            if (preg_match('/^(\s*\d+[\.\)]*\s*)?(.+?)\s*(\d{4}-\d{4})(.*)$/u', $originalName, $m)) {
+                $prefix = $m[1] ?? '';      // "1. " или ""
+                $base   = trim($m[2]);     // "СИЛЛАБУСЫ"
+                $year   = $m[3];           // "2024-2025"
+                $suffix = $m[4] ?? '';     // "(Фармакогнозия)" или ""
             } else {
+                // fallback — без года/суффикса
                 $prefix = '';
-                $base = $originalName;
-                $year = '';
+                $base   = $originalName;
+                $year   = '';
+                $suffix = '';
             }
 
-            // Приводим к нижнему регистру для поиска в словаре
             $baseLower = mb_strtolower($base);
-
-            // Переводим, если найдено
             $translatedBase = $dictionary[$baseLower][$currentLocale] ?? $base;
 
-            // Собираем обратно
-            $directory['directory_name'] = trim("{$prefix}{$translatedBase} {$year}");
+            // Собираем обратно, сохраняя суффикс
+            $directory['directory_name'] = trim("{$prefix}{$translatedBase} {$year}{$suffix}");
 
-            // Рекурсия
+            // Рекурсия для вложенных
             if (!empty($directory['subdirectories'])) {
                 $directory['subdirectories'] = $this->translateDirectoryNames($directory['subdirectories']);
             }

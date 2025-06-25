@@ -25,7 +25,7 @@ return [
     'phone' => 'Phone',
 
     'basic_information' => 'Basic Information',
-    'umkd' => 'UMKD',
+    'umkd' => 'EMC',
     'portfolio' => 'Portfolio',
 
 ];
