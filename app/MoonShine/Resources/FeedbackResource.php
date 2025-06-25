@@ -54,11 +54,11 @@ class FeedbackResource extends ModelResource
             Box::make([
                 ID::make(),
                 Select::make('Язык', 'language')
-                ->options([
-                    'ru' => 'Русский',
-                    'kz' => 'Казахский',
-                    'en' => 'Английский',
-                ]),
+                    ->options([
+                        'ru' => 'Русский',
+                        'kz' => 'Казахский',
+                        'en' => 'Английский',
+                    ]),
                 Image::make('Фотография', 'image')
                     ->dir('uploads/feedback/')
                     ->customName(function ($file, $field) {
@@ -66,8 +66,8 @@ class FeedbackResource extends ModelResource
                         return 'feedback_' . $timestamp . "_." . $file->extension();
                     })
                     ->removable(),
-                Text::make('Имя', 'name'),
-                Text::make('О студенте', 'about'),
+                Text::make('Имя', 'name')->unescape(),
+                Text::make('О студенте', 'about')->unescape(),
                 Textarea::make('Отзыв', 'message'),
             ])
         ];
