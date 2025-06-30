@@ -46,17 +46,20 @@
     </div>
     <div class="mb-[60px]">
         <div class="container mx-auto px-4">
-            <div x-data="{ open: false }" class="overflow-hidden bg-white rounded-[15px] box-border">
-                <h3 @click="open = !open"
-                    class="cursor-pointer flex justify-between items-center bg-[var(--color-main)] py-[16px] px-[24px] rounded-[15px] text-white shadow-md font-semibold">
-                    <span class="mr-[20px]">{{ __('applicant.catalog_elective_subjects') }}</span>
-                    <i :class="open ? 'fal fa-angle-up' : 'fal fa-angle-down'"></i>
-                </h3>
+            @if($information->elective_catalog)
+                <div x-data="{ open: false }" class="overflow-hidden bg-white rounded-[15px] box-border">
+                    <h3 @click="open = !open"
+                        class="cursor-pointer flex justify-between items-center bg-[var(--color-main)] py-[16px] px-[24px] rounded-[15px] text-white shadow-md font-semibold">
+                        <span class="mr-[20px]">{{ __('applicant.catalog_elective_subjects') }}</span>
+                        <i :class="open ? 'fal fa-angle-up' : 'fal fa-angle-down'"></i>
+                    </h3>
 
-                <div x-show="open" class="p-[20px]">
-                    @include('components.academ-calendars', ['directory' => $information->elective_catalog])
+
+                    <div x-show="open" class="p-[20px]">
+                        @include('components.academ-calendars', ['directory' => $information->elective_catalog])
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
     <div>

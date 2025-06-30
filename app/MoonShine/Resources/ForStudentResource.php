@@ -124,7 +124,9 @@ class ForStudentResource extends ModelResource
                         Text::make('Slug', 'slug_en'),
                     ]),
                     Tab::make('Документы', [
-                        Text::make('Ссылка на элективные дисциплины', 'elective_catalog'),
+                        Text::make('Ссылка на элективные дисциплины RU', 'electiveCatalog_ru'),
+                        Text::make('Ссылка на элективные дисциплины KZ', 'electiveCatalog_kz'),
+                        Text::make('Ссылка на элективные дисциплины EN', 'electiveCatalog_en'),
                         Text::make('Ссылка на академические календари', 'academic_calendars'),
                         Collapse::make('Видео мaтериалы', [
                             Json::make('video_materials')
