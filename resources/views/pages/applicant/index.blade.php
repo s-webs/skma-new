@@ -19,7 +19,7 @@
                     <div class="flex flex-wrap xl:flex-nowrap items-center w-full mt-[40px]">
                         @foreach(json_decode($applicant->getProperty('cards')) as $item)
                             @if($item->title !== null)
-                                <x-link-card url="/{{ $item->file }}"
+                                <x-link-card url="/{{ $item->file ?? $item->link }}"
                                              title="{{ $item->subtitle }}"
                                              subtitle="{{ $item->title }}"/>
                             @endif
