@@ -17,18 +17,13 @@
                         {{ __('applicant.carefully_study_this_page') }}
                     </div>
                     <div class="flex flex-wrap xl:flex-nowrap items-center w-full mt-[40px]">
-                        <x-link-card url="https://system.skma.edu.kz/"
-                                     title="{{ __('applicant.psihometric_test') }}"
-                                     subtitle=""/>
-                        <x-link-card url="/assets/files/price-bakalavr-2025.pdf"
-                                     title="{{ __('applicant.education_and_accommodation') }}"
-                                     subtitle="{{ __('applicant.price_list') }}"/>
-                        <x-link-card url="/assets/files/pravila-priema-bakalavr-2025.pdf"
-                                     title="{{ __('applicant.admission_rules_for_training') }}"
-                                     subtitle="{{ __('applicant.bakalavriat') }}"/>
-                        <x-link-card url="https://3d-tour.ukma.kz/"
-                                     title="{{ __('applicant.virtual_walk') }}"
-                                     subtitle="По ЮКМА"/>
+                        @foreach(json_decode($applicant->getProperty('cards')) as $item)
+                            @if($item->title !== null)
+                                <x-link-card url="/{{ $item->file }}"
+                                             title="{{ $item->subtitle }}"
+                                             subtitle="{{ $item->title }}"/>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>

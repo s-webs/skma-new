@@ -62,6 +62,7 @@ use App\MoonShine\Resources\DisSovetInformationResource;
 use App\MoonShine\Resources\DisSovetStaffResource;
 use App\MoonShine\Resources\DisSovetAnnouncementResource;
 use App\MoonShine\Resources\CmsPageResource;
+use App\MoonShine\Resources\ForApplicantResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -76,8 +77,7 @@ final class MoonShineLayout extends CompactLayout
     {
         $userRoleId = request()->user('moonshine')->moonshine_user_role_id;
 
-        $menu = [MenuItem::make('CmsPages', CmsPageResource::class),
-        ];
+        $menu = [];
 
         if ($userRoleId === 1) {
             $menu = [
@@ -100,6 +100,7 @@ final class MoonShineLayout extends CompactLayout
                 MenuGroup::make('Учебный процесс', [
                     MenuItem::make('Факультеты', FacultyResource::class),
                     MenuItem::make('Кафедры', DepartmentResource::class),
+                    MenuItem::make('Для абитуриентов', ForApplicantResource::class),
                     MenuItem::make('Для студентов', ForStudentResource::class),
                     MenuItem::make('Выпускникам', GraduateResource::class),
                 ], 'academic-cap'),
@@ -115,7 +116,8 @@ final class MoonShineLayout extends CompactLayout
                 ], 'users'),
                 MenuGroup::make('Настройки', [
                     MenuItem::make('Темы', ThemeResource::class),
-                    MenuItem::make('Файловый менеджер', route('fmanager.index'))
+                    MenuItem::make('Файловый менеджер', route('fmanager.index')),
+                    MenuItem::make('CmsPages', CmsPageResource::class),
                 ], 'wrench-screwdriver'),
                 MenuGroup::make('Дисс совет', [
                     MenuItem::make('Образовательные программы', EducationProgramResource::class),
@@ -125,7 +127,7 @@ final class MoonShineLayout extends CompactLayout
                     MenuItem::make('Состав диссертационного совета', DisSovetStaffResource::class),
                     MenuItem::make('Объявления о защитах', DisSovetAnnouncementResource::class),
                 ]),
-            ];
+        ];
         } elseif ($userRoleId === 2) {
             $menu = [
                 MenuGroup::make('Об академии', [
@@ -145,6 +147,7 @@ final class MoonShineLayout extends CompactLayout
                 MenuGroup::make('Учебный процесс', [
                     MenuItem::make('Факультеты', FacultyResource::class),
                     MenuItem::make('Кафедры', DepartmentResource::class),
+                    MenuItem::make('Для абитуриентов', ForApplicantResource::class),
                     MenuItem::make('Для студентов', ForStudentResource::class),
                     MenuItem::make('Выпускникам', GraduateResource::class),
                 ], 'academic-cap'),
