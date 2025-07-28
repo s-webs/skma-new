@@ -17,7 +17,7 @@ class AdsController extends Controller
             Carbon::setLocale('kk');
         }
 
-        $ads = Advert::query()->where('is_published', '=', 1)->paginate(9)
+        $ads = Advert::query()->where('is_published', '=', 1)->orderBy('created_at', 'desc')->paginate(9)
             ->map(function ($item) {
                 $item->formatted_date = Carbon::parse($item->created_at)->translatedFormat('j F Y');
                 return $item;
