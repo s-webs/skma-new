@@ -18,8 +18,9 @@
                             <i class="fad fa-calendar-alt text-custom-main mr-[8px] group-hover:text-white"></i>
                             <span class="group-hover:text-white">{{ $item->formatted_date }}</span>
                         </div>
-                        <div class="flex items-center h-[100px] overflow-hidden font-semibold">
-                            <a href="{{ route('ads.show', $item->getProperty('slug')) }}" class="group-hover:text-white">
+                        <div class="flex items-center h-[100px] text-[12px] overflow-hidden font-semibold">
+                            <a href="{{ route('ads.show', $item->getProperty('slug')) }}"
+                               class="group-hover:text-white">
                                 {{ $item->getProperty('title') }}
                             </a>
                         </div>
