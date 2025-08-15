@@ -10,7 +10,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.1",
         "geoip2/geoip2": "~2.0",
+        "guzzlehttp/guzzle": "^7.9",
         "laravel-lang/common": "^6.7",
         "laravel-lang/translator": "1.0-ALPHA5",
         "laravel/framework": "^11.31",
@@ -23,6 +25,7 @@
         "moonshine/import-export": "^1.0",
         "moonshine/moonshine": "3.0",
         "moonshine/tinymce": "^1.0",
+        "ramsey/uuid": "*",
         "spatie/image-optimizer": "^1.8",
         "spatie/laravel-image-optimizer": "^1.8",
         "spatie/laravel-permission": "^6.10",
