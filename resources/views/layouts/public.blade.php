@@ -35,6 +35,10 @@
 
 @include('layouts.components.header', compact('menus'))
 
+@auth()
+    <x-ai-assistant-widget locale="{{ app()->getLocale() }}"/>
+@endauth
+
 @yield('content')
 
 @include('layouts.components.footer')

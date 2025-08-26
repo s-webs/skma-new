@@ -3,43 +3,35 @@
 namespace App\Http\Controllers\Ai;
 
 use App\Http\Controllers\Controller;
-use App\Services\OpenAIService;
+use App\Services\N8nAiService;
 use Illuminate\Http\Request;
 
 class ChatBotController extends Controller
 {
-    public function chat(Request $req, OpenAIService $ai)
+    public function chat(Request $req, N8nAiService $ai)
     {
         $req->validate([
             'message' => 'required|string|max:2000',
             'locale' => 'nullable|in:ru,kz,en',
-        ]);
-
-        // 1) берём locale из запроса или сайтовой локали
-        $locale = $req->input('locale', app()->getLocale()); // ru|kz|en
-
-        try {
-            $ans = $ai->answerWithRAGForLocale($locale, (string)$req->input('message'));
-            return response()->json(['ok' => true, 'answer' => $ans['text']]);
-        } catch (\Throwable $e) {
-            return response()->json(['ok' => false, 'error' => 'AI error: ' . $e->getMessage()], 500);
-        }
-    }
-
-    public function ingest(Request $req, OpenAIService $ai)
-    {
-        $req->validate([
-            'file' => 'required|file|mimes:pdf,txt,doc,docx,md',
-            'locale' => 'required|in:ru,kz,en',
+            'thread_id' => 'nullable|string',
         ]);
 
         try {
-            $path = $req->file('file')->store('tmp_ingest');
-            $abs = storage_path('app/' . $path);
-            $file = $ai->uploadFileForLocale($req->string('locale'), $abs);
-            return response()->json(['ok' => true, 'file_id' => $file['id']]);
+            $ans = $ai->ask(
+                $req->input('message'),
+                $req->input('thread_id') ?: uniqid('sess_') // если нет thread_id, создаём новый
+            );
+
+            return response()->json([
+                'ok' => true,
+                'answer' => $ans['text'],
+                'thread_id' => $ans['thread_id'],
+            ]);
         } catch (\Throwable $e) {
-            return response()->json(['ok' => false, 'error' => $e->getMessage()], 500);
+            return response()->json([
+                'ok' => false,
+                'error' => 'AI error: ' . $e->getMessage(),
+            ], 500);
         }
     }
 }

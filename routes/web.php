@@ -33,5 +33,5 @@ Route::get('/test', function () {
 });
 
 Route::view('/chatbot', 'widgets.chatBot');
-Route::post('/api/chat', [\App\Http\Controllers\Ai\ChatBotController::class, 'chat'])->name('chat.post');
-Route::post('/api/ingest', [\App\Http\Controllers\Ai\ChatBotController::class, 'ingest'])->name('chat.ingest');
+Route::post('/api/chat', [\App\Http\Controllers\Ai\ChatBotController::class, 'chat'])
+    ->name('chat.post');

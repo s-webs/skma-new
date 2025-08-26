@@ -58,7 +58,7 @@
 
         .log {
             height: 60vh;
-            overflow: auto;
+            overflow-y: auto;
             padding: 16px 18px
         }
 
@@ -66,7 +66,8 @@
             margin: 10px 0;
             padding: 12px 14px;
             border-radius: 12px;
-            max-width: 82%
+            max-width: 82%;
+            word-wrap: break-word; /* перенос длинных слов */
         }
 
         .user {
@@ -87,7 +88,7 @@
             border-top: 1px solid rgba(255, 255, 255, .06)
         }
 
-        input, textarea {
+        input {
             flex: 1;
             background: transparent;
             border: 1px solid rgba(148, 163, 184, .35);
@@ -110,27 +111,51 @@
             color: var(--muted);
             font-size: 12px
         }
+
+        /* Анимация печатания */
+        .typing {
+            display: inline-block;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .typing::after {
+            content: '...';
+            animation: dots 1.5s steps(3, end) infinite;
+        }
+
+        @keyframes dots {
+            0% {
+                content: '';
+            }
+            33% {
+                content: '.';
+            }
+            66% {
+                content: '..';
+            }
+            100% {
+                content: '...';
+            }
+        }
     </style>
 </head>
-<body class="">
+<body>
 @php $locale = app()->getLocale(); @endphp
 <div class="card" x-data="chatbot('{{ $locale }}')">
     <div class="head">
         <span class="dot"></span>
         <strong>SKMA - AI ChatBot</strong>
-        <span class="small" x-text="hint"></span>
     </div>
 
     <div class="log" x-ref="log">
-        <template x-for="m in messages">
+        <template x-for="(m, idx) in messages" :key="idx">
             <div :class="m.role==='user' ? 'msg user' : 'msg ai'">
-                <div x-text="m.text"></div>
-                <template x-if="m.sources?.length">
-                    <div class="small" style="margin-top:6px">Sources:
-                        <template x-for="s in m.sources">
-                            <span style="margin-right:8px" x-text="s"></span>
-                        </template>
-                    </div>
+                <template x-if="m.typing">
+                    <div class="typing"></div>
+                </template>
+                <template x-if="!m.typing">
+                    <div x-text="m.text"></div>
                 </template>
             </div>
         </template>
@@ -145,14 +170,18 @@
 <script>
     function chatbot(locale) {
         const ui = {
-            ru: {hello: 'Привет! Чем помочь?', ph: 'Напишите вопрос', btn: 'Отправить'},
-            kz: {hello: 'Сәлем! Қалай көмектесе аламын?', ph: 'Сұрақ жазыңыз', btn: 'Жіберу'},
-            en: {hello: 'Hello! How can I help?', ph: 'Type your question', btn: 'Send'},
+            // ru: {hello: 'Привет! Чем помочь?', ph: 'Напишите вопрос', btn: 'Отправить'},
+            // kz: {hello: 'Привет! Чем помочь?', ph: 'Напишите вопрос', btn: 'Отправить'},
+            // en: {hello: 'Привет! Чем помочь?', ph: 'Напишите вопрос', btn: 'Отправить'},
+            ru: {hello: 'Hi! How can I help you?', ph: 'Write a question', btn: 'Send'},
+            kz: {hello: 'Hi! How can I help you?', ph: 'Write a question', btn: 'Send'},
+            en: {hello: 'Hi! How can I help you?', ph: 'Write a question', btn: 'Send'},
         }[locale] ?? {hello: 'Hello!', ph: 'Type...', btn: 'Send'};
 
         return {
             messages: [{role: 'assistant', text: ui.hello}],
             input: '', loading: false, ph: ui.ph, btn: ui.btn, locale,
+            thread_id: null,
 
             async send() {
                 const text = (this.input || '').trim();
@@ -161,10 +190,15 @@
                 this.input = '';
                 this.loading = true;
 
+                // Добавляем "печатает..."
+                const typingMsg = {role: 'assistant', text: '', typing: true};
+                this.messages.push(typingMsg);
+
                 try {
                     const f = new FormData();
                     f.append('message', text);
-                    f.append('locale', this.locale); // <-- ключевой момент
+                    f.append('locale', this.locale);
+                    if (this.thread_id) f.append('thread_id', this.thread_id);
 
                     const res = await fetch("{{ route('chat.post') }}", {
                         method: 'POST',
@@ -172,11 +206,18 @@
                         body: f
                     });
                     const data = await res.json();
-                    this.messages.push({
-                        role: 'assistant',
-                        text: data.ok ? data.answer : (data.error || 'Server error')
-                    });
+
+                    // убираем typing
+                    this.messages = this.messages.filter(m => !m.typing);
+
+                    if (data.ok) {
+                        this.thread_id = data.thread_id;
+                        this.messages.push({role: 'assistant', text: data.answer});
+                    } else {
+                        this.messages.push({role: 'assistant', text: data.error || 'Server error'});
+                    }
                 } catch (e) {
+                    this.messages = this.messages.filter(m => !m.typing);
                     this.messages.push({role: 'assistant', text: 'Network error: ' + e.message});
                 } finally {
                     this.loading = false;
