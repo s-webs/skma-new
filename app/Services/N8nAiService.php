@@ -4,6 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class N8nAiService
 {
@@ -20,11 +21,9 @@ class N8nAiService
             ],
         ]);
 
-        // Адрес твоего n8n webhook (production URL!)
-        $this->endpoint = rtrim(env('N8N_AI_URL', 'http://10.10.101.54:5678/webhook/assistant/ru'), '/');
-//        $this->endpoint = rtrim(env('N8N_AI_URL', 'http://10.10.101.54:5678/webhook/assistant/en'), '/');
-//        $this->endpoint = rtrim(env('N8N_AI_URL', 'http://10.10.101.54:5678/webhook/assistant/kz'), '/');
-//        $this->endpoint = rtrim(env('N8N_AI_URL', 'http://10.10.101.54:5678/webhook/a9e0d3b4-dd23-4bea-b4d5-2d9ff7b1393b'), '/');
+        $api_url = 'http://10.10.101.54:5678/webhook/assistant/' . LaravelLocalization::getCurrentLocale();
+
+        $this->endpoint = rtrim(env('N8N_AI_URL', $api_url), '/');
     }
 
     /**

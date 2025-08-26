@@ -22,16 +22,8 @@ Route::group([
     require __DIR__ . '/public.php';
     require __DIR__ . '/auth.php';
     require __DIR__ . '/admin.php';
+
     Route::view('/chatbot', 'widgets.chatBot');
-    Route::post('/api/chat', [\App\Http\Controllers\Ai\ChatBotController::class, 'chat'])->name('chat.post');
+    Route::post('/api/chat', [\App\Http\Controllers\Ai\ChatBotController::class, 'chat'])
+        ->name('chat.post');
 });
-
-Route::get('/test', function () {
-    $departments = \App\Models\Division::all();
-    $department = $departments->last();
-    dd($department);
-});
-
-Route::view('/chatbot', 'widgets.chatBot');
-Route::post('/api/chat', [\App\Http\Controllers\Ai\ChatBotController::class, 'chat'])
-    ->name('chat.post');

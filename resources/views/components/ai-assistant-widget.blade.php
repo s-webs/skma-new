@@ -32,7 +32,7 @@
                         ? 'ml-auto bg-blue-500 text-white'
                         : 'mr-auto bg-gray-200 dark:bg-gray-700 dark:text-gray-100'"
                 >
-                    <span x-text="msg.typing ? 'Печатает...' : msg.text" class="break-all"></span>
+                    <span x-text="msg.typing ? typing : msg.text" class="break-all"></span>
                 </div>
             </template>
         </div>
@@ -61,14 +61,29 @@
     <script>
         function chatbot(locale) {
             const ui = {
-                ru: {hello: 'Привет! Чем помочь?', ph: 'Напишите вопрос', btn: 'Отправить'},
-                kz: {hello: 'Сәлем! Қалай көмектесейін?', ph: 'Сұрағыңызды жазыңыз', btn: 'Жіберу'},
-                en: {hello: 'Hi! How can I help you?', ph: 'Write a question', btn: 'Send'},
-            }[locale] ?? {hello: 'Hello!', ph: 'Type...', btn: 'Send'};
+                ru: {
+                    hello: 'Привет! Чем помочь?',
+                    ph: 'Напишите вопрос',
+                    btn: 'Отправить',
+                    typing: 'Печатает...'
+                },
+                kz: {
+                    hello: 'Сәлем! Қалай көмектесейін?',
+                    ph: 'Сұрағыңызды жазыңыз',
+                    btn: 'Жіберу',
+                    typing: 'Жазып жатыр...'
+                },
+                en: {
+                    hello: 'Hi! How can I help you?',
+                    ph: 'Write a question',
+                    btn: 'Send',
+                    typing: 'Typing...'
+                }
+            }[locale] ?? {hello: 'Hello!', ph: 'Type...', btn: 'Send', typing: 'Typing...'};
 
             return {
                 messages: [{role: 'assistant', text: ui.hello}],
-                input: '', loading: false, ph: ui.ph, btn: ui.btn, locale,
+                input: '', loading: false, ph: ui.ph, btn: ui.btn, locale, typing: ui.typing,
                 thread_id: null,
 
                 async send() {

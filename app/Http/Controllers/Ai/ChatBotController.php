@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ai;
 use App\Http\Controllers\Controller;
 use App\Services\N8nAiService;
 use Illuminate\Http\Request;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ChatBotController extends Controller
 {
@@ -19,7 +20,8 @@ class ChatBotController extends Controller
         try {
             $ans = $ai->ask(
                 $req->input('message'),
-                $req->input('thread_id') ?: uniqid('sess_') // если нет thread_id, создаём новый
+                $req->input('thread_id') ?: uniqid('sess_'),
+                app()->getLocale()
             );
 
             return response()->json([
