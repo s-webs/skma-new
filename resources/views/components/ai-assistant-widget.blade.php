@@ -15,12 +15,9 @@
         x-data="chatbot('{{ $locale }}')"
         class="mt-3 w-80 h-[400px] bg-white dark:bg-gray-900 shadow-lg rounded-xl flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700"
     >
-        <!-- Заголовок -->
         <div class="bg-gray-700 text-gray-200 p-3 font-semibold">
             🤖 SKMA AI Assistant
         </div>
-
-        <!-- Сообщения -->
         <div
             class="flex-1 p-3 space-y-2 text-[13px] overflow-y-auto max-h-80"
             x-ref="log"
@@ -36,8 +33,6 @@
                 </div>
             </template>
         </div>
-
-        <!-- Форма -->
         <div class="flex">
             <input
                 type="text"
