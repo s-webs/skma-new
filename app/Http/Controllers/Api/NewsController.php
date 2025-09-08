@@ -18,6 +18,7 @@ class NewsController extends Controller
             'id',
             "title_$lang as title",
             "preview_$lang as preview",
+            "text_$lang as text",
             "slug_$lang as slug",
             "views_$lang as views",
             'author',
