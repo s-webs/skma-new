@@ -14,16 +14,17 @@ class NewsController extends Controller
         $lang = $request->get('lang', 'ru');
         $perPage = $request->get('per_page', 10);
 
-        $query = \DB::table('news')
-            ->select([
-                'id',
-                "title_$lang as title",
-                "preview_$lang as preview",
-                "slug_$lang as slug",
-                "views_$lang as views",
-                'author',
-                'created_at'
-            ])
+        $query = News::select([
+            'id',
+            "title_$lang as title",
+            "preview_$lang as preview",
+            "slug_$lang as slug",
+            "views_$lang as views",
+            'author',
+            'created_at'
+        ])
+            ->withCount(['likes', 'comments']) // 🔥 количество
+            ->with(['likes', 'comments'])     // 🔥 сами записи (если нужны)
             ->orderByDesc('id')
             ->paginate($perPage);
 
