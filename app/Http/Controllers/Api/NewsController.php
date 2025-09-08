@@ -19,7 +19,7 @@ class NewsController extends Controller
             'id',
             "title_$lang as title",
             "preview_$lang as preview",
-            \DB::raw("text_$lang as text"), // сырое HTML содержимое
+            \DB::raw("text_$lang as text"), // сырое HTML
             "slug_$lang as slug",
             "views_$lang as views",
             'author',
@@ -29,28 +29,35 @@ class NewsController extends Controller
             ->orderByDesc('id')
             ->paginate($perPage);
 
-        $paginator->getCollection()->transform(function ($item) {
-            // 1) Собираем картинки ИЗ СЫРОГО HTML (до очистки)
+        $base = config('app.url', 'https://new.skma.edu.kz'); // БАЗОВЫЙ ДОМЕН
+
+        $paginator->getCollection()->transform(function ($item) use ($base) {
+            // -------- 1) Собираем <img> из СЫРОГО HTML --------
             $raw = (string)($item->text ?? '');
             $imagesFromContent = [];
 
             if (trim($raw) !== '') {
                 $dom = new DOMDocument();
                 libxml_use_internal_errors(true);
-                // префикс с encoding нужен, чтобы не сломать unicode
                 $dom->loadHTML('<?xml encoding="utf-8" ?>' . $raw);
                 libxml_clear_errors();
+                libxml_use_internal_errors(false);
 
                 $imgs = $dom->getElementsByTagName('img');
                 foreach ($imgs as $img) {
                     $src = $img->getAttribute('src');
 
-                    // поддержка ленивой загрузки
+                    // ленивые варианты
                     if (!$src) {
                         $src = $img->getAttribute('data-src');
                     }
+                    if (!$src && $img->hasAttribute('data-srcset')) {
+                        $srcset = $img->getAttribute('data-srcset');
+                        $first = trim(explode(',', $srcset)[0]);
+                        $src = trim(explode(' ', $first)[0]);
+                    }
 
-                    // поддержка srcset: берём первый URL
+                    // srcset
                     if (!$src && $img->hasAttribute('srcset')) {
                         $srcset = $img->getAttribute('srcset'); // "url1 1x, url2 2x"
                         $first = trim(explode(',', $srcset)[0]);
@@ -63,39 +70,37 @@ class NewsController extends Controller
                 }
             }
 
-            // 2) Формируем итоговый список: сначала preview, затем остальные (без дублей)
+            // -------- 2) Делаем preview абсолютным --------
+            $item->preview = $this->absolutizeUrl((string)$item->preview, $base);
+
+            // -------- 3) Формируем images: preview первым, затем контент --------
             $images = [];
             if (!empty($item->preview)) {
-                $images[] = $item->preview;
-            }
-            foreach ($imagesFromContent as $url) {
-                if (!in_array($url, $images, true)) {
-                    $images[] = $url;
-                }
+                $images[] = $item->preview; // preview всегда первый
             }
 
-            // Если хочешь сделать абсолютные URL (вместо относительных),
-            // раскомментируй и подставь базовый домен:
-            //
-            $base = config('https://new.skma.edu.kz'); // например, https://new.skma.edu.kz
-            $images = array_map(function ($u) use ($base) {
-                return preg_match('#^https?://#i', $u) ? $u : rtrim($base, '/') . '/' . ltrim($u, '/');
-            }, $images);
+            // приводим контентные URL к абсолютным
+            foreach ($imagesFromContent as $u) {
+                $images[] = $this->absolutizeUrl($u, $base);
+            }
 
-            // Добавляем поле images в ответ
-            $item->setAttribute('images', array_values($images));
+            // удаляем дубли, сохраняем порядок (preview останется первым)
+            $images = array_values(array_unique(array_filter($images)));
 
-            // 3) Чистим текст от HTML (как раньше)
+            // отдадим как поле images
+            $item->setAttribute('images', $images);
+
+            // -------- 4) Чистим текст от HTML --------
             $clean = $raw;
-            // вырезать полностью содержимое <script>/<style>
+            // вырезать <script>/<style> целиком
             $clean = preg_replace(
                 '#<(script|style)\b[^<]*(?:(?!</\1>)<[^<]*)*</\1>#si',
                 '',
                 $clean
             );
-            $clean = strip_tags($clean);                                   // убрать теги
-            $clean = html_entity_decode($clean, ENT_QUOTES | ENT_HTML5);   // декодировать сущности
-            $clean = trim(preg_replace('/\s+/u', ' ', $clean));            // нормализовать пробелы
+            $clean = strip_tags($clean);
+            $clean = html_entity_decode($clean, ENT_QUOTES | ENT_HTML5);
+            $clean = trim(preg_replace('/\s+/u', ' ', $clean));
 
             $item->text = $clean;
 
@@ -103,6 +108,35 @@ class NewsController extends Controller
         });
 
         return response()->json($paginator);
+    }
+
+    /**
+     * Превращает относительный/схемно-независимый URL в абсолютный.
+     */
+    private function absolutizeUrl(?string $url, string $base): string
+    {
+        $u = trim((string)$url);
+        if ($u === '') {
+            return '';
+        }
+
+        // data: изображения оставляем как есть
+        if (str_starts_with($u, 'data:image')) {
+            return $u;
+        }
+
+        // уже абсолютный (http/https)
+        if (preg_match('#^https?://#i', $u)) {
+            return $u;
+        }
+
+        // схемно-независимый //example.com/...
+        if (str_starts_with($u, '//')) {
+            return 'https:' . $u;
+        }
+
+        // относительный путь
+        return rtrim($base, '/') . '/' . ltrim($u, '/');
     }
 
 }
