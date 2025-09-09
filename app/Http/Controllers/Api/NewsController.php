@@ -10,7 +10,6 @@ use App\Models\News;
 use App\Repositories\NewsRepository;
 use DOMDocument;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller

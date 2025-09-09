@@ -2,14 +2,18 @@
 
 namespace App\Http\Resources;
 
-use App\Support\ContentHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Support\ContentHelper;
 
 class NewsResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $carbonLocale = $request->langForCarbon() ?? 'ru'; // из FormRequest
+        // язык из query (?lang=ru|kk|en)
+        $rawLang = (string)$request->query('lang', 'ru');
+        // для Carbon нужна именно kk/ru/en
+        $carbonLocale = in_array($rawLang, ['ru', 'en', 'kk'], true) ? $rawLang : 'ru';
+
         $base = config('app.url', 'https://new.skma.edu.kz');
 
         $raw = (string)($this->text ?? '');
@@ -37,3 +41,4 @@ class NewsResource extends JsonResource
         ];
     }
 }
+
