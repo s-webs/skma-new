@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use DOMDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
@@ -26,12 +27,13 @@ class NewsController extends Controller
             'created_at',
         ])
             ->withCount(['likes', 'comments'])
-            ->orderByDesc('id')
+            ->orderByDesc('created_at')
             ->paginate($perPage);
 
         $base = config('app.url', 'https://new.skma.edu.kz'); // БАЗОВЫЙ ДОМЕН
 
         $paginator->getCollection()->transform(function ($item) use ($base) {
+            $item->created_at = Carbon::parse($item->created_at)->format('d M Y');
             // -------- 1) Собираем <img> из СЫРОГО HTML --------
             $raw = (string)($item->text ?? '');
             $imagesFromContent = [];
