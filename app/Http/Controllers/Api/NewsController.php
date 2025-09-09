@@ -34,8 +34,11 @@ class NewsController extends Controller
 
         $paginator->getCollection()->transform(function ($item) use ($base, $lang) {
 
-            Carbon::setLocale('ru');
-            $item->setAttribute('created_at_formatted', Carbon::parse($item->created_at)->format('d M Y'));
+            Carbon::setLocale($lang);
+            $item->setAttribute(
+                'created_at_formatted',
+                Carbon::parse($item->created_at)->translatedFormat('d F Y')
+            );
 
             // -------- 1) Собираем <img> из СЫРОГО HTML --------
             $raw = (string)($item->text ?? '');
