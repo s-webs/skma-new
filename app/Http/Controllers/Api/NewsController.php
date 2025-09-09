@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\GetNewsRequest;
+use App\Http\Resources\NewsResource;
 use App\Models\Like;
 use App\Models\News;
+use App\Repositories\NewsRepository;
 use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -12,200 +15,63 @@ use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
-    public function getNews(Request $request)
+    public function getNews(GetNewsRequest $request, NewsRepository $repo)
     {
-        $lang = $request->get('lang', 'ru');
-        if ($lang == 'kk') {
-            $lang = 'kz';
-        }
-        $perPage = $request->get('per_page', 10);
+        $perPage = $request->perPage();
+        $langForColumns = $request->langForColumns();
+        $userId = optional($request->user())->id;
 
-        $paginator = News::select([
-            'id',
-            "title_$lang as title",
-            "preview_$lang as preview",
-            \DB::raw("text_$lang as text"), // сырое HTML
-            "slug_$lang as slug",
-            "views_$lang as views",
-            'author',
-            'created_at',
-        ])
-            ->withCount(['likes', 'comments'])
-            ->orderByDesc('created_at')
-            ->paginate($perPage);
+        $paginator = $repo->paginate($langForColumns, $perPage, $userId);
 
-        $base = config('app.url', 'https://new.skma.edu.kz'); // БАЗОВЫЙ ДОМЕН
-
-        $paginator->getCollection()->transform(function ($item) use ($base, $lang) {
-
-            if ($lang == 'kz') {
-                Carbon::setLocale('kk');
-            } else {
-                Carbon::setLocale($lang);
-            }
-            $item->setAttribute(
-                'created_at_formatted',
-                Carbon::parse($item->created_at)->translatedFormat('d F Y')
-            );
-
-            // -------- 1) Собираем <img> из СЫРОГО HTML --------
-            $raw = (string)($item->text ?? '');
-            $imagesFromContent = [];
-
-            if (trim($raw) !== '') {
-                $dom = new DOMDocument();
-                libxml_use_internal_errors(true);
-                $dom->loadHTML('<?xml encoding="utf-8" ?>' . $raw);
-                libxml_clear_errors();
-                libxml_use_internal_errors(false);
-
-                $imgs = $dom->getElementsByTagName('img');
-                foreach ($imgs as $img) {
-                    $src = $img->getAttribute('src');
-
-                    // ленивые варианты
-                    if (!$src) {
-                        $src = $img->getAttribute('data-src');
-                    }
-                    if (!$src && $img->hasAttribute('data-srcset')) {
-                        $srcset = $img->getAttribute('data-srcset');
-                        $first = trim(explode(',', $srcset)[0]);
-                        $src = trim(explode(' ', $first)[0]);
-                    }
-
-                    // srcset
-                    if (!$src && $img->hasAttribute('srcset')) {
-                        $srcset = $img->getAttribute('srcset'); // "url1 1x, url2 2x"
-                        $first = trim(explode(',', $srcset)[0]);
-                        $src = trim(explode(' ', $first)[0]);
-                    }
-
-                    if ($src) {
-                        $imagesFromContent[] = $src;
-                    }
-                }
-            }
-
-            // -------- 2) Делаем preview абсолютным --------
-            $item->preview = $this->absolutizeUrl((string)$item->preview, $base);
-
-            // -------- 3) Формируем images: preview первым, затем контент --------
-            $images = [];
-            if (!empty($item->preview)) {
-                $images[] = $item->preview; // preview всегда первый
-            }
-
-            // приводим контентные URL к абсолютным
-            foreach ($imagesFromContent as $u) {
-                $images[] = $this->absolutizeUrl($u, $base);
-            }
-
-            // удаляем дубли, сохраняем порядок (preview останется первым)
-            $images = array_values(array_unique(array_filter($images)));
-
-            // отдадим как поле images
-            $item->setAttribute('images', $images);
-
-            // -------- 4) Чистим текст от HTML --------
-            $clean = $raw;
-            // вырезать <script>/<style> целиком
-            $clean = preg_replace(
-                '#<(script|style)\b[^<]*(?:(?!</\1>)<[^<]*)*</\1>#si',
-                '',
-                $clean
-            );
-            $clean = strip_tags($clean);
-            $clean = html_entity_decode($clean, ENT_QUOTES | ENT_HTML5);
-            $clean = trim(preg_replace('/\s+/u', ' ', $clean));
-
-            $item->text = $clean;
-
-            return $item;
-        });
-
-        return response()->json($paginator);
+        // Вернёт JSON с data + meta/links пагинации
+        return NewsResource::collection($paginator);
     }
 
-    /**
-     * Превращает относительный/схемно-независимый URL в абсолютный.
-     */
-    private function absolutizeUrl(?string $url, string $base): string
+    public function like(Request $request, News $news)
     {
-        $u = trim((string)$url);
-        if ($u === '') {
-            return '';
-        }
+        $user = $request->user();
 
-        // data: изображения оставляем как есть
-        if (str_starts_with($u, 'data:image')) {
-            return $u;
-        }
-
-        // уже абсолютный (http/https)
-        if (preg_match('#^https?://#i', $u)) {
-            return $u;
-        }
-
-        // схемно-независимый //example.com/...
-        if (str_starts_with($u, '//')) {
-            return 'https:' . $u;
-        }
-
-        // относительный путь
-        return rtrim($base, '/') . '/' . ltrim($u, '/');
-    }
-
-    public function addLike(Request $request, $newsId = null)
-    {
-        $user = $request->user(); // требуются middleware auth:*
-        if (!$user) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
-
-        // поддерживаем как параметр роута, так и body: { "news_id": 123 }
-        $id = $newsId ?? $request->input('news_id');
-
-        // валидация
-        validator(['id' => $id], [
-            'id' => 'required|integer|exists:news,id',
-        ])->validate();
-
-        // убедимся, что новость существует (и на будущее можно проверить доступность по языку/статусу)
-        $news = News::find($id);
-        if (!$news) {
-            return response()->json(['message' => 'Not found'], 404);
-        }
-
-        $liked = false;
-
-        // атомарный toggle (на случай гонок)
-        DB::transaction(function () use ($id, $user, &$liked) {
-            $existing = Like::where('news_id', $id)
+        DB::transaction(function () use ($news, $user) {
+            $exists = Like::where('news_id', $news->id)
                 ->where('user_id', $user->id)
                 ->lockForUpdate()
-                ->first();
+                ->exists();
 
-            if ($existing) {
-                $existing->delete();
-                $liked = false;
-            } else {
+            if (!$exists) {
                 Like::create([
-                    'news_id' => $id,
+                    'news_id' => $news->id,
                     'user_id' => $user->id,
                 ]);
-                $liked = true;
             }
         });
 
-        // актуальное число лайков
-        $likesCount = Like::where('news_id', $id)->count();
+        $count = Like::where('news_id', $news->id)->count();
 
         return response()->json([
-            'status' => 'ok',
-            'news_id' => (int)$id,
-            'liked' => $liked,         // true — лайк теперь есть, false — снят
-            'likes_count' => $likesCount,    // текущее количество
-        ]);
+            'news_id' => $news->id,
+            'liked' => true,
+            'likes_count' => $count,
+        ], 200);
+    }
+
+    public function unlike(Request $request, News $news)
+    {
+        $user = $request->user();
+
+        DB::transaction(function () use ($news, $user) {
+            Like::where('news_id', $news->id)
+                ->where('user_id', $user->id)
+                ->lockForUpdate()
+                ->delete(); // идемпотентно: если нет — просто 0 удалений
+        });
+
+        $count = Like::where('news_id', $news->id)->count();
+
+        return response()->json([
+            'news_id' => $news->id,
+            'liked' => false,
+            'likes_count' => $count,
+        ], 200);
     }
 
 }
