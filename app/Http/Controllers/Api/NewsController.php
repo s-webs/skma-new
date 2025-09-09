@@ -14,6 +14,9 @@ class NewsController extends Controller
     public function getNews(Request $request)
     {
         $lang = $request->get('lang', 'ru');
+        if ($lang == 'kk') {
+            $lang = 'kz';
+        }
         $perPage = $request->get('per_page', 10);
 
         $paginator = News::select([
@@ -34,7 +37,11 @@ class NewsController extends Controller
 
         $paginator->getCollection()->transform(function ($item) use ($base, $lang) {
 
-            Carbon::setLocale($lang);
+            if ($lang == 'kz') {
+                Carbon::setLocale('kk');
+            } else {
+                Carbon::setLocale($lang);
+            }
             $item->setAttribute(
                 'created_at_formatted',
                 Carbon::parse($item->created_at)->translatedFormat('d F Y')
