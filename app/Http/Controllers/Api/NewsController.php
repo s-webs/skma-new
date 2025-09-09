@@ -33,6 +33,7 @@ class NewsController extends Controller
         $base = config('app.url', 'https://new.skma.edu.kz'); // БАЗОВЫЙ ДОМЕН
 
         $paginator->getCollection()->transform(function ($item) use ($base) {
+            $item->created_at = Carbon::parse($item->created_at)->format('d M Y');
             // -------- 1) Собираем <img> из СЫРОГО HTML --------
             $raw = (string)($item->text ?? '');
             $imagesFromContent = [];
