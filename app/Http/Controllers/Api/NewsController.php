@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Like;
 use App\Models\News;
 use DOMDocument;
 use Illuminate\Http\Request;
@@ -152,6 +153,59 @@ class NewsController extends Controller
 
         // относительный путь
         return rtrim($base, '/') . '/' . ltrim($u, '/');
+    }
+
+    public function addLike(Request $request, $newsId = null)
+    {
+        $user = $request->user(); // требуются middleware auth:*
+        if (!$user) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
+        // поддерживаем как параметр роута, так и body: { "news_id": 123 }
+        $id = $newsId ?? $request->input('news_id');
+
+        // валидация
+        validator(['id' => $id], [
+            'id' => 'required|integer|exists:news,id',
+        ])->validate();
+
+        // убедимся, что новость существует (и на будущее можно проверить доступность по языку/статусу)
+        $news = News::find($id);
+        if (!$news) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        $liked = false;
+
+        // атомарный toggle (на случай гонок)
+        DB::transaction(function () use ($id, $user, &$liked) {
+            $existing = Like::where('news_id', $id)
+                ->where('user_id', $user->id)
+                ->lockForUpdate()
+                ->first();
+
+            if ($existing) {
+                $existing->delete();
+                $liked = false;
+            } else {
+                Like::create([
+                    'news_id' => $id,
+                    'user_id' => $user->id,
+                ]);
+                $liked = true;
+            }
+        });
+
+        // актуальное число лайков
+        $likesCount = Like::where('news_id', $id)->count();
+
+        return response()->json([
+            'status' => 'ok',
+            'news_id' => (int)$id,
+            'liked' => $liked,         // true — лайк теперь есть, false — снят
+            'likes_count' => $likesCount,    // текущее количество
+        ]);
     }
 
 }

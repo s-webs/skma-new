@@ -34,8 +34,9 @@ Route::group([
 
 Route::group([
     'middleware' => [
-//        'auth:sanctum',
+        'auth:sanctum',
     ],
 ], function () {
     Route::get('/news-index', [\App\Http\Controllers\Api\NewsController::class, 'getNews']);
+    Route::post('/news/{news}/like', [\App\Http\Controllers\Api\NewsController::class, 'addLike']);
 });
