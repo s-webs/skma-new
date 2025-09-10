@@ -25,9 +25,7 @@ class NewsRepository
             ->withCount(['likes', 'comments'])
             ->latest('created_at');
 
-        // boolean "liked" (есть ли лайк от текущего пользователя)
         if ($userId) {
-            // Laravel 10+: alias для withExists
             $q->withExists([
                 'likes as liked' => fn($qq) => $qq->where('user_id', $userId),
             ]);

@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'news_id',
+        'comment',
+        'created_at',
+    ];
+
     public function news(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(News::class);
