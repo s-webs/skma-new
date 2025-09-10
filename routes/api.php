@@ -40,6 +40,7 @@ Route::group([
     Route::get('/news-index', [\App\Http\Controllers\Api\NewsController::class, 'getNews']);
     Route::put('/news/{news}/like', [\App\Http\Controllers\Api\NewsController::class, 'like']);   // поставить лайк (идемпотентно)
     Route::delete('/news/{news}/like', [\App\Http\Controllers\Api\NewsController::class, 'unlike']);
+    Route::get('/news/{news}/comments', [\App\Http\Controllers\Api\CommentsController::class, 'index']);
     Route::post('/news/{news}/comments', [\App\Http\Controllers\Api\CommentsController::class, 'store']);   // добавить
     Route::delete('/comments/{comment}', [\App\Http\Controllers\Api\CommentsController::class, 'destroy']); // удалить своё
 });
