@@ -30,17 +30,21 @@ class CommentsController extends Controller
             'comment' => 'required|string|min:1|max:2000',
         ]);
 
-        $user = $request->user(); // auth:sanctum
+        $user = $request->user();
 
-        $comment = Comment::create([
+        $comment = \App\Models\Comment::create([
             'news_id' => $news->id,
             'user_id' => $user->id,
             'comment' => $request->string('comment'),
         ]);
 
-        // вернуть созданный комментарий
-        return new CommentResource($comment->load('user:id,name'));
+        // Обновить timestamps и подгрузить пользователя
+        $comment->refresh()->load('user:id,name');
+
+        // Вернуть ресурс (он уже форматирует дату по ?lang)
+        return new \App\Http\Resources\CommentResource($comment);
     }
+
 
     // DELETE /api/comments/{comment}
     public function destroy(Request $request, Comment $comment)
