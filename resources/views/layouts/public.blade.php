@@ -41,7 +41,6 @@
 @yield('content')
 
 @include('layouts.components.footer')
-</body>
 <script src="/assets/js/pro.min.js"></script>
 <script src="/assets/js/bvi.min.js"></script>
 @vite('resources/js/app.js')

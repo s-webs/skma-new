@@ -24,6 +24,7 @@ Route::group([
     require __DIR__ . '/admin.php';
 
     Route::view('/chatbot', 'widgets.chatBot');
+    Route::view('/chatbot-page', 'widgets.chatbotFullScreen');
     Route::post('/api/chat', [\App\Http\Controllers\Ai\ChatBotController::class, 'chat'])
         ->name('chat.post');
 });
