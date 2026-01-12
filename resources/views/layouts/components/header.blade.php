@@ -13,7 +13,7 @@
             </div>
             <div class="flex-1"></div>
             <div class="mr-[44px] hidden lg:block">
-                <ul class="flex py-[26.5px] font-semibold text-[16px]">
+                <ul class="flex py-[26.5px] font-semibold text-[14px]">
                     @foreach ($menus as $menu)
                         @if ($menu->children->isNotEmpty())
                             <li class="relative mx-[22px] group">
