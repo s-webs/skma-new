@@ -17,6 +17,8 @@ class TrackVisitor
 {
     public function handle(Request $request, Closure $next): Response
     {
+		return $next($request);
+		
         $cookieName = 'site_visitor_id';
         $ip = $request->ip();
 

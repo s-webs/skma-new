@@ -53,19 +53,22 @@ class AdvertResource extends ModelResource
                 Tabs::make([
                     Tab::make('RU', [
                         Text::make('Название', 'title_ru'),
-                        TinyMce::make('Контент', 'description_ru'),
+                        TinyMce::make('Контент', 'description_ru')
+							->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_ru')
                             ->from('title_ru'),
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название', 'title_kz'),
-                        TinyMce::make('Контент', 'description_kz'),
+                        TinyMce::make('Контент', 'description_kz')
+							->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_kz')
                             ->from('title_kz'),
                     ]),
                     Tab::make('EN', [
                         Text::make('Название', 'title_en'),
-                        TinyMce::make('Контент', 'description_en'),
+                        TinyMce::make('Контент', 'description_en')
+							->addOption('file_manager', 'laravel-filemanager'),
                         Slug::make('Slug', 'slug_en')
                             ->from('title_en'),
                     ]),

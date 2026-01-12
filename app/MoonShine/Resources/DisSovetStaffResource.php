@@ -57,6 +57,8 @@ class DisSovetStaffResource extends ModelResource
                             ->keepOriginalFileName()
                             ->sortable()
                             ->multiple()
+							->removable()
+							->sortable()
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название', 'title_kz')->unescape(),
@@ -66,6 +68,8 @@ class DisSovetStaffResource extends ModelResource
                             ->keepOriginalFileName()
                             ->sortable()
                             ->multiple()
+							->removable()
+							->sortable()
                     ]),
                     Tab::make('EN', [
                         Text::make('Название', 'title_en')->unescape(),
@@ -75,6 +79,8 @@ class DisSovetStaffResource extends ModelResource
                             ->keepOriginalFileName()
                             ->sortable()
                             ->multiple()
+							->removable()
+							->sortable()
                     ]),
                 ])
             ])
