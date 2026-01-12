@@ -123,7 +123,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                     ->dir('uploads/news/sliders')
                     ->removable()
                     ->multiple(),
-                Switcher::make('Активно', 'published')->default(false),
+                Switcher::make('Активно', 'published')->default(true),
 
             ])
         ];

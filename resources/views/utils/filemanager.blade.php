@@ -20,9 +20,11 @@
     x-data="fileManager()"
     x-init="init()"
     class="h-full"
-    @click.away="contextMenu.show = false"
-    x-ref="fmRoot"    {{-- можно добавить для отладки --}}
+    @click="closeContextMenus()"
+    @keydown.escape.window="closeAllPopups()"
+    x-ref="fmRoot"
 >
+
     <div class="flex h-screen">
 
         {{-- Левое меню директорий --}}
@@ -38,6 +40,7 @@
 
             @include('utils.fmanager-components.file-context-menu')
             @include('utils.fmanager-components.preview-modal')
+            @include('utils.fmanager-components.rename-modal')
             @include('utils.fmanager-components.footer')
         </div>
     </div>

@@ -15,6 +15,16 @@
                     <input type="hidden" name="path" x-model="currentPath">
                     @csrf
                 </form>
+                {{-- Прогресс загрузки --}}
+                <div class="mt-4" x-show="totalProgress > 0" x-cloak>
+                    <div class="h-2 bg-gray-200 rounded">
+                        <div class="h-2 bg-blue-600 rounded transition-all"
+                             :style="`width: ${totalProgress}%;`"></div>
+                    </div>
+                    <div class="text-xs text-gray-600 mt-1">
+                        Загрузка: <span x-text="totalProgress"></span>%
+                    </div>
+                </div>
                 <button @click="showModal = false"
                         class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md">
                     Закрыть
@@ -32,6 +42,11 @@
                    class="form-checkbox mr-4">
             Выбрать все
         </label>
+        <button @click="downloadSelectedFiles()"
+                :disabled="!selectedFiles.length"
+                class="bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 text-white font-semibold rounded-md mr-4">
+            Скачать выбранное (<span x-text="selectedFiles.length"></span>)
+        </button>
         <button @click="deleteSelectedFiles()"
                 :disabled="!selectedFiles.length"
                 class="bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 text-white font-semibold rounded-md">
