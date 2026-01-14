@@ -19,4 +19,8 @@ Route::group([
     Route::post('/add-like/{news_id}/', [\App\Http\Controllers\Public\LikesController::class, 'store'])->name('like.store');
     Route::post('/add-comment/{news_id}/', [\App\Http\Controllers\Public\CommentsController::class, 'store'])->name('comment.store');
     Route::delete('/comment-{comment_id}/delete', [\App\Http\Controllers\Public\CommentsController::class, 'destroy'])->name('comment.delete');
+
+    Route::get('ai-check', [\App\Http\Controllers\Ai\AiCheckController::class, 'index'])->name('ai.check');
+    Route::post('ai-check', [\App\Http\Controllers\Ai\AiCheckController::class, 'check'])->name('ai.check.submit');
+    Route::get('/ai-check/pdf', [\App\Http\Controllers\Ai\AiCheckController::class, 'downloadPdf'])->name('ai.check.pdf');
 });
