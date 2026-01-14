@@ -46,10 +46,10 @@
 
                         {{-- Результат --}}
                         @if(!empty($conclusion))
-{{--                            <div class="mb-6 rounded-2xl bg-white p-5">--}}
-{{--                                <div class="text-[var(--color-main)] font-semibold text-lg mb-2">Заключение</div>--}}
-{{--                                <div class="text-sm text-gray-800 whitespace-pre-wrap">{{ $conclusion }}</div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="mb-6 rounded-2xl bg-white p-5">--}}
+                            {{--                                <div class="text-[var(--color-main)] font-semibold text-lg mb-2">Заключение</div>--}}
+                            {{--                                <div class="text-sm text-gray-800 whitespace-pre-wrap">{{ $conclusion }}</div>--}}
+                            {{--                            </div>--}}
 
                             <div class="my-[30px] w-full">
                                 <a
@@ -69,10 +69,13 @@
                             class="mb-6 rounded-2xl bg-white/10 p-4 text-white"
                         >
                             <div class="flex items-center gap-3">
-                                <div class="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
+                                <div
+                                    class="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
                                 <div>
                                     <div class="font-semibold">Идёт анализ…</div>
-                                    <div class="text-sm text-white/80">Не закрывайте окно, пока не получите результат.</div>
+                                    <div class="text-sm text-white/80">Не закрывайте окно и не обновляйте страницу, пока
+                                        не получите результат.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -97,15 +100,14 @@
                                 <label
                                     for="doc"
                                     class="block w-full cursor-pointer select-none rounded-full
-               bg-[var(--color-extra)]
-               py-[12px]
-               text-center text-lg font-medium
-               text-[var(--color-halftone)]
-               transition"
+                                       bg-[var(--color-extra)]
+                                       py-[12px]
+                                       text-center text-lg font-medium
+                                       text-[var(--color-halftone)]
+                                       transition"
                                     :class="submitting ? 'opacity-60 cursor-not-allowed' : ''"
                                 >
-        <span class="block truncate"
-              x-text="fileName || 'Загрузите TXT файл для проверки'"></span>
+                                    <span class="block text-sm truncate" x-text="fileName || 'Загрузите TXT файл для проверки'"></span>
                                 </label>
                             </div>
 
