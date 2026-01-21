@@ -28,4 +28,8 @@ return [
     'basic_information' => 'Основная информация',
     'umkd' => 'УМКД',
     'portfolio' => 'Портфолио',
+
+    'checking_compiled_test_tasks_using_ai' => 'Проверка составленных тестовых заданий
+с помощью AI',
+
 ];

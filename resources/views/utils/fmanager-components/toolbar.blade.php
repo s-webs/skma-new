@@ -16,13 +16,19 @@
                     @csrf
                 </form>
                 {{-- Прогресс загрузки --}}
-                <div class="mt-4" x-show="totalProgress > 0" x-cloak>
-                    <div class="h-2 bg-gray-200 rounded">
-                        <div class="h-2 bg-blue-600 rounded transition-all"
-                             :style="`width: ${totalProgress}%;`"></div>
+                <div class="mt-4" x-show="isUploading || uploadProgress > 0" x-cloak>
+                    <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-600 rounded-full transition-all duration-300 flex items-center justify-end pr-2"
+                             :style="`width: ${uploadProgress}%;`">
+                            <span class="text-xs text-white font-medium" x-text="uploadProgress + '%'"></span>
+                        </div>
                     </div>
-                    <div class="text-xs text-gray-600 mt-1">
-                        Загрузка: <span x-text="totalProgress"></span>%
+                    <div class="text-xs text-gray-600 mt-2 flex items-center justify-between">
+                        <span>Загрузка: <span x-text="uploadProgress"></span>%</span>
+                        <span x-show="isUploading" class="flex items-center">
+                            <div class="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-600 mr-2"></div>
+                            Загрузка...
+                        </span>
                     </div>
                 </div>
                 <button @click="showModal = false"

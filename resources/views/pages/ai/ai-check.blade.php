@@ -7,8 +7,7 @@
 
                 <div class="text-center">
                     <h1 class="text-[26px] md:text-xl leading-tight text-white font-semibold">
-                        Проверка составленных тестовых заданий<br class="hidden md:block">
-                        с помощью AI
+                        {{ __('public.checking_compiled_test_tasks_using_ai') }}
                     </h1>
 
                     <div class="mt-6 h-[2px] w-full bg-white/60 rounded-full"></div>

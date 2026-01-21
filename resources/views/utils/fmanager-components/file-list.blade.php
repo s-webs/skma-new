@@ -145,4 +145,42 @@
             </li>
         </template>
     </ul>
+
+    {{-- Пагинация --}}
+    <div x-show="pagination.enabled && pagination.totalPages > 1" 
+         x-cloak
+         class="mt-4 flex items-center justify-center space-x-2"
+         style="display: none;">
+        <button @click="goToPage(pagination.currentPage - 1)"
+                :disabled="pagination.currentPage === 1"
+                :class="pagination.currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'"
+                class="px-3 py-2 border rounded-md">
+            <i class="ph ph-caret-left"></i>
+        </button>
+        
+        <template x-for="page in Array.from({length: Math.min(5, pagination.totalPages)}, (_, i) => {
+            const start = Math.max(1, pagination.currentPage - 2);
+            return start + i;
+        }).filter(p => p <= pagination.totalPages)" :key="page">
+            <button @click="goToPage(page)"
+                    :class="page === pagination.currentPage 
+                        ? 'bg-gray-700 text-white' 
+                        : 'bg-white hover:bg-gray-100'"
+                    class="px-3 py-2 border rounded-md min-w-[40px]">
+                <span x-text="page"></span>
+            </button>
+        </template>
+
+        <button @click="goToPage(pagination.currentPage + 1)"
+                :disabled="pagination.currentPage === pagination.totalPages"
+                :class="pagination.currentPage === pagination.totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'"
+                class="px-3 py-2 border rounded-md">
+            <i class="ph ph-caret-right"></i>
+        </button>
+
+        <span class="text-sm text-gray-600 ml-4">
+            Страница <span x-text="pagination.currentPage"></span> из <span x-text="pagination.totalPages"></span>
+            (<span x-text="pagination.total"></span> файлов)
+        </span>
+    </div>
 </div>
