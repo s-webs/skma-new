@@ -60,17 +60,42 @@ class FilesController extends Controller
         // Убираем двойные слэши
         $path = preg_replace('#/+#', '/', $path);
 
-        // Блокируем traversal - проверяем все варианты
-        if (str_contains($path, '..') || 
-            str_contains($path, '%2e%2e') || 
-            str_contains($path, '%2E%2E') ||
-            preg_match('/\.\./', $path)) {
-            $this->logAction('security_violation', [
-                'attempted_path' => $path,
-                'user_id' => MoonShineAuth::getGuard()->id(),
-            ]);
-            abort(422, 'Invalid path: path traversal detected');
+        // Блокируем traversal - проверяем только целые сегменты пути
+        // Разбиваем путь на сегменты и проверяем каждый
+        $segments = explode('/', $path);
+        foreach ($segments as $segment) {
+            // Пропускаем пустые сегменты
+            if ($segment === '') {
+                continue;
+            }
+            
+            // Декодируем сегмент для проверки (на случай URL-encoded пути)
+            $decodedSegment = urldecode($segment);
+            
+            // Проверяем точное совпадение (не подстроку!) - это безопаснее для кириллицы
+            if ($decodedSegment === '..' || $decodedSegment === '.') {
+                $this->logAction('security_violation', [
+                    'attempted_path' => $path,
+                    'segment' => $segment,
+                    'decoded_segment' => $decodedSegment,
+                    'user_id' => MoonShineAuth::getGuard()->id(),
+                ]);
+                abort(422, 'Invalid path: path traversal detected');
+            }
+            
+            // Также проверяем URL-encoded версии в исходном сегменте
+            if (str_contains($segment, '%2e%2e') || str_contains($segment, '%2E%2E')) {
+                $this->logAction('security_violation', [
+                    'attempted_path' => $path,
+                    'segment' => $segment,
+                    'user_id' => MoonShineAuth::getGuard()->id(),
+                ]);
+                abort(422, 'Invalid path: path traversal detected');
+            }
         }
+        
+        // Декодируем весь путь после проверки безопасности (для дальнейшей обработки)
+        $path = urldecode($path);
 
         // Проверка глубины пути
         $maxDepth = config('filemanager.security.max_path_depth', 20);
