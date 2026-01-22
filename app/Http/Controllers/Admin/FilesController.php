@@ -87,14 +87,53 @@ class FilesController extends Controller
                     $fullPath = $this->disk->path($path);
                     $realPath = realpath($fullPath);
                     
+                    // На Windows с кириллицей realpath() может возвращать false даже для существующих директорий
+                    // Используем fallback проверку через Storage
                     if ($realPath === false) {
-                        $this->logAction('security_violation', [
-                            'attempted_path' => $path,
-                            'full_path' => $fullPath,
-                            'base_path' => $this->basePath,
-                            'user_id' => MoonShineAuth::getGuard()->id(),
-                        ]);
-                        abort(422, 'Invalid path: path does not exist');
+                        // Проверяем существование через Storage (работает с кириллицей)
+                        if (!$this->disk->directoryExists($path)) {
+                            $this->logAction('security_violation', [
+                                'attempted_path' => $path,
+                                'full_path' => $fullPath,
+                                'base_path' => $this->basePath,
+                                'user_id' => MoonShineAuth::getGuard()->id(),
+                            ]);
+                            abort(422, 'Invalid path: path does not exist');
+                        }
+                        
+                        // Если директория существует через Storage, но realpath() вернул false,
+                        // используем fallback проверку безопасности через file_exists() и базовый путь
+                        if (file_exists($fullPath) && is_dir($fullPath)) {
+                            $normalizedFullPath = str_replace('\\', '/', rtrim($fullPath, '/\\'));
+                            $normalizedBasePath = str_replace('\\', '/', rtrim($this->basePath, '/\\'));
+                            
+                            // Для Windows учитываем регистр
+                            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                                $normalizedFullPath = strtolower($normalizedFullPath);
+                                $normalizedBasePath = strtolower($normalizedBasePath);
+                            }
+                            
+                            if (!str_starts_with($normalizedFullPath, $normalizedBasePath)) {
+                                $this->logAction('security_violation', [
+                                    'attempted_path' => $path,
+                                    'full_path' => $fullPath,
+                                    'base_path' => $this->basePath,
+                                    'user_id' => MoonShineAuth::getGuard()->id(),
+                                ]);
+                                abort(422, 'Invalid path: outside allowed directory');
+                            }
+                            
+                            // Путь валиден, продолжаем
+                            return $path;
+                        } else {
+                            $this->logAction('security_violation', [
+                                'attempted_path' => $path,
+                                'full_path' => $fullPath,
+                                'base_path' => $this->basePath,
+                                'user_id' => MoonShineAuth::getGuard()->id(),
+                            ]);
+                            abort(422, 'Invalid path: path does not exist');
+                        }
                     }
                     
                     // Нормализуем пути для сравнения
@@ -248,6 +287,12 @@ class FilesController extends Controller
                 'files' => $files
             ]);
         } catch (\Throwable $e) {
+            $this->logAction('error', [
+                'action' => 'read_directory',
+                'path' => $path,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             // Если прилетел “кривой” путь/директория — лучше вернуть пустой список, чем падать
             return response()->json([
                 'path' => $path,
