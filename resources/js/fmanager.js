@@ -15,6 +15,7 @@ function fileManager() {
         newFolder: '',
         breadcrumbs: [],
         dropzoneInstance: null,
+        dropzoneModalInstance: null,
         selectedFiles: [],
 
         viewMode: 'grid',
@@ -79,13 +80,28 @@ function fileManager() {
             newName: ''
         },
 
+        uploadModal: {
+            show: false
+        },
+
+        openUploadModal() {
+            this.uploadModal.show = true;
+            // Инициализируем dropzone на модальном окне после его открытия
+            setTimeout(() => {
+                const uploadZoneModal = document.getElementById("uploadZoneModal");
+                if (uploadZoneModal && !this.dropzoneModalInstance) {
+                    this.dropzoneModalInstance = this.createDropzone(uploadZoneModal, true);
+                }
+            }, 100);
+        },
+
         // 2) Computed
         get filteredFiles() {
             if (!this.searchQuery.trim()) {
                 return this.paginatedFiles;
             }
             const q = this.searchQuery.trim().toLowerCase();
-            return this.paginatedFiles.filter(file => 
+            return this.paginatedFiles.filter(file =>
                 file.name.toLowerCase().includes(q) ||
                 (file.name && file.name.toLowerCase().includes(q))
             );
@@ -167,13 +183,29 @@ function fileManager() {
 
         setMenuPosition(menuObj, clientX, clientY) {
             const menuW = 190;
-            const menuH = 160;
+            const menuH = 200; // Увеличиваем для учета всех элементов
 
-            const maxX = window.innerWidth - menuW;
-            const maxY = window.innerHeight - menuH;
+            // Позиционируем меню рядом с курсором, но не слишком далеко
+            let x = clientX;
+            let y = clientY;
 
-            menuObj.x = Math.max(8, Math.min(clientX, maxX));
-            menuObj.y = Math.max(8, Math.min(clientY, maxY));
+            // Проверяем границы экрана
+            const maxX = window.innerWidth - menuW - 10;
+            const maxY = window.innerHeight - menuH - 10;
+
+            // Если меню выходит за правую границу, позиционируем слева от курсора
+            if (x > maxX) {
+                x = clientX - menuW - 10;
+            }
+
+            // Если меню выходит за нижнюю границу, позиционируем выше курсора
+            if (y > maxY) {
+                y = clientY - menuH - 10;
+            }
+
+            // Минимальные отступы от краев
+            menuObj.x = Math.max(10, Math.min(x, maxX));
+            menuObj.y = Math.max(10, Math.min(y, maxY));
         },
 
         openDirContextMenu(dir, event) {
@@ -185,13 +217,35 @@ function fileManager() {
             this.contextMenu.show = true;
         },
 
-        openFileContextMenu(file, event) {
-            event.preventDefault();
-            this.contextMenu.show = false;
+        openFileContextMenu(file, e) {
+            e.preventDefault();
+            e.stopPropagation();
 
+            this.contextMenu.show = false; // если есть другое меню
             this.fileContextMenu.file = file;
-            this.setMenuPosition(this.fileContextMenu, event.clientX + 5, event.clientY + 5);
+
+            // Сначала показываем (чтобы можно было измерить размеры)
             this.fileContextMenu.show = true;
+
+            this.$nextTick(() => {
+                const el = this.$refs.fileCtxMenu;
+                const rect = el.getBoundingClientRect();
+
+                let x = e.clientX + 6;
+                let y = e.clientY + 6;
+
+                // Правый/нижний край
+                if (x + rect.width > window.innerWidth - 10) {
+                    x = e.clientX - rect.width - 6;
+                }
+                if (y + rect.height > window.innerHeight - 10) {
+                    y = e.clientY - rect.height - 6;
+                }
+
+                // Защита от выхода за границы
+                this.fileContextMenu.x = Math.max(10, Math.min(x, window.innerWidth - rect.width - 10));
+                this.fileContextMenu.y = Math.max(10, Math.min(y, window.innerHeight - rect.height - 10));
+            });
         },
 
         async apiFetch(url, options = {}) {
@@ -214,7 +268,7 @@ function fileManager() {
 
             if (!res.ok) {
                 let msg = data?.message || data?.error || `HTTP ${res.status}`;
-                
+
                 // Обработка rate limiting
                 if (res.status === 429) {
                     msg = data?.rate_limit || 'Слишком много запросов. Попробуйте позже.';
@@ -233,7 +287,7 @@ function fileManager() {
             this.closeContextMenus();
 
             const cacheKey = `files:${this.currentPath}:${page}`;
-            
+
             // Проверка кэша
             if (this.cacheEnabled && this.cache.has(cacheKey)) {
                 const cached = this.cache.get(cacheKey);
@@ -398,7 +452,7 @@ function fileManager() {
 
             const folderName = target.split('/').pop() || target;
             const confirmed = confirm(`Вы уверены, что хотите удалить папку "${folderName}"?\n\nЭто действие нельзя отменить.`);
-            
+
             if (!confirmed) return;
 
             this.operationLoading = true;
@@ -693,22 +747,51 @@ function fileManager() {
         handleDragLeave(event) {
             event.preventDefault();
             event.stopPropagation();
-            this.dragOver = false;
+
+            // Проверяем, что мы действительно покинули область
+            // relatedTarget может быть null или указывать на дочерний элемент
+            const relatedTarget = event.relatedTarget;
+            const currentTarget = event.currentTarget;
+
+            // Если relatedTarget null или не является дочерним элементом, скрываем
+            if (!relatedTarget || !currentTarget.contains(relatedTarget)) {
+                // Используем небольшую задержку для предотвращения мигания
+                setTimeout(() => {
+                    // Проверяем еще раз, что мы действительно вне области
+                    if (!this.dragOver) return;
+                    this.dragOver = false;
+                }, 50);
+            }
         },
 
         handleDrop(event) {
             event.preventDefault();
             event.stopPropagation();
+
+            // Сбрасываем состояние
             this.dragOver = false;
+            this.dragOverCounter = 0;
 
             const files = Array.from(event.dataTransfer.files);
             if (files.length === 0) return;
 
             // Используем Dropzone для загрузки
-            if (this.dropzoneInstance) {
-                files.forEach(file => {
-                    this.dropzoneInstance.addFile(file);
-                });
+            if (this.dropzoneInstance && this.dropzoneInstance.element) {
+                try {
+                    files.forEach(file => {
+                        // Проверяем, что файл валидный
+                        if (file && file.size > 0) {
+                            this.dropzoneInstance.addFile(file);
+                        }
+                    });
+                    this.showNotification(`Начинается загрузка ${files.length} файл(ов)`, 'info');
+                } catch (error) {
+                    console.error('Ошибка при добавлении файлов в Dropzone:', error);
+                    this.showNotification('Ошибка при загрузке файлов. Попробуйте использовать кнопку "Загрузить файлы"', 'error');
+                }
+            } else {
+                // Если dropzone не инициализирован, показываем ошибку
+                this.showNotification('Ошибка: система загрузки не готова. Попробуйте использовать кнопку "Загрузить файлы"', 'error');
             }
         },
 
@@ -723,8 +806,20 @@ function fileManager() {
             if (this.dropzoneInstance) {
                 this.dropzoneInstance.destroy();
             }
+            if (this.dropzoneModalInstance) {
+                this.dropzoneModalInstance.destroy();
+            }
 
-            this.dropzoneInstance = new Dropzone("#uploadZone", {
+            // Инициализируем dropzone на скрытом элементе для drag & drop
+            const uploadZoneHidden = document.getElementById("uploadZoneHidden");
+            if (uploadZoneHidden) {
+                this.dropzoneInstance = this.createDropzone(uploadZoneHidden, false);
+            }
+        },
+
+        createDropzone(element, clickable) {
+            const self = this;
+            return new Dropzone(element, {
                 url: "/s-files/upload",
                 paramName: "file",
                 maxFilesize: 10,
@@ -762,6 +857,9 @@ function fileManager() {
                     'X-CSRF-TOKEN': self.csrfToken()
                 },
 
+                clickable: clickable,
+                autoProcessQueue: true,
+
                 init: function () {
                     this.on("sending", function (file, xhr, formData) {
                         formData.append("path", self.currentPath);
@@ -785,7 +883,7 @@ function fileManager() {
 
                     this.on("error", function (file, message, xhr) {
                         let errorMsg = 'Ошибка загрузки файла';
-                        
+
                         if (xhr && xhr.responseText) {
                             try {
                                 const response = JSON.parse(xhr.responseText);
