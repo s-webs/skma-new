@@ -7,8 +7,6 @@ require __DIR__ . '/utils.php';
 
 require __DIR__ . '/moonshine.php';
 
-require __DIR__ . '/filemanager.php';
-
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [

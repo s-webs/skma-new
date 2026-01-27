@@ -18,8 +18,36 @@
                         action="{{ route('ai.check.submit') }}"
                         method="POST"
                         enctype="multipart/form-data"
-                        x-data="{ fileName: '', submitting: false }"
-                        @submit="submitting = true"
+                        data-prepare-pdf-url="{{ route('ai.check.prepare-pdf') }}"
+                        x-data="{
+                            fileName: '',
+                            submitting: false,
+                            phase: 'analysis',
+                            errorDetails: @js($errorDetails ?? ''),
+                            async runCheck(e) {
+                                const form = e.target;
+                                if (!form.document?.files?.length) { this.errorDetails = 'Выберите файл'; return; }
+                                this.submitting = true;
+                                this.phase = 'analysis';
+                                this.errorDetails = '';
+                                try {
+                                    const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' } });
+                                    const data = await r.json().catch(() => ({}));
+                                    if (!r.ok) { this.errorDetails = data.message || data.error || (data.errors ? Object.values(data.errors).flat().join(' ') : '') || 'Ошибка'; this.submitting = false; return; }
+                                    if (data.success === false) { this.errorDetails = data.error || 'Ошибка'; this.submitting = false; return; }
+                                    this.phase = 'pdf';
+                                    const r2 = await fetch(form.dataset.preparePdfUrl, { method: 'POST', headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': form.querySelector('[name=_token]').value, 'Content-Type': 'application/json' } });
+                                    const data2 = await r2.json().catch(() => ({}));
+                                    if (!r2.ok) { this.errorDetails = data2.error || 'Ошибка генерации PDF'; this.submitting = false; return; }
+                                    if (data2.success === false) { this.errorDetails = data2.error || 'Ошибка'; this.submitting = false; return; }
+                                    window.location.reload();
+                                } catch (err) {
+                                    this.errorDetails = err.message || 'Ошибка сети';
+                                    this.submitting = false;
+                                }
+                            }
+                        }"
+                        @submit.prevent="runCheck($event)"
                     >
                         @csrf
 
@@ -35,33 +63,39 @@
                             </div>
                         @endif
 
-                        {{-- Ошибка от n8n/запроса --}}
-                        @if(!empty($errorDetails))
-                            <div class="mb-4 rounded-2xl bg-white/10 p-4 text-white">
-                                <div class="font-semibold mb-2">Ошибка обработки:</div>
-                                <div class="text-sm text-white/90 whitespace-pre-wrap">{{ $errorDetails }}</div>
-                            </div>
-                        @endif
+                        {{-- Ошибка от n8n/запроса (сервер и AJAX) --}}
+                        <div
+                            x-cloak
+                            x-show="errorDetails"
+                            class="mb-4 rounded-2xl bg-white/10 p-4 text-white"
+                        >
+                            <div class="font-semibold mb-2">Ошибка обработки:</div>
+                            <div class="text-sm text-white/90 whitespace-pre-wrap" x-text="errorDetails"></div>
+                        </div>
 
-                        {{-- Результат --}}
+                        {{-- Результат: ссылка на PDF и кнопка удаления отчёта --}}
                         @if(!empty($conclusion))
-                            {{--                            <div class="mb-6 rounded-2xl bg-white p-5">--}}
-                            {{--                                <div class="text-[var(--color-main)] font-semibold text-lg mb-2">Заключение</div>--}}
-                            {{--                                <div class="text-sm text-gray-800 whitespace-pre-wrap">{{ $conclusion }}</div>--}}
-                            {{--                            </div>--}}
-
                             <div class="my-[30px] w-full">
-                                <a
-                                    href="{{ route('ai.check.pdf') }}"
-                                    class="block text-center rounded-full bg-[var(--color-halftone)] px-5 py-3 font-semibold text-[var(--color-main)]"
-                                >
-                                    Скачать заключение (PDF)
-                                </a>
+                                <div class="flex items-center gap-3 justify-between flex-wrap">
+                                    <a
+                                        href="{{ route('ai.check.pdf') }}"
+                                        class="flex-1 min-w-0 text-center rounded-full bg-[var(--color-halftone)] px-5 py-3 font-semibold text-[var(--color-main)]"
+                                    >
+                                        Скачать заключение (PDF)
+                                    </a>
+                                    <a
+                                        href="{{ route('ai.check.clear') }}"
+                                        class="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition"
+                                        title="Удалить отчёт"
+                                        aria-label="Удалить отчёт"
+                                    >
+                                        <span class="text-lg leading-none">×</span>
+                                    </a>
+                                </div>
                             </div>
-
                         @endif
 
-                        {{-- Спиннер/оверлей: показывается сразу после submit, пока сервер отвечает --}}
+                        {{-- Спиннер: «Идёт анализ…» затем «Генерация отчёта» --}}
                         <div
                             x-cloak
                             x-show="submitting"
@@ -71,7 +105,7 @@
                                 <div
                                     class="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
                                 <div>
-                                    <div class="font-semibold">Идёт анализ…</div>
+                                    <div class="font-semibold" x-text="phase === 'analysis' ? 'Идёт анализ…' : 'Генерация отчёта'"></div>
                                     <div class="text-sm text-white/80">Не закрывайте окно и не обновляйте страницу, пока
                                         не получите результат.
                                     </div>

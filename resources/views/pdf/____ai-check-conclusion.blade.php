@@ -317,7 +317,7 @@
 <!-- Печать (внизу справа) -->
 <div class="stamp-container">
     <img src="{{ $stampImagePath }}" alt="Печать" class="stamp-image">
-    {{--    <div class="stamp-text">Печать</div>--}}
+{{--    <div class="stamp-text">Печать</div>--}}
 </div>
 <!-- Основной контент -->
 <div class="content-wrapper">
@@ -340,94 +340,120 @@
 
     <!-- Критические находки -->
     @if (!empty($data['major_findings']))
-        <div class="section">
-            <div class="section-title">Критические находки</div>
-            @foreach ($data['major_findings'] as $finding)
-                <div class="finding-item severity-{{ strtoupper($finding['severity'] ?? 'MEDIUM') }}">
-                    <div class="finding-title">
+    <div class="section">
+        <div class="section-title">Критические находки</div>
+        @foreach ($data['major_findings'] as $finding)
+        <div class="finding-item severity-{{ strtoupper($finding['severity'] ?? 'MEDIUM') }}">
+            <div class="finding-title">
                 <span class="severity-badge severity-{{ strtoupper($finding['severity'] ?? 'MEDIUM') }}">
                     {{ $finding['severity'] ?? 'MEDIUM' }}
                 </span>
-                        {{ $finding['title'] ?? 'Без названия' }}
-                    </div>
-                    <div class="finding-details">{{ $finding['details'] ?? '' }}</div>
-                </div>
-            @endforeach
+                {{ $finding['title'] ?? 'Без названия' }}
+            </div>
+            <div class="finding-details">{{ $finding['details'] ?? '' }}</div>
         </div>
+        @endforeach
+    </div>
+    @endif
+
+    <!-- Оценки качества: фиксированный порядок ключей из схемы n8n, подписи только из шаблона -->
+    @if (!empty($data['quality_scores']))
+    @php
+        $qs = $data['quality_scores'];
+        $scoreRows = [
+            'clarity' => 'Ясность',
+            'single_best_answer' => 'Один правильный ответ',
+            'distractors' => 'Отвлекающие варианты',
+            'no_clues' => 'Отсутствие подсказок',
+            'language' => 'Язык',
+            'structure_consistency' => 'Согласованность структуры',
+        ];
+    @endphp
+    <div class="section">
+        <div class="section-title">Оценки качества</div>
+        <div class="box">
+            <div class="scores-grid">
+                @foreach ($scoreRows as $key => $label)
+                <div class="score-row">
+                    <span class="score-label">{{ $label }}</span><span class="score-value">{{ isset($qs[$key]) && is_numeric($qs[$key]) ? number_format($qs[$key], 1) : ($qs[$key] ?? '—') }}</span>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
     @endif
 
     <!-- Типичные ошибки -->
     @if (!empty($data['common_error_patterns']))
-        <div class="section">
-            <div class="section-title">Типичные ошибки</div>
-            @foreach ($data['common_error_patterns'] as $pattern)
-                <div class="error-pattern">
-                    <div class="error-pattern-title">{{ $pattern['pattern'] ?? 'Ошибка' }}</div>
-                    @if (!empty($pattern['why_bad']))
-                        <div class="error-pattern-field">
-                            <strong>Почему это плохо:</strong> {{ $pattern['why_bad'] }}
-                        </div>
-                    @endif
-                    @if (!empty($pattern['how_to_fix']))
-                        <div class="error-pattern-field">
-                            <strong>Как исправить:</strong> {{ $pattern['how_to_fix'] }}
-                        </div>
-                    @endif
-                    @if (!empty($pattern['example_rewrite_template']))
-                        <div class="error-pattern-field">
-                            <strong>Пример исправления:</strong> {{ $pattern['example_rewrite_template'] }}
-                        </div>
-                    @endif
-                </div>
-            @endforeach
+    <div class="section">
+        <div class="section-title">Типичные ошибки</div>
+        @foreach ($data['common_error_patterns'] as $pattern)
+        <div class="error-pattern">
+            <div class="error-pattern-title">{{ $pattern['pattern'] ?? 'Ошибка' }}</div>
+            @if (!empty($pattern['why_bad']))
+            <div class="error-pattern-field">
+                <strong>Почему это плохо:</strong> {{ $pattern['why_bad'] }}
+            </div>
+            @endif
+            @if (!empty($pattern['how_to_fix']))
+            <div class="error-pattern-field">
+                <strong>Как исправить:</strong> {{ $pattern['how_to_fix'] }}
+            </div>
+            @endif
+            @if (!empty($pattern['example_rewrite_template']))
+            <div class="error-pattern-field">
+                <strong>Пример исправления:</strong> {{ $pattern['example_rewrite_template'] }}
+            </div>
+            @endif
         </div>
+        @endforeach
+    </div>
     @endif
 
     <!-- План действий -->
     @if (!empty($data['action_plan']))
-        <div class="section">
-            <div class="section-title">План действий</div>
-            @foreach ($data['action_plan'] as $action)
-                <div class="action-plan-item">
-                    <div>
-                        <span class="action-step">Шаг {{ $action['step'] ?? '' }}</span>
-                        <span class="action-owner">{{ $action['owner'] ?? 'Не указан' }}</span>
-                    </div>
-                    <div style="margin-top: 6px; font-size: 11px;">
-                        <strong>Действие:</strong> {{ $action['action'] ?? '' }}
-                    </div>
-                    @if (!empty($action['expected_result']))
-                        <div style="margin-top: 24px; font-size: 11px; color: #555;">
-                            <strong>Ожидаемый результат:</strong> {{ $action['expected_result'] }}
-                        </div>
-                    @endif
-                </div>
-            @endforeach
+    <div class="section">
+        <div class="section-title">План действий</div>
+        @foreach ($data['action_plan'] as $action)
+        <div class="action-plan-item">
+            <div>
+                <span class="action-step">Шаг {{ $action['step'] ?? '' }}</span>
+                <span class="action-owner">{{ $action['owner'] ?? 'Не указан' }}</span>
+            </div>
+            <div style="margin-top: 6px; font-size: 11px;">
+                <strong>Действие:</strong> {{ $action['action'] ?? '' }}
+            </div>
+            @if (!empty($action['expected_result']))
+            <div style="margin-top: 24px; font-size: 11px; color: #555;">
+                <strong>Ожидаемый результат:</strong> {{ $action['expected_result'] }}
+            </div>
+            @endif
         </div>
+        @endforeach
+    </div>
     @endif
 
     <!-- Выборочная проверка -->
     @if (!empty($data['spot_check']))
-        <div class="section">
-            <div class="section-title">Выборочная проверка</div>
-            <div class="box">
-                @if (!empty($data['spot_check']['sample_size']))
-                    <div class="spot-check-info">
-                        <strong>Размер выборки:</strong> {{ $data['spot_check']['sample_size'] }} вопросов
-                    </div>
-                @endif
-
-                @if (!empty($data['spot_check']['suspicious_question_numbers']))
-                    <div class="subsection-title">Подозрительные вопросы:</div>
-                    @foreach ($data['spot_check']['suspicious_question_numbers'] as $suspicious)
-                        <div class="suspicious-item">
-                            <strong>Вопрос №{{ $suspicious['number'] ?? '' }}
-                                :</strong> {{ $suspicious['reason'] ?? '' }}
-                        </div>
-                    @endforeach
-                @endif
+    <div class="section">
+        <div class="section-title">Выборочная проверка</div>
+        <div class="box">
+            @if (!empty($data['spot_check']['sample_size']))
+            <div class="spot-check-info">
+                <strong>Размер выборки:</strong> {{ $data['spot_check']['sample_size'] }} вопросов
             </div>
+            @endif
+
+            @if (!empty($data['spot_check']['suspicious_question_numbers']))
+            <div class="subsection-title">Подозрительные вопросы:</div>
+            @foreach ($data['spot_check']['suspicious_question_numbers'] as $suspicious)
+            <div class="suspicious-item">
+                <strong>Вопрос №{{ $suspicious['number'] ?? '' }}:</strong> {{ $suspicious['reason'] ?? '' }}
+            </div>
+            @endforeach
+            @endif
         </div>
+    </div>
     @endif
 
     <div class="footer">

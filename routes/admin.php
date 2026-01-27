@@ -22,5 +22,7 @@ Route::group([
 
     Route::get('ai-check', [\App\Http\Controllers\Ai\AiCheckController::class, 'index'])->name('ai.check');
     Route::post('ai-check', [\App\Http\Controllers\Ai\AiCheckController::class, 'check'])->name('ai.check.submit');
+    Route::post('ai-check/prepare-pdf', [\App\Http\Controllers\Ai\AiCheckController::class, 'preparePdf'])->name('ai.check.prepare-pdf');
     Route::get('/ai-check/pdf', [\App\Http\Controllers\Ai\AiCheckController::class, 'downloadPdf'])->name('ai.check.pdf');
+    Route::get('ai-check/clear', [\App\Http\Controllers\Ai\AiCheckController::class, 'clearReport'])->name('ai.check.clear');
 });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d620c548c508141ddf500a9471fd2730",
+    "content-hash": "8af3b1fb394535c6bd10357230cdac41",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -7027,6 +7027,65 @@
             "time": "2025-02-18T12:50:31+00:00"
         },
         {
+            "name": "s-webs/s-files",
+            "version": "v1.0.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/s-webs/s-files.git",
+                "reference": "2801c43cb9dc789c2eeda2beabff0c1506c68b4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/s-webs/s-files/zipball/2801c43cb9dc789c2eeda2beabff0c1506c68b4e",
+                "reference": "2801c43cb9dc789c2eeda2beabff0c1506c68b4e",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^10.0|^11.0|^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Swebs\\Sfiles\\SFilesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Swebs\\Sfiles\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "S-WEBS",
+                    "email": "swebs.sh@gmail.com"
+                }
+            ],
+            "description": "File manager for Laravel projects",
+            "keywords": [
+                "file-manager",
+                "filemanager",
+                "files",
+                "laravel",
+                "storage",
+                "upload"
+            ],
+            "support": {
+                "issues": "https://github.com/s-webs/s-files/issues",
+                "source": "https://github.com/s-webs/s-files/tree/v1.0.14"
+            },
+            "time": "2026-01-24T07:40:34+00:00"
+        },
+        {
             "name": "sabberworm/php-css-parser",
             "version": "v8.9.0",
             "source": {
@@ -13821,5 +13880,5 @@
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

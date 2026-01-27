@@ -80,8 +80,7 @@ class NewsResource extends ModelResource implements HasImportExportContract
                 Tabs::make([
                     Tab::make('RU', [
                         Text::make('Название на русском', 'title_ru')->unescape(),
-                        TinyMce::make('Содержание', 'text_ru')
-                            ->addOption('file_manager', 'laravel-filemanager'),
+                        TinyMce::make('Содержание', 'text_ru'),
                         Slug::make('Slug', 'slug_ru')->unique()->from('title_ru'),
                         Image::make('Превью', 'preview_ru')
                             ->dir('uploads/news/')
