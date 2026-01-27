@@ -7028,16 +7028,16 @@
         },
         {
             "name": "s-webs/s-files",
-            "version": "v1.0.14",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/s-webs/s-files.git",
-                "reference": "2801c43cb9dc789c2eeda2beabff0c1506c68b4e"
+                "reference": "e8c2194e4e650878f333f6edc4f60017d76723f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/s-webs/s-files/zipball/2801c43cb9dc789c2eeda2beabff0c1506c68b4e",
-                "reference": "2801c43cb9dc789c2eeda2beabff0c1506c68b4e",
+                "url": "https://api.github.com/repos/s-webs/s-files/zipball/e8c2194e4e650878f333f6edc4f60017d76723f6",
+                "reference": "e8c2194e4e650878f333f6edc4f60017d76723f6",
                 "shasum": ""
             },
             "require": {
@@ -7081,9 +7081,9 @@
             ],
             "support": {
                 "issues": "https://github.com/s-webs/s-files/issues",
-                "source": "https://github.com/s-webs/s-files/tree/v1.0.14"
+                "source": "https://github.com/s-webs/s-files/tree/v1.0.8"
             },
-            "time": "2026-01-24T07:40:34+00:00"
+            "time": "2026-01-22T19:47:31+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
