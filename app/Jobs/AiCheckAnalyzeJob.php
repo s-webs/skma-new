@@ -16,6 +16,10 @@ class AiCheckAnalyzeJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public int $timeout = 180;
+
+    public int $tries = 10;
+
     public int $jobId;
 
     /**
