@@ -52,7 +52,7 @@ class KomplaensResource extends ModelResource
                 Tabs::make([
                     Tab::make('RU', [
                         Text::make('Название', 'title_ru'),
-                        TextArea::make('Описание', 'description_ru'),
+                        //TextArea::make('Описание', 'description_ru'),
                         Json::make('Карточки', 'cards_ru')
                             ->fields([
                                 Position::make(),
@@ -72,14 +72,14 @@ class KomplaensResource extends ModelResource
                             ->vertical()
                             ->removable(),
                         File::make('documents_ru')
-                            ->dir('uploads/komplaens/documents')
+                            ->dir('uploads/komplaens/documents/ru')
                             ->keepOriginalFileName()
                             ->removable()
                             ->multiple()
                     ]),
                     Tab::make('KZ', [
                         Text::make('Название', 'title_kz'),
-                        TextArea::make('Описание', 'description_kz'),
+                        //TextArea::make('Описание', 'description_kz'),
                         Json::make('Карточки', 'cards_kz')
                             ->fields([
                                 Position::make(),
@@ -99,14 +99,14 @@ class KomplaensResource extends ModelResource
                             ->vertical()
                             ->removable(),
                         File::make('documents_kz')
-                            ->dir('uploads/komplaens/documents')
+                            ->dir('uploads/komplaens/documents/kz')
                             ->keepOriginalFileName()
                             ->removable()
                             ->multiple()
                     ]),
                     Tab::make('EN', [
                         Text::make('Название', 'title_en'),
-                        TextArea::make('Описание', 'description_en'),
+                        //TextArea::make('Описание', 'description_en'),
                         Json::make('Карточки', 'cards_en')
                             ->fields([
                                 Position::make(),
@@ -126,7 +126,7 @@ class KomplaensResource extends ModelResource
                             ->vertical()
                             ->removable(),
                         File::make('documents_en')
-                            ->dir('uploads/komplaens/documents')
+                            ->dir('uploads/komplaens/documents/en')
                             ->keepOriginalFileName()
                             ->removable()
                             ->multiple()

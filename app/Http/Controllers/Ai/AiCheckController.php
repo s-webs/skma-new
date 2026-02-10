@@ -3,67 +3,58 @@
 namespace App\Http\Controllers\Ai;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\AiCheckAnalyzeJob;
+use App\Models\AiCheckJob;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-set_time_limit(120);          // 120 секунд
-ini_set('max_execution_time', '120');
 
 class AiCheckController extends Controller
 {
     public function index()
     {
         return view('pages.ai.ai-check', [
-            'conclusion' => session('ai_check_conclusion'),
+            'conclusion' => null,
             'errorDetails' => session('errorDetails'),
         ]);
     }
 
     public function clearReport()
     {
-        session()->forget(['ai_check_conclusion', 'ai_check_filename', 'ai_check_pdf']);
+        session()->forget(['ai_check_conclusion', 'ai_check_filename', 'ai_check_pdf', 'ai_check_pdfs']);
 
         return redirect()->route('ai.check');
     }
 
     public function preparePdf(Request $request)
     {
-        $conclusionData = session('ai_check_conclusion');
-        $filename = session('ai_check_filename');
+        $pdfs = session('ai_check_pdfs');
 
-        if (!$conclusionData) {
-            return response()->json(['success' => false, 'error' => 'Нет данных для формирования PDF'], 404);
+        if (!$pdfs || !is_array($pdfs)) {
+            return response()->json(['success' => false, 'error' => 'Нет PDF-файлов от сервиса проверки'], 404);
         }
 
-        if (is_string($conclusionData)) {
-            $conclusionData = [
-                'overall_assessment' => $conclusionData,
-                'risk_level' => 'MEDIUM',
-                'major_findings' => [],
-                'quality_scores' => [],
-                'common_error_patterns' => [],
-                'action_plan' => [],
-                'spot_check' => [],
-            ];
+        // Язык можно будет выбирать через параметр ?lang=ru/kk/en, пока — ru по умолчанию
+        $lang = $request->get('lang', 'ru');
+        $lang = strtolower($lang);
+        if (!in_array($lang, ['ru', 'kk', 'en'], true)) {
+            $lang = 'ru';
         }
 
-        $headerImagePath = public_path('header_kolontitul.png');
-        $stampImagePath = public_path('stamp_test.png');
+        $pdfBase64 = $pdfs[$lang] ?? null;
+        if (!$pdfBase64 || !is_string($pdfBase64)) {
+            return response()->json(['success' => false, 'error' => 'Не удалось найти PDF для выбранного языка'], 404);
+        }
 
-        $pdf = Pdf::loadView('pdf.ai-check-conclusion', [
-            'data' => $conclusionData,
-            'filename' => $filename,
-            'generatedAt' => now(),
-            'headerImagePath' => $headerImagePath,
-            'stampImagePath' => $stampImagePath,
-        ])->setPaper('a4', 'portrait')
-          ->setOption('enable-local-file-access', true)
-          ->setOption('isHtml5ParserEnabled', true);
+        $pdfBinary = base64_decode($pdfBase64, true);
+        if ($pdfBinary === false) {
+            return response()->json(['success' => false, 'error' => 'Ошибка декодирования PDF'], 500);
+        }
 
-        $pdfBinary = $pdf->output();
         session()->put('ai_check_pdf', $pdfBinary);
+        session()->put('ai_check_pdf_lang', $lang);
 
         return response()->json(['success' => true]);
     }
@@ -241,29 +232,20 @@ class AiCheckController extends Controller
             'document' => [
                 'required',
                 'file',
-                'max:10240', // 10 MB (в KB)
-
-                // MIME-тип (строго под текст)
-                'mimetypes:text/plain',
-
-                // Дополнительно проверяем расширение, чтобы точно был .txt
-                function ($attribute, $value, $fail) {
-                    /** @var \Illuminate\Http\UploadedFile $value */
-                    if (strtolower($value->getClientOriginalExtension()) !== 'txt') {
-                        $fail('Разрешён только файл формата .txt');
-                    }
-                },
+                // Максимальный размер: 50 МБ (в килобайтах)
+                'max:51200',
+                // Разрешаем только Word-документы
+                'mimes:doc,docx',
             ],
         ]);
 
         $file = $request->file('document');
 
         // При проверке нового документа — удалить старый отчёт из сессии
-        session()->forget(['ai_check_conclusion', 'ai_check_filename', 'ai_check_pdf']);
+        session()->forget(['ai_check_conclusion', 'ai_check_filename', 'ai_check_pdf', 'ai_check_pdfs']);
 
-        $n8nUrl = config('services.n8n.webhook_url');
-        if (!$n8nUrl) {
-            $msg = 'N8N_WEBHOOK_URL не настроен в .env';
+        if (!config('services.aicheck.url')) {
+            $msg = 'AICHECK_API_URL не настроен в .env';
             if ($request->wantsJson()) {
                 return response()->json(['success' => false, 'error' => $msg], 500);
             }
@@ -274,148 +256,99 @@ class AiCheckController extends Controller
                 ->with('errorDetails', $msg);
         }
 
-        // На всякий случай нормализуем имя файла (чтобы точно было .txt)
         $originalName = $file->getClientOriginalName();
-        $baseName = pathinfo($originalName, PATHINFO_FILENAME);
-        $safeName = $baseName . '.txt';
+        $extension = strtolower($file->getClientOriginalExtension());
+        $safeBase = Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) ?: 'document';
+        $safeName = $safeBase . '.' . $extension;
 
-        try {
-            $response = Http::timeout(180)
-                ->attach(
-                    'document',
-                    file_get_contents($file->getRealPath()),
-                    $safeName,
-                    ['Content-Type' => 'text/plain; charset=utf-8']
-                )
+        $storedPath = $file->storeAs('ai-check/uploads', $safeName);
 
-                ->post($n8nUrl, [
-                    'filename' => $safeName,
-                ]);
+        $job = AiCheckJob::create([
+            'user_id' => Auth::id(),
+            'status' => AiCheckJob::STATUS_PENDING,
+            'source_filename' => $originalName,
+            'stored_path' => $storedPath,
+        ]);
 
-            if (!$response->successful()) {
-                $msg = 'n8n вернул ошибку: ' . $response->status() . ' ' . $response->body();
-                if ($request->wantsJson()) {
-                    return response()->json(['success' => false, 'error' => $msg], 502);
-                }
+        AiCheckAnalyzeJob::dispatch($job->id);
 
-                return redirect()
-                    ->route('ai.check')
-                    ->with('conclusion', null)
-                    ->with('errorDetails', $msg);
-            }
-
-            // Берём максимум информации: и json(), и сырой body
-            $payload = $response->json();
-            $rawBody = $response->body();
-
-            // Логирование ответа n8n для отладки (особенно quality_scores)
-            Log::info('AiCheck: ответ n8n', [
-                'raw_body' => $rawBody,
-                'payload' => $payload,
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'job_id' => $job->id,
             ]);
-
-            // Пытаемся распарсить JSON по новой схеме
-            $conclusionData = $this->parseConclusionJson(
-                $payload['conclusion']
-                ?? $payload['result']
-                ?? $payload
-                ?? $rawBody
-            );
-
-            if (!$conclusionData) {
-                // Если не удалось распарсить, сохраняем как текст для обратной совместимости
-                $conclusionData = [
-                    'overall_assessment' => is_string($rawBody) ? $rawBody : 'Не удалось получить заключение от сервиса проверки.',
-                    'risk_level' => 'MEDIUM',
-                    'major_findings' => [],
-                    'quality_scores' => [],
-                    'common_error_patterns' => [],
-                    'action_plan' => [],
-                    'spot_check' => [],
-                ];
-            }
-
-            session()->put('ai_check_conclusion', $conclusionData);
-            session()->put('ai_check_filename', $safeName);
-
-            // Логирование распарсенных данных (в т.ч. quality_scores для отладки блока оценок качества)
-            Log::info('AiCheck: распарсенный conclusion', [
-                'conclusion_data' => $conclusionData,
-                'quality_scores_raw' => $conclusionData['quality_scores'] ?? null,
-                'quality_scores_type' => gettype($conclusionData['quality_scores'] ?? null),
-            ]);
-
-            if ($request->wantsJson()) {
-                return response()->json(['success' => true]);
-            }
-
-            return redirect()
-                ->route('ai.check')
-                ->with('errorDetails', null);
-
-        } catch (\Throwable $e) {
-            $msg = 'Ошибка запроса к n8n: ' . $e->getMessage();
-            if ($request->wantsJson()) {
-                return response()->json(['success' => false, 'error' => $msg], 500);
-            }
-
-            return redirect()
-                ->route('ai.check')
-                ->with('conclusion', null)
-                ->with('errorDetails', $msg);
         }
+
+        return redirect()
+            ->route('ai.check')
+            ->with('errorDetails', null);
     }
 
     public function downloadPdf(Request $request)
     {
-        $pdfBinary = session('ai_check_pdf');
-        $filename = session('ai_check_filename');
-
-        if ($pdfBinary) {
-            $safeBase = $filename ? Str::slug(pathinfo($filename, PATHINFO_FILENAME)) : 'ai-check';
-            $pdfName = $safeBase . '-conclusion.pdf';
-
-            return response($pdfBinary)
-                ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'attachment; filename="' . $pdfName . '"');
-        }
-
-        $conclusionData = session('ai_check_conclusion');
-        if (!$conclusionData) {
-            abort(404, 'Нет данных для формирования PDF');
-        }
-
-        // Если данные в старом формате (строка), преобразуем в новый формат
-        if (is_string($conclusionData)) {
-            $conclusionData = [
-                'overall_assessment' => $conclusionData,
-                'risk_level' => 'MEDIUM',
-                'major_findings' => [],
-                'quality_scores' => [],
-                'common_error_patterns' => [],
-                'action_plan' => [],
-                'spot_check' => [],
-            ];
-        }
-
-        $safeBase = $filename ? Str::slug(pathinfo($filename, PATHINFO_FILENAME)) : 'ai-check';
-        $pdfName = $safeBase . '-conclusion.pdf';
-
-        $headerImagePath = public_path('header_kolontitul.png');
-        $stampImagePath = public_path('stamp_test.png');
-
-        $pdf = Pdf::loadView('pdf.ai-check-conclusion', [
-            'data' => $conclusionData,
-            'filename' => $filename,
-            'generatedAt' => now(),
-            'headerImagePath' => $headerImagePath,
-            'stampImagePath' => $stampImagePath,
-        ])->setPaper('a4', 'portrait')
-          ->setOption('enable-local-file-access', true)
-          ->setOption('isHtml5ParserEnabled', true);
-
-        return $pdf->download($pdfName);
+        abort(404);
     }
 
+    public function status(AiCheckJob $job)
+    {
+        if ($job->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return response()->json([
+            'status' => $job->status,
+            'has_result' => $job->status === AiCheckJob::STATUS_DONE && !empty($job->result_json),
+            'has_error' => $job->status === AiCheckJob::STATUS_FAILED,
+            'error_message' => $job->error_message,
+        ]);
+    }
+
+    public function result(AiCheckJob $job)
+    {
+        if ($job->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if ($job->status !== AiCheckJob::STATUS_DONE || empty($job->result_json)) {
+            abort(404, 'Результат ещё не готов');
+        }
+
+        $assessment = $this->validateConclusionSchema($job->result_json ?? []);
+
+        return view('pages.ai.ai-check-result', [
+            'job' => $job,
+            'assessment' => $assessment,
+        ]);
+    }
+
+    public function downloadResultPdf(AiCheckJob $job, string $lang)
+    {
+        if ($job->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $lang = strtolower($lang);
+        if (!in_array($lang, ['ru', 'kk', 'en'], true)) {
+            abort(404);
+        }
+
+        $field = match ($lang) {
+            'kk' => 'pdf_kk_path',
+            'en' => 'pdf_en_path',
+            default => 'pdf_ru_path',
+        };
+
+        $path = $job->{$field};
+        if (!$path || !Storage::exists($path)) {
+            abort(404, 'PDF не найден');
+        }
+
+        $safeBase = Str::slug(pathinfo($job->source_filename, PATHINFO_FILENAME)) ?: 'ai-check';
+        $pdfName = $safeBase . "-conclusion-{$lang}.pdf";
+
+        return Storage::download($path, $pdfName, [
+            'Content-Type' => 'application/pdf',
+        ]);
+    }
 
 }

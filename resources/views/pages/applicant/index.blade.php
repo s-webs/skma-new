@@ -16,7 +16,7 @@
                     <div class="text-md md:text-[18px] text-white mt-[20px] max-w-[500px]">
                         {{ __('applicant.carefully_study_this_page') }}
                     </div>
-                    <div class="flex flex-wrap xl:flex-nowrap items-center w-full mt-[40px]">
+                    <div class="flex flex-wrap items-center w-full mt-[40px]">
                         @foreach(json_decode($applicant->getProperty('cards')) as $item)
                             @if($item->title !== null)
                                 @if($item->file)

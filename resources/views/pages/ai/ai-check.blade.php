@@ -18,12 +18,45 @@
                         action="{{ route('ai.check.submit') }}"
                         method="POST"
                         enctype="multipart/form-data"
-                        data-prepare-pdf-url="{{ route('ai.check.prepare-pdf') }}"
                         x-data="{
                             fileName: '',
                             submitting: false,
                             phase: 'analysis',
+                            jobId: null,
+                            toastVisible: false,
+                            resultUrl: '',
                             errorDetails: @js($errorDetails ?? ''),
+                            statusUrlTemplate: @js(route('ai.check.status', ['job' => '__JOB__'])),
+                            resultUrlTemplate: @js(route('ai.check.result', ['job' => '__JOB__'])),
+                            async pollStatus() {
+                                if (!this.jobId) return;
+                                try {
+                                    const url = this.statusUrlTemplate.replace('__JOB__', this.jobId);
+                                    const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+                                    const data = await r.json().catch(() => ({}));
+                                    if (!r.ok) {
+                                        this.errorDetails = data.message || data.error || 'Ошибка при проверке статуса';
+                                        this.submitting = false;
+                                        return;
+                                    }
+                                    if (data.status === 'done' && data.has_result) {
+                                        this.submitting = false;
+                                        this.toastVisible = true;
+                                        this.resultUrl = this.resultUrlTemplate.replace('__JOB__', this.jobId);
+                                        return;
+                                    }
+                                    if (data.status === 'failed') {
+                                        this.submitting = false;
+                                        this.errorDetails = data.error_message || 'Ошибка обработки';
+                                        return;
+                                    }
+                                    // пока не готово — повторим запрос через несколько секунд
+                                    setTimeout(() => this.pollStatus(), 8000);
+                                } catch (err) {
+                                    this.errorDetails = err.message || 'Ошибка сети при проверке статуса';
+                                    this.submitting = false;
+                                }
+                            },
                             async runCheck(e) {
                                 const form = e.target;
                                 if (!form.document?.files?.length) { this.errorDetails = 'Выберите файл'; return; }
@@ -35,12 +68,10 @@
                                     const data = await r.json().catch(() => ({}));
                                     if (!r.ok) { this.errorDetails = data.message || data.error || (data.errors ? Object.values(data.errors).flat().join(' ') : '') || 'Ошибка'; this.submitting = false; return; }
                                     if (data.success === false) { this.errorDetails = data.error || 'Ошибка'; this.submitting = false; return; }
-                                    this.phase = 'pdf';
-                                    const r2 = await fetch(form.dataset.preparePdfUrl, { method: 'POST', headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': form.querySelector('[name=_token]').value, 'Content-Type': 'application/json' } });
-                                    const data2 = await r2.json().catch(() => ({}));
-                                    if (!r2.ok) { this.errorDetails = data2.error || 'Ошибка генерации PDF'; this.submitting = false; return; }
-                                    if (data2.success === false) { this.errorDetails = data2.error || 'Ошибка'; this.submitting = false; return; }
-                                    window.location.reload();
+                                    if (!data.job_id) { this.errorDetails = 'Не удалось создать задачу проверки'; this.submitting = false; return; }
+                                    this.jobId = data.job_id;
+                                    this.phase = 'analysis';
+                                    this.pollStatus();
                                 } catch (err) {
                                     this.errorDetails = err.message || 'Ошибка сети';
                                     this.submitting = false;
@@ -50,6 +81,24 @@
                         @submit.prevent="runCheck($event)"
                     >
                         @csrf
+
+                        {{-- Toast о готовности результата --}}
+                        <div
+                            x-cloak
+                            x-show="toastVisible"
+                            class="mb-4 rounded-2xl bg-white text-[var(--color-main)] p-4 shadow-lg"
+                        >
+                            <div class="font-semibold mb-2">Проверка завершена</div>
+                            <div class="text-sm mb-3">
+                                Результат проверки готов. Вы можете просмотреть текст заключения и скачать PDF.
+                            </div>
+                            <a
+                                :href="resultUrl"
+                                class="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold bg-[var(--color-main)] text-white hover:bg-[var(--color-extra)] transition"
+                            >
+                                Перейти к результату
+                            </a>
+                        </div>
 
                         {{-- Ошибки валидации --}}
                         @if ($errors->any())
@@ -63,7 +112,7 @@
                             </div>
                         @endif
 
-                        {{-- Ошибка от n8n/запроса (сервер и AJAX) --}}
+                            {{-- Ошибка от сервиса проверки (сервер и AJAX) --}}
                         <div
                             x-cloak
                             x-show="errorDetails"
@@ -72,28 +121,6 @@
                             <div class="font-semibold mb-2">Ошибка обработки:</div>
                             <div class="text-sm text-white/90 whitespace-pre-wrap" x-text="errorDetails"></div>
                         </div>
-
-                        {{-- Результат: ссылка на PDF и кнопка удаления отчёта --}}
-                        @if(!empty($conclusion))
-                            <div class="my-[30px] w-full">
-                                <div class="flex items-center gap-3 justify-between flex-wrap">
-                                    <a
-                                        href="{{ route('ai.check.pdf') }}"
-                                        class="flex-1 min-w-0 text-center rounded-full bg-[var(--color-halftone)] px-5 py-3 font-semibold text-[var(--color-main)]"
-                                    >
-                                        Скачать заключение (PDF)
-                                    </a>
-                                    <a
-                                        href="{{ route('ai.check.clear') }}"
-                                        class="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition"
-                                        title="Удалить отчёт"
-                                        aria-label="Удалить отчёт"
-                                    >
-                                        <span class="text-lg leading-none">×</span>
-                                    </a>
-                                </div>
-                            </div>
-                        @endif
 
                         {{-- Спиннер: «Идёт анализ…» затем «Генерация отчёта» --}}
                         <div
@@ -115,8 +142,10 @@
 
                         <div class="mt-auto">
                             <p class="text-white/70 text-sm">
-                                Поддерживаемый формат документа: <span class="font-semibold">.txt</span>,
-                                допустимый размер до <span class="font-medium">10 МБ</span>
+                                Поддерживаемые форматы документа:
+                                <span class="font-semibold">.doc</span> и
+                                <span class="font-semibold">.docx</span>,
+                                допустимый размер до <span class="font-medium">50 МБ</span>
                             </p>
 
                             <div class="mt-4">
@@ -124,7 +153,7 @@
                                     id="doc"
                                     type="file"
                                     name="document"
-                                    accept=".txt,text/plain"
+                                    accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                     class="hidden"
                                     @change="fileName = $event.target.files?.[0]?.name || ''"
                                     required
@@ -140,7 +169,10 @@
                                        transition"
                                     :class="submitting ? 'opacity-60 cursor-not-allowed' : ''"
                                 >
-                                    <span class="block text-sm truncate" x-text="fileName || 'Загрузите TXT файл для проверки'"></span>
+                                    <span
+                                        class="block text-sm truncate"
+                                        x-text="fileName || 'Загрузите DOC или DOCX файл для проверки'"
+                                    ></span>
                                 </label>
                             </div>
 

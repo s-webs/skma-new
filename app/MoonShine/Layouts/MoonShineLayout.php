@@ -163,7 +163,7 @@ final class MoonShineLayout extends CompactLayout
                 ], 'users'),
                 MenuGroup::make('Настройки', [
                     MenuItem::make('Темы', ThemeResource::class),
-                    MenuItem::make('Файловый менеджер', route('fmanager.index'))
+                    MenuItem::make('Файловый менеджер', route('sfiles.index'))
                 ], 'wrench-screwdriver'),
                 MenuGroup::make('Дисс совет', [
                     MenuItem::make('Образовательные программы', EducationProgramResource::class),
